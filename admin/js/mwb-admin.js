@@ -35,9 +35,51 @@ $(document).ready(function () {
     }
     else
     {
-      $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().nextAll().hide();
+      // $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().nextAll().hide();
     }
   });
+
+
+  $('#woocommerce_mwb_shipping_rate_free_shipping').on('change',function()
+  {
+    if($('#woocommerce_mwb_shipping_rate_free_shipping').is(':checked')){
+      $.ajax({
+        type:'POST',
+        dataType: 'text',
+        url: srfw_shipping_param.ajaxurl,
+    
+        data: {
+            'action':'show_free_shipping_field',
+            'srfw_ajax_nonce':srfw_shipping_param.license_nonce,
+            'show_free_shipping':'yes',
+        },
+        success:function( response ) {
+          // alert(response);
+         $( ".woocommerce-save-button" ).trigger( "click" );
+        }
+    });
+     }
+    if($('#woocommerce_mwb_shipping_rate_free_shipping').not(':checked').length)
+  {
+    $.ajax({
+      type:'POST',
+      dataType: 'text',
+      url: srfw_shipping_param.ajaxurl,
+  
+      data: {
+          'action':'hide_free_shipping_field',
+          'srfw_ajax_nonce':srfw_shipping_param.license_nonce,
+          'hide_free_shipping':'no',
+      },
+    
+      success:function( response ) {
+        // alert(response);
+      }
+  });
+  }
+  });
+
+
 
   if($('.default_check_class').is(':checked')) {
     $.ajax({
@@ -147,6 +189,49 @@ $('#woocommerce_mwb_shipping_rate_t1').on('click',function()
   }
 });
 
+$('#woocommerce_mwb_shipping_rate_t1').on('change',function()
+{
+  if($('#woocommerce_mwb_shipping_rate_t1').is(':checked')){
+    $.ajax({
+      type:'POST',
+      dataType: 'text',
+      url: srfw_shipping_param.ajaxurl,
+  
+      data: {
+          'action':'show_advance_shipping_field',
+          'srfw_ajax_nonce':srfw_shipping_param.license_nonce,
+          'show':'yes',
+      },
+    
+      success:function( response ) {
+        // alert(response);
+        $( ".woocommerce-save-button" ).trigger( "click" );
+      }
+  });
+  }
+  if($('#woocommerce_mwb_shipping_rate_t1').not(':checked').length)
+  {
+    $.ajax({
+      type:'POST',
+      dataType: 'text',
+      url: srfw_shipping_param.ajaxurl,
+  
+      data: {
+          'action':'hide_advance_shipping_field',
+          'srfw_ajax_nonce':srfw_shipping_param.license_nonce,
+          'hide':'no',
+      },
+    
+      success:function( response ) {
+        // alert(response);
+      }
+  });
+  }
+
+});
+
+
+
 $('#woocommerce_mwb_shipping_rate_categories_wise').on('click',function()
 {
   var select_button_text = $('#woocommerce_mwb_shipping_rate_categories_wise option:selected')
@@ -159,7 +244,7 @@ $.ajax({
   url: srfw_shipping_param.ajaxurl,
 
   data: {
-      'action':'pinki',
+      'action':'product_categories',
       'srfw_ajax_nonce':srfw_shipping_param.license_nonce,
       'cat':select_button_text,
   },

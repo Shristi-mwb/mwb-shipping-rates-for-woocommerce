@@ -105,137 +105,90 @@ class Shipping_rates_for_woocommerce_Common {
 		return $methods;
 	}
 	
-	public function srfw_coupon_add_fun()
-	{ 
-$applied_coupons = WC()->cart->get_applied_coupons();
+	public function srfw_coupon_add_fun() { 
+	$applied_coupons = WC()->cart->get_applied_coupons();
 
-    foreach( $applied_coupons as $coupon_code ){
+	foreach( $applied_coupons as $coupon_code ){
 
-    $coupon = new WC_Coupon($coupon_code);
+	$coupon = new WC_Coupon($coupon_code);
 
-    if($coupon->get_free_shipping()){
-    //   var_dump($coupon);
+	if($coupon->get_free_shipping()){
+	//   var_dump($coupon);
 	 update_option('shipping_coupon','yes');
 	//  var_dump(WC()->cart->get_applied_coupons());
-    //  die();
-    }
+	//  die();
+	}
 }
 }
-public function srfw_coupon_remove_fun()
-	{
-
+public function srfw_coupon_remove_fun() {
 		update_option('shipping_coupon','no');
-		// $applied_coupons = WC()->cart->get_applied_coupons();
-
-		// foreach( $applied_coupons as $coupon_code ){
-	
-		// $coupon = new WC_Coupon($coupon_code);
-		// $coupon->get_free_shipping();
-		// if( $coupon->get_free_shipping()){
-		// 	update_option('shipping_coupon','no');
-		// 	}
-			// else{
-			// 	update_option('shipping_coupon','no');
-			// }
-	// }
-
-	
 }
 
 public function  expected_delivery_date_message()
 {
-    global $woocommerce , $product;
-	$i=get_option('expected_days');
-	if(!empty($i)){
-	// $Date =date('Y-m-d');
-$expec_date = date('l jS \of F ', strtotime($Date. ' + '. $i .'days'));
-echo '<h4><i>'.'Expected to be delivered by '. $expec_date.'<i></h4>';
+	global $woocommerce , $product;
+	$days_checker=get_option('expected_days');
+	if(!empty($days_checker)){
+	$expec_date = date('l jS \of F ', strtotime($Date. ' + '. $days_checker .'days'));
+	echo '<h4><i>'.'Expected to be delivered by '. $expec_date.'<i></h4>';
 	}
-	// echo  number_format(WC()->cart->get_cart_subtotal(),1,'.','');
-	$amount = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
-	echo $amount;
+
+// 	$shipping_prod_cat=get_option('product_categories');
+// 	$shipping_ar = explode(',', $shipping_prod_cat[0]);
+// 	// var_dump($shipping_ar);
+
 	
+// 	$cat_in_cart = false;
+	   
+// 	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+ 
+// 	foreach($shipping_ar as $x=>$val){
+// 	if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
+// 		$cat_in_cart = true;
+// 	}
+// 	}
+// }
 	
+// 	if ( $cat_in_cart ) {
+// 	update_option('shipping_cart','yes');
+// 	} else {
+// 	update_option('shipping_cart','no');
+// 	}
+}
 
-	$items = $woocommerce->cart->get_cart();
-    $cart_prods_m3 = array();
+public function displaying_cart_items_weight( $item_data, $cart_item ) {
+	$item_weight = $cart_item['data']->get_weight();
+	$item_data[] = array(
+		'key'       => __('Weight', 'woocommerce'),
+		'value'     => $item_weight,
+		'display'   => $item_weight . ' ' . get_option('woocommerce_weight_unit')
+	);
 
-        //LOOP ALL THE PRODUCTS IN THE CART
-        foreach($items as $item => $values) { 
-            $_product =  wc_get_product( $values['data']->get_id());
-            //GET GET PRODUCT M3 
-            $prod_m3 = $_product->get_length() * 
-                       $_product->get_width() * 
-                       $_product->get_height();
-            //MULTIPLY BY THE CART ITEM QUANTITY
-            //DIVIDE BY 1000000 (ONE MILLION) IF ENTERING THE SIZE IN CENTIMETERS
-            // $prod_m3 = ($prod_m3 * $values['quantity']) / 1000000;
-            //PUSH RESULT TO ARRAY
-            array_push($cart_prods_m3, $prod_m3);
-        } 
+	return $item_data;
+}
 
-    echo "Total of M3 in the cart: " . array_sum($cart_prods_m3).'<br>';
-	// var_dump(get_option('product_categories'));
-	$i=get_option('product_categories');
-	$fruits_ar = explode(',', $i[0]);
-	var_dump($fruits_ar);
-	foreach( WC()->cart->get_cart() as $cart_item ){
-		// compatibility with WC +3
-		if( version_compare( WC_VERSION, '3.0', '<' ) ){
-			echo $product_id = $cart_item['data']->id; // Before version 3.0
-		} else {
-			 $product_id = $cart_item['data']->get_id().'<br>'; // For version 3 or more
-		
-		}
+public function shipping_rates_categories() {
+	$shipping_prod_cat=get_option('product_categories');
+	$shipping_ar = explode(',', $shipping_prod_cat[0]);
+	// var_dump($shipping_ar);
+
+	
+	$cat_in_cart = false;
+	   
+	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+ 
+	foreach($shipping_ar as $x=>$val){
+	if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
+		$cat_in_cart = true;
 	}
-	$terms = get_the_terms( 12, 'product_cat' );
-foreach ($terms as $term) {
-   $product_cat = $term->name;
+	}
 }
-echo $product_cat ;
-
-
-
-	// echo $terms = get_the_terms( $product->get_id(), 'product_cat' );
-	// // Retrieve object containing all of the categories.
-    // $cats = get_categories();
-
-    // // Convert the object into a simple array containing a list of categories.
-    // $categories[] =  '';
-    // foreach($cats as $category) {
-    //     $categories[] = __( $category->cat_name, 'hs_textdomain' );
-    // }
-
-    // // Return the array.
-    // print_r($categories);
-	// $woocommerce->cart->cart_contents_weight ;
-	// $item_weight = $cart_item['data']->get_weight();
-	// die();
-	// echo get_the_date();
-	// echo date('l jS \of F Y');
-	// var_dump(WC()->cart->get_cart());
-    // $session_cart = WC()->session->applied_coupons;
-// 	$applied_coupons = WC()->cart->get_applied_coupons();
-
-// 		foreach( $applied_coupons as $coupon_code ){
-	
-// 		$coupon = new WC_Coupon($coupon_code);
-// 	echo '<pre>';
-// 	print_r($coupon->get_free_shipping());
-// die();
-// 		}
-// die();
+if ( $cat_in_cart ) {
+	update_option('shipping_cart','yes');
+	} else {
+	update_option('shipping_cart','no');
+	}
 }
 
-function displaying_cart_items_weight( $item_data, $cart_item ) {
-    $item_weight = $cart_item['data']->get_weight();
-    $item_data[] = array(
-        'key'       => __('Weight', 'woocommerce'),
-        'value'     => $item_weight,
-        'display'   => $item_weight . ' ' . get_option('woocommerce_weight_unit')
-    );
-
-    return $item_data;
-}
 
 }

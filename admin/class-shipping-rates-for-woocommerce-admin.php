@@ -244,14 +244,45 @@ public function srfw_visibility_shipping_unchecked()
 	update_option('visibility_check',$_COOKIE["visibility_check"]);
 }
 
-public function my()
-{
-
+public function product_shipping_categories() {
 	$me =array();
 	$cat = !empty( $_POST['cat'] ) ? sanitize_text_field( wp_unslash ( $_POST['cat'] ) ) : '';
 	$me[]=$cat;
 	update_option( 'product_categories', $me);
 	echo 'save ho gya';
+	wp_die();
+}
+
+
+public function fun_show_advance_field()
+{
+	$show_or_hide = !empty( $_POST['show'] ) ? sanitize_text_field( wp_unslash ( $_POST['show'] ) ) : '';
+	update_option( 'advance_shipping_field',$show_or_hide );
+	echo 'hello';
+	wp_die();
+}
+
+public function fun_hide_advance_field()
+{
+	$hide_or_show = !empty( $_POST['hide'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide'] ) ) : '';
+	update_option( 'advance_shipping_field',$hide_or_show );
+	echo 'yeah';
+	wp_die();
+}
+
+public function fun_show_free_field()
+{
+	$show_or_hide_free_shipping = !empty( $_POST['show_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['show_free_shipping'] ) ) : '';
+	update_option( 'free_shipping_field',$show_or_hide_free_shipping );
+	echo 'hello free';
+	wp_die();
+}
+
+public function fun_hide_free_field()
+{
+	$hide_or_show_free_shipping = !empty( $_POST['hide_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide_free_shipping'] ) ) : '';
+	update_option( 'free_shipping_field',$hide_or_show_free_shipping);
+	echo 'yeah free';
 	wp_die();
 }
 

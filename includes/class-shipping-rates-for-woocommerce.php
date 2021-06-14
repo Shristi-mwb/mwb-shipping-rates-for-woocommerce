@@ -213,15 +213,29 @@ class Shipping_rates_for_woocommerce {
 		$this->loader->add_action( 'wp_ajax_shipping_coupon_action', $srfw_plugin_admin, 'srfw_shipping_coupon' ,10);
 	    $this->loader->add_action( 'wp_ajax_nopriv_shipping_coupon_action', $srfw_plugin_admin, 'srfw_shipping_coupon',10 );
         
-		//Ajax for visibility of  shipping.
+		//Ajax for visibility of  shipping. 
 		$this->loader->add_action( 'wp_ajax_shipping_visibility', $srfw_plugin_admin, 'srfw_visibility_shipping_checked' ,10);
 	    $this->loader->add_action( 'wp_ajax_nopriv_shipping_visibility', $srfw_plugin_admin, 'srfw_visibility_shipping_checked',10 );
 
 		$this->loader->add_action( 'wp_ajax_expected_date', $srfw_plugin_admin, 'expected_date_delivery_fun' ,10);
 	    $this->loader->add_action( 'wp_ajax_nopriv_expected_date', $srfw_plugin_admin, 'expected_date_delivery_fun',10 );
 
-		$this->loader->add_action( 'wp_ajax_pinki', $srfw_plugin_admin, 'my' ,10);
-	    $this->loader->add_action( 'wp_ajax_nopriv_pinki', $srfw_plugin_admin, 'my',10 );
+		$this->loader->add_action( 'wp_ajax_product_categories', $srfw_plugin_admin, 'product_shipping_categories' ,10);
+	    $this->loader->add_action( 'wp_ajax_nopriv_product_categories', $srfw_plugin_admin, 'product_shipping_categories',10 );
+
+		$this->loader->add_action( 'wp_ajax_show_advance_shipping_field', $srfw_plugin_admin, 'fun_show_advance_field' ,10);
+	    $this->loader->add_action( 'wp_ajax_nopriv_show_advance_shipping_field', $srfw_plugin_admin, 'fun_show_advance_field',10 );
+
+		$this->loader->add_action( 'wp_ajax_hide_advance_shipping_field', $srfw_plugin_admin, 'fun_hide_advance_field' ,10);
+	    $this->loader->add_action( 'wp_ajax_nopriv_hide_advance_shipping_field', $srfw_plugin_admin, 'fun_hide_advance_field',10 );
+
+		$this->loader->add_action( 'wp_ajax_show_free_shipping_field', $srfw_plugin_admin, 'fun_show_free_field' ,10);
+	    $this->loader->add_action( 'wp_ajax_nopriv_show_free_shipping_field', $srfw_plugin_admin, 'fun_show_free_field',10 );
+
+		$this->loader->add_action( 'wp_ajax_hide_free_shipping_field', $srfw_plugin_admin, 'fun_hide_free_field' ,10);
+	    $this->loader->add_action( 'wp_ajax_nopriv_hide_free_shipping_field', $srfw_plugin_admin, 'fun_hide_free_field',10 );
+
+		
 
 	}
 
@@ -245,7 +259,8 @@ class Shipping_rates_for_woocommerce {
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
 		$this->loader->add_action( 'woocommerce_applied_coupon', $srfw_plugin_common, 'srfw_coupon_add_fun' );
 		$this->loader->add_action( 'woocommerce_removed_coupon', $srfw_plugin_common, 'srfw_coupon_remove_fun' );
-		// $this->loader->add_action( 'woocommerce_cart_updated', $srfw_plugin_common, 'check' );
+		$this->loader->add_action( 'woocommerce_before_cart', $srfw_plugin_common, 'shipping_rates_categories' );
+		$this->loader->add_action( 'woocommerce_cart_updated', $srfw_plugin_common, 'shipping_rates_categories' );
 		$this->loader->add_action( 'woocommerce_before_shipping_calculator', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_review_order_before_payment', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_before_thankyou', $srfw_plugin_common, 'expected_delivery_date_message' );

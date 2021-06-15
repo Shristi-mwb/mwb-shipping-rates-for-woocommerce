@@ -406,14 +406,47 @@ public function fun_hide_free_field()
 		return $srfw_settings_template;
 	}
 
+
+	/**
+	 * shipping-rates-for-woocommerce admin menu page.
+	 *
+	 * @since    1.0.0
+	 * @param array $srfw_settings_general Settings fields.
+	 */
+	public function srfw_admin_general_settings_page( $srfw_settings_general ) {
+
+		$srfw_settings_general = array(
+			array(
+				'title' => __( 'Enable Shipping Rates For Woocommerce', 'shipping-rates-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable plugin to start the functionality.', 'shipping-rates-for-woocommerce' ),
+				'id'    => 'srfw_radio_switch_shipping',
+				'value' => get_option( 'srfw_radio_switch_shipping' ),
+				'class' => 'srfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'shipping-rates-for-woocommerce' ),
+					'no' => __( 'NO', 'shipping-rates-for-woocommerce' ),
+				),
+			),
+
+			array(
+				'type'  => 'button',
+				'id'    => 'srfw_button_save',
+				'button_text' => __( 'Save Changes', 'shipping-rates-for-woocommerce' ),
+				'class' => 'srfw-button-class',
+			),
+		);
+		return $srfw_settings_general;
+	}
+
 	/**
 	* shipping-rates-for-woocommerce save tab settings.
 	*
 	* @since 1.0.0
 	*/
 	public function srfw_admin_save_tab_settings() {
-		global $srfw_mwb_srfw_obj;
-		if ( isset( $_POST['srfw_button_demo'] ) ) {
+		global $srfw_mwb_srfw_obj, $error_notice;
+		if ( isset( $_POST['srfw_button_save'] ) ) {
 			$mwb_srfw_gen_flag = false;
 			$srfw_genaral_settings = apply_filters( 'srfw_general_settings_array', array() );
 			$srfw_button_index = array_search( 'submit', array_column( $srfw_genaral_settings, 'type' ) );
@@ -440,13 +473,10 @@ public function fun_hide_free_field()
 					$srfw_mwb_srfw_obj->mwb_srfw_plug_admin_notice( $mwb_srfw_error_text, 'error' );
 				}else{
 					$mwb_srfw_error_text = esc_html__( 'Settings saved !', 'shipping-rates-for-woocommerce' );
-					$srfw_mwb_srfw_obj->mwb_srfw_plug_admin_notice( $mwb_srfw_error_text, 'success' );
+					$error_notice         = false;
 				}
 			}
 		}
-
-
-		
 	}
 
 	/**
@@ -460,55 +490,4 @@ public function fun_hide_free_field()
 	update_option('expected_days',$days);
 	wp_die();
 	}
-
-	public function mwb_srfw_condition_html(){
-		$condition = sanitize_text_field($_POST['condition']);
-		// echo $condition;
-
-		if($condition){
-			$html='';
-			$html .='<select id="srfw_condition_name" name ="srfw_condition_name"> <option value ="Category">Category </option><option value ="Weight" >Weight </option><option value ="Cart Total" >Cart Total </option><option value ="Price Range" >Price Range </option><option value ="Delivery Method" >Delivery Method </option><option value ="Free Shipping" >Free Shipping </option></select>';
-
-			echo $html;
-		}
-		
-		// $html = '';
-		// if($condition == 'Category'){
-		// 	$args = array( 'type' => 'product', 'taxonomy' => 'product_cat' ); 
-		// 	$categories = get_categories( $args ); 
-
-
-		// 	// print_r( $categories );
-		// 	$html .='<select id= "srfw_condition_name"> <option value ="Category">Category </option><option value ="Weight" >Weight </option><option value ="Cart Total" >Cart Total </option><option value ="Price Range" >Price Range </option><option value ="Delivery Method" >Delivery Method </option><option value ="Free Shipping" >Free Shipping </option>
-			
-			
-			
-		// 	</select><select id ="srfw_select_condition"><option value= "equal">Equal to (=)</option> <option value= "not_equal">Not Equal to(!=)</option> </select>';
-		// 	$html .='<select name=" " id=" ">';
-		// 	foreach ($categories as $cat) { 
-
-		// 		$html .='<option value = "'.$cat->slug .'">'.$cat->name.'</option>';
-		// 	}
-		// 	$html .='</select><input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-				
-		// 	echo $html;
-        
-		// }
-		// elseif($condition == 'Weight'){
-		// 	$html .='<input id ="min_weight" type="number" placeholder="Minimum Weight"><input id ="max_weight" type="number" placeholder="Maximum Weight"> <input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-		// 	echo $html;
-		// }
-		// elseif($condition == 'Cart Total'){
-		// 	$html .='<select id ="srfw_select_condition"><option value= "equal">Equal to (=)</option> <option value= "not_equal">Not Equal to(!=)</option> <option value= "greater_than">Greater than(>)</option> <option value= "less_than">Not Less than(<)</option></select><input id ="cart_price" type = "number" placeholder ="Cart Total"> <input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-		// 	echo $html;
-		// }
-		// elseif($condition == 'Price Range'){
-		// 	$html .='<input id ="min_price" type="number" placeholder="Minimum Price"><input id ="max_price" type="number" placeholder="Maximum price"> <input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-		// 	echo $html;
-		// }
-		
-			
-	}
-
-
 }

@@ -18,7 +18,6 @@
  * @author     makewebbetter <webmaster@makewebbetter.com>
  */
 class Mwb_Shipping_rate_method extends WC_Shipping_Method {
-		
 	/**
 	 * Constructor for your shipping class
 	 *
@@ -28,23 +27,20 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 	public function __construct( $instance_id = 0 ) {
 
 		$this->id                 = 'mwb_shipping_rate'; // Id for your shipping method. Should be uunique.
-		$this->method_title       = __( 'MWB Shipping', 'shipping-rates-for-woocommerce' );  // Title shown in admin.
-		$this->method_description = __( 'MWB Shipping method add diffrent shipping conditions.', 'shipping-rates-for-woocommerce' ); // Description shown in admin.
+		$this->method_title       = __( 'MWB Shipping Rates', 'shipping-rates-for-woocommerce' );  // Title shown in admin.
+		$this->method_description = __( 'MWB Shipping Method With Different Conditioning Rules For Shipping.', 'shipping-rates-for-woocommerce' ); // Description shown in admin.
 		$this->instance_id        = absint( $instance_id );
-		$this->title              = __( 'MWB Shipping', 'shipping-rates-for-woocommerce' );
+		$this->title              = __( 'MWB Shipping Rates', 'shipping-rates-for-woocommerce' );
 		$this->zones_settings     = $this->id . 'zones_settings';
 		$this->rates_settings     = $this->id . 'rates_settings';
 		$this->enabled            = 'yes'; // For alwayes enable
 		$this->supports           = array(
 			'shipping-zones',
-			// 'settings', //use this for separate settings page
 			'instance-settings',
-			 //'instance-settings-modal',
 		);
-		$this->option_key = $this->id . '_mwb_shipping_rates';   //The key for wordpress options
+		$this->option_key = $this->id . '_mwb_shipping_rates';//The key for wordpress options
 		$this->jem_shipping_methods_option = 'mwb_rate_shipping_methods_' . $this->instance_id;
 		$this->init();
-		// $this->title = $this->get_option( 'title' );
 		$this->cost  = $this->get_option( 'cost' );
 	}
 
@@ -52,12 +48,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				// Load the settings API
 				$this->init_form_fields();
 				$this->init_settings();
-				// $this->create_select_arrays();
-				// $this->init_custom_settings();
-				// Save settings in admin if you have any defined
 				add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-				// add_action('init','calculate_shipping');
-
 		}
 	public function init_form_fields() { 
 		$args = array(
@@ -65,12 +56,14 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 		    'taxonomy'     => 'product_cat',
 		);
 		$cats = get_categories($args);
-		// Convert the object into a simple array containing a list of categories.
+		//Convert the object into a simple array containing a list of categories.
 		$categories[] =  '';
 		foreach($cats as $category) {
 			$categories[] = __( $category->cat_name, 'shipping-rates-for-woocommerce' );
 			
 		}
+		array_splice( $categories, 0 , 0, 'No Categories Selected' ); 
+		unset($categories[1]);
 		
 	$this->instance_form_fields =
 	 array(
@@ -79,7 +72,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'type' => 'checkbox',
 			'class'=>'default_check_class',
 			'label' => __('Checkbox to set this shipping method as default selected option ', 'shipping-rates-for-woocommerce'),
-			'default`' => 'no'
+			'default`' => 'yes'
 		 ),
 		 'visibility' => array(
 			'title' => __('visibility', 'shipping-rates-for-woocommerce'),
@@ -109,14 +102,21 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 						 'notax' => __('Not Taxable', 'shipping-rates-for-woocommerce'),
 				 )
 				 ));
-				  if('yes' == 'yes'){
+				 $this->instance_form_fields['expected_delivery_date'] = array(
+					'title' => __( 'Expected Delivery Date', 'shipping-rates-for-woocommerce' ),
+						'type' => 'text',
+						'placeholder'=>'days',
+						'description' => __( 'Expected delivery date for shipping ', 'shipping-rates-for-woocommerce' ),
+		 );
 				 $this->instance_form_fields['free_shipping'] = array(
-		 'title' => __('<h3>Free Shipping</h3>', 'shipping-rates-for-woocommerce'),
+		 'title' => __('Free Shipping', 'shipping-rates-for-woocommerce'),
 		 'type' => 'checkbox',
 		 'label' => __('Enable to apply conditional free shipping', 'shipping-rates-for-woocommerce'),
 		 'default`' => 'no',
 		 'description' => __( 'Free shipping will override the configuration mention below.', 'shipping-rates-for-woocommerce' ),
 				 );
+				 
+				 if('yes' == get_option('free_shipping_field')){
 				 $this->instance_form_fields['pre_discount_price'] = array(
 			'title' => __('Pre Discount Price', 'shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
@@ -135,21 +135,15 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			 )
 			 );
 			 $this->instance_form_fields['shipping_label'] = array(
-				'title' => __( 'Free Shipping label', 'shipping-rates-for-woocommerce' ),
+				'title' => __( 'Free Shipping title', 'shipping-rates-for-woocommerce' ),
 					'type' => 'text',
 					'description' => __( 'Free Shipping label on site', 'shipping-rates-for-woocommerce' ),
-					'default' => __( 'Free Shippping ', 'shipping-rates-for-woocommerce' )
+					'default' => __( 'Mwb Free Shippping Applied', 'shipping-rates-for-woocommerce' )
 			 );
 			 $this->instance_form_fields['free_shipping_amount'] = array(
 				 'title' => __( 'Free Shipping Amount', 'shipping-rates-for-woocommerce' ),
 					 'type' => 'number',
 					 'description' => __( 'Minmun amount for Free Shipping ', 'shipping-rates-for-woocommerce' ),
-			 );
-			 $this->instance_form_fields['expected_delivery_date'] = array(
-						'title' => __( 'Expected Delivery Date', 'shipping-rates-for-woocommerce' ),
-							'type' => 'text',
-							'placeholder'=>'days',
-							'description' => __( 'Expected delivery date for shipping ', 'shipping-rates-for-woocommerce' ),
 			 );
 			}
 			 $this->instance_form_fields['t1'] = array(
@@ -163,7 +157,6 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'title' => __( 'Include General Shipping Charges', 'shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to include general shipping charges applied above into advance charges.',
-			'class' =>'',
 		 );
 		
 		$this->instance_form_fields['categories_wise'] = array(
@@ -174,7 +167,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				'options' => $categories,
 		 );
 		 $this->instance_form_fields['price_categories_wise'] = array(
-			'title' => __( 'Price Categories Wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Shipping charge by categories wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
 				'description' => __( 'Shipping charge for selected categories', 'shipping-rates-for-woocommerce' ),
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
@@ -203,19 +196,19 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'description'  => __( 'Check to apply Volume rules.', 'shipping-rates-for-woocommerce' ),
 		);
 		$this->instance_form_fields['max_weight_wise'] =  array(
-			'title' => __( 'Maximun Weight', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Maximun Weight (Kg)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
 				'description' => __( 'Maximum weight of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
 		);
 		$this->instance_form_fields['min_weight_wise'] = array(
-			'title' => __( 'Minimum Weight', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Minimum Weight (Kg)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
 				'description' => __( 'Minimum weight of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
 		);
 		$this->instance_form_fields ['price_weight_wise'] = array(
-			'title' => __( 'Price Weight Wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Charge Weight Wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
 				'description' => __( 'shipping charge on selected weight of the cart', 'shipping-rates-for-woocommerce' ),
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
@@ -239,13 +232,13 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
 		 );
 		 $this->instance_form_fields['max_volume_wise'] = array(
-			'title' => __( 'Maximun Volume', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Maximun Volume (cm<sup>3</sup>)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
 				'description' => __( 'Maximum vol. of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
 		 );
 		 $this->instance_form_fields['min_volume_wise'] = array(
-			'title' => __( 'Minimum Volume', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Minimum Volume (cm<sup>3</sup>)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
 				'description' => __( 'Minimum vol. of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
 				'default' => __( '', 'shipping-rates-for-woocommerce' )
@@ -308,33 +301,6 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
         } 
             
 		
-		if('yes' === $enable_free_shipping){
-		if ( 'yes' === $pre_discount_price ) {
-			$cart_total = $cart_total_before_disc;
-		} else {
-			$cart_total = $cart_total_after_disc;
-		}
-		if ( $min_amount <= $cart_total && 'minimum_order' === $min_order_cond  && 'yes' === $enable_free_shipping ) {
-				$this->add_rate( array(
-					'id'      => $this->id,
-					'label'   => $free_shippping_lable,
-					'cost'    =>  0,
-					'package' => $package,
-					'taxes'   => false,
-				)
-			);
-		} if ('shipping_coupon' === $min_order_cond  && 'yes' === $enable_free_shipping && 'yes' === $shipping_cond_check ) {
-			  $this->add_rate( array(
-				'id'      => $this->id,
-				'label'   =>$free_shippping_lable,
-				'cost'    => 0,
-				'package' => $package,
-				'taxes'   => false,
-			)
-		);
-		}		
-	}
-
 if('yes' === $enable_all_rules)
 {
 	if($total_cart_weight <= $max_weight && 'yes' === $range && $total_cart_weight >= $min_weight && !empty($min_weight) && !empty($max_weight)){
@@ -373,7 +339,6 @@ if($total_cart_price > $max_price  && !empty($max_price) && 'yes' !== $price_ran
 }
 else{
 	$p1=0;	
-	$amount = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
 }
 
 if($total_cart_price < $min_price && !empty($min_price) && 'yes' !== $price_range){
@@ -407,6 +372,7 @@ else{
 	$volume_2=0;
 }
 
+
 if('yes' === $cart_categories && !empty($categories_wise_price)){
 	$price_for_categories = $categories_wise_price;
 }else{
@@ -428,17 +394,44 @@ if('yes' === $general_charges_enable)
 	)
 );
 }
-	
-else {
-					$this->add_rate( array(
-								'id'      => $this->id,
-								'label'   =>$this->get_option( 'title' ),
-								'cost'    => $this->get_option( 'cost' ),
-								'package' => $package,
-								'taxes'   => false,
-							)
-						);
-		}
+
+if('yes' === $enable_free_shipping){
+	if ( 'yes' === $pre_discount_price ) {
+		$cart_total = $cart_total_before_disc;
+	} else {
+		$cart_total = $cart_total_after_disc;
+	}
+	if ( $min_amount <= $cart_total && 'minimum_order' === $min_order_cond  && 'yes' === $enable_free_shipping ) {
+			$this->add_rate( array(
+				'id'      => $this->id,
+				'label'   => $free_shippping_lable,
+				'cost'    =>  0,
+				'package' => $package,
+				'taxes'   => false,
+			)
+		);
+	} if ('shipping_coupon' === $min_order_cond  && 'yes' === $enable_free_shipping && 'yes' === $shipping_cond_check ) {
+		  $this->add_rate( array(
+			'id'      => $this->id,
+			'label'   =>$free_shippping_lable,
+			'cost'    => 0,
+			'package' => $package,
+			'taxes'   => false,
+		)
+	);
+	}		
+}
+
+// elseif('yes' === $general_charges_enable) {
+// 					$this->add_rate( array(
+// 								'id'      => $this->id,
+// 								'label'   =>$this->get_option( 'title' ),
+// 								'cost'    => $this->get_option( 'cost' ),
+// 								'package' => $package,
+// 								'taxes'   => false,
+// 							)
+// 						);
+// 		}
 	}
 
 }

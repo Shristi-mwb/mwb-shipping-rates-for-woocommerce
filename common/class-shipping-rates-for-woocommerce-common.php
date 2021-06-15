@@ -85,8 +85,10 @@ class Shipping_rates_for_woocommerce_Common {
 			/**
 			 * Custom shipping class for Shipping.
 			 */
+		
 			require_once plugin_dir_path( __FILE__ ) . '/classes/class-mwb-shipping-rate-method.php'; // Including class file.
 			new Mwb_Shipping_rate_method();
+			
 			
 		}
 	}
@@ -99,10 +101,11 @@ class Shipping_rates_for_woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function mwb_shipping_rate_for_woocommerce_add_shipping_method( $methods ) {
-
+       
 		$methods['mwb_shipping_rate'] = 'Mwb_Shipping_rate_method';
 
 		return $methods;
+		
 	}
 	
 	public function srfw_coupon_add_fun() { 
@@ -172,7 +175,6 @@ public function shipping_rates_categories() {
 	$shipping_ar = explode(',', $shipping_prod_cat[0]);
 	// var_dump($shipping_ar);
 
-	
 	$cat_in_cart = false;
 	   
 	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
@@ -182,12 +184,18 @@ public function shipping_rates_categories() {
 		$cat_in_cart = true;
 	}
 	}
+
 }
-if ( $cat_in_cart ) {
+	if ( $cat_in_cart ) {
 	update_option('shipping_cart','yes');
-	} else {
+	} else  {
 	update_option('shipping_cart','no');
 	}
+	if($shipping_prod_cat[0] === 'No Categories Selected'){	
+		update_option('shipping_cart','no');
+	}
+
+
 }
 
 

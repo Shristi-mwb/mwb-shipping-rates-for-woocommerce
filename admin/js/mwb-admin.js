@@ -35,7 +35,11 @@ $(document).ready(function () {
     }
     else
     {
-      // $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().nextAll().hide();
+      $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().hide();
+      $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().next().hide();
+      $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().next().next().hide();
+      $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().next().next().next().hide();
+      
     }
   });
 
@@ -55,7 +59,7 @@ $(document).ready(function () {
         },
         success:function( response ) {
           // alert(response);
-         $( ".woocommerce-save-button" ).trigger( "click" );
+        $( ".woocommerce-save-button" ).trigger( "click" );
         }
     });
      }
@@ -79,8 +83,6 @@ $(document).ready(function () {
   }
   });
 
-
-
   if($('.default_check_class').is(':checked')) {
     $.ajax({
       type:'POST',
@@ -93,12 +95,11 @@ $(document).ready(function () {
       },
     
       success:function( response ) {
-        // alert(response);
+      //alert(response);
       }
      
   });
   }
-
   if($('.default_check_class').not(':checked').length)
   {
      $(document).ready(function () {
@@ -135,7 +136,6 @@ $(document).ready(function () {
       // alert(response);
     }
 });
- //  createMyCookie("visibility_check", 'true', "10");
 }
   if($('.visibility_class').not(':checked').length)
   {

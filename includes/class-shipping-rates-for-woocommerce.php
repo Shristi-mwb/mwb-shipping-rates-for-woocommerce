@@ -201,7 +201,7 @@ class Shipping_rates_for_woocommerce {
 		// All admin actions and filters after License Validation goes here.
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $srfw_plugin_admin, 'srfw_admin_submenu_page', 15 );
 		$this->loader->add_filter( 'srfw_template_settings_array', $srfw_plugin_admin, 'srfw_admin_template_settings_page', 10 );
-		// $this->loader->add_filter( 'srfw_general_settings_array', $srfw_plugin_admin, 'srfw_admin_general_settings_page', 10 );
+		$this->loader->add_filter( 'srfw_general_settings_array', $srfw_plugin_admin, 'srfw_admin_general_settings_page', 10 );
 
 		// Saving tab settings.
 		$this->loader->add_action( 'admin_init', $srfw_plugin_admin, 'srfw_admin_save_tab_settings' );
@@ -255,6 +255,7 @@ class Shipping_rates_for_woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_common, 'srfw_common_enqueue_scripts' );
 		
 		// Creating MWb shipping method.
+		if('on' === get_option( 'srfw_radio_switch_shipping	')){
 		$this->loader->add_action( 'woocommerce_shipping_init', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
 		$this->loader->add_action( 'woocommerce_applied_coupon', $srfw_plugin_common, 'srfw_coupon_add_fun' );
@@ -265,9 +266,7 @@ class Shipping_rates_for_woocommerce {
 		$this->loader->add_action( 'woocommerce_review_order_before_payment', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_before_thankyou', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_filter( 'woocommerce_get_item_data',$srfw_plugin_common ,'displaying_cart_items_weight', 10, 2 );
-		
-		
-
+		}
 		// $this->loader->add_action( 'wp_ajax_shipping_coupon_action', $srfw_plugin_common, 'srfw_shipping_coupon' ,10);woocommerce_after_cart_item_name
 		// $this->loader->add_action( 'wp_ajax_nopriv_shipping_coupon_action', $srfw_plugin_common, 'srfw_shipping_coupon',10 );
 	}
@@ -287,7 +286,6 @@ class Shipping_rates_for_woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_public, 'srfw_public_enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_before_cart', $srfw_plugin_public ,'auto_select_free_shipping_by_default' );
 		$this->loader->add_filter( 'woocommerce_package_rates',$srfw_plugin_public ,'hide_shipping_for_unlogged_user', 10, 2 );
-
 	}
 
 	/**
@@ -300,9 +298,7 @@ class Shipping_rates_for_woocommerce {
 	private function shipping_rates_for_woocommerce_api_hooks() {
 
 		$srfw_plugin_api = new Shipping_rates_for_woocommerce_Rest_Api( $this->srfw_get_plugin_name(), $this->srfw_get_version() );
-
 		$this->loader->add_action( 'rest_api_init', $srfw_plugin_api, 'mwb_srfw_add_endpoint' );
-
 	}
 
 
@@ -545,7 +541,11 @@ class Shipping_rates_for_woocommerce {
 		$srfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'shipping-rates-for-woocommerce' );
 
 		// Get outgoing IP address.
-		$srfw_system_status['outgoing_ip'] = function_exists( 'file_get_contents' ) ? file_get_contents( 'http://ipecho.net/plain' ) : __( 'N/A (file_get_contents function does not exist)', 'shipping-rates-for-woocommerce' );
+		   global $wp_filesystem;
+		   WP_Filesystem();
+		   $file_data = $wp_filesystem->get_contents( 'http://ipecho.net/plain' );
+   
+		   $srfw_system_status['outgoing_ip'] = ! empty( $file_data ) ? $file_data : __( 'N/A (File data not set.)', 'shipping-rates-for-woocommerce' );
 
 		$srfw_system_data['php'] = $srfw_system_status;
 		$srfw_system_data['wp'] = $srfw_wordpress_status;

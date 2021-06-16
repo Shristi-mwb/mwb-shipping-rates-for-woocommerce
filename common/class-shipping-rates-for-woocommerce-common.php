@@ -25,7 +25,6 @@ class Shipping_rates_for_woocommerce_Common {
 	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
 	private $plugin_name;
@@ -34,7 +33,6 @@ class Shipping_rates_for_woocommerce_Common {
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
@@ -101,65 +99,60 @@ class Shipping_rates_for_woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function mwb_shipping_rate_for_woocommerce_add_shipping_method( $methods ) {
-       
 		$methods['mwb_shipping_rate'] = 'Mwb_Shipping_rate_method';
 
 		return $methods;
 		
 	}
 	
+	/**
+	 * Adding coupon shipping method.
+	 *
+	 * @since 1.0.0
+	 */
 	public function srfw_coupon_add_fun() { 
 	$applied_coupons = WC()->cart->get_applied_coupons();
 
-	foreach( $applied_coupons as $coupon_code ){
+		foreach ( $applied_coupons as $coupon_code ) {
 
 	$coupon = new WC_Coupon($coupon_code);
 
-	if($coupon->get_free_shipping()){
-	//   var_dump($coupon);
-	 update_option('shipping_coupon','yes');
-	//  var_dump(WC()->cart->get_applied_coupons());
-	//  die();
+			if ($coupon->get_free_shipping()) {
+	 update_option('shipping_coupon', 'yes');
+			}
+		}
 	}
-}
-}
-public function srfw_coupon_remove_fun() {
-		update_option('shipping_coupon','no');
-}
 
-public function  expected_delivery_date_message()
-{
+	 /**
+	 * Removing coupon shipping method.
+	 *
+	 * @since 1.0.0
+	 */
+	public function srfw_coupon_remove_fun() {
+		update_option('shipping_coupon', 'no');
+	}
+
+	/**
+	 * Expected delivery  shipping method.
+	 *
+	 * @since 1.0.0
+	 */
+	public function  expected_delivery_date_message() {
 	global $woocommerce , $product;
-	$days_checker=get_option('expected_days');
-	if(!empty($days_checker)){
-	$expec_date = date('l jS \of F ', strtotime($Date. ' + '. $days_checker .'days'));
-	echo '<h4><i>'.'Expected to be delivered by '. $expec_date.'<i></h4>';
+	$days_checker = get_option('expected_days');
+		if (!empty($days_checker)) {
+	$expec_date = date('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
+	esc_html__( '<div id=" mwb_delivery_message">Expected to be delivered by ' . $expec_date . '</div>');
+		}
+
 	}
 
-// 	$shipping_prod_cat=get_option('product_categories');
-// 	$shipping_ar = explode(',', $shipping_prod_cat[0]);
-// 	// var_dump($shipping_ar);
-
-	
-// 	$cat_in_cart = false;
-	   
-// 	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
- 
-// 	foreach($shipping_ar as $x=>$val){
-// 	if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
-// 		$cat_in_cart = true;
-// 	}
-// 	}
-// }
-	
-// 	if ( $cat_in_cart ) {
-// 	update_option('shipping_cart','yes');
-// 	} else {
-// 	update_option('shipping_cart','no');
-// 	}
-}
-
-public function displaying_cart_items_weight( $item_data, $cart_item ) {
+	/**
+	 * Weighting display delivery  shipping method.
+	 *
+	 * @since 1.0.0
+	 */
+	public function displaying_cart_items_weight( $item_data, $cart_item ) {
 	$item_weight = $cart_item['data']->get_weight();
 	$item_data[] = array(
 		'key'       => __('Weight', 'woocommerce'),
@@ -168,35 +161,36 @@ public function displaying_cart_items_weight( $item_data, $cart_item ) {
 	);
 
 	return $item_data;
-}
+	}
 
-public function shipping_rates_categories() {
-	$shipping_prod_cat=get_option('product_categories');
-	$shipping_ar = explode(',', $shipping_prod_cat[0]);
-	// var_dump($shipping_ar);
+	/**
+	 * Selecting categories of the product  shipping method.
+	 *
+	 * @since 1.0.0
+	 */
+	public function shipping_rates_categories() {
+	$shipping_prod_cat = get_option('product_categories');
+	$shipping_ar       = explode(',', $shipping_prod_cat[0]);
 
 	$cat_in_cart = false;
 	   
-	foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
  
-	foreach($shipping_ar as $x=>$val){
-	if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
+			foreach ($shipping_ar as $x=>$val){
+		if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
 		$cat_in_cart = true;
-	}
-	}
+				}
+			}
 
-}
-	if ( $cat_in_cart ) {
+		}
+		if ( $cat_in_cart ) {
 	update_option('shipping_cart','yes');
-	} else  {
+		} else {
 	update_option('shipping_cart','no');
+		}
+		if ( 'No Categories Selected' === $shipping_prod_cat[0] ) {	
+		update_option('shipping_cart', 'no');
+		}
 	}
-	if($shipping_prod_cat[0] === 'No Categories Selected'){	
-		update_option('shipping_cart','no');
-	}
-
-
-}
-
 
 }

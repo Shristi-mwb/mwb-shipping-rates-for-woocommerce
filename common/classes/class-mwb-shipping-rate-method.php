@@ -53,12 +53,12 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 	public function init_form_fields() { 
 		$args = array(
 			'hide_empty'      => false,
-		    'taxonomy'     => 'product_cat',
+			'taxonomy'     => 'product_cat',
 		);
 		$cats = get_categories($args);
 		//Convert the object into a simple array containing a list of categories.
 		$categories[] =  '';
-		foreach($cats as $category) {
+		foreach ($cats as $category) {
 			$categories[] = __( $category->cat_name, 'shipping-rates-for-woocommerce' );
 			
 		}
@@ -89,8 +89,9 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				),
 	 'cost' => array(
 			'title' => __( 'Shipping Cost', 'shipping-rates-for-woocommerce' ),
-				'type' => 'number',
+				'type' => 'text',
 				'description' => __( 'general shipping cost', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 				),
 
 		 'tax_status' => array(
@@ -107,6 +108,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 						'type' => 'text',
 						'placeholder'=>'days',
 						'description' => __( 'Expected delivery date for shipping ', 'shipping-rates-for-woocommerce' ),
+						'class' =>'mwb_stop_text',
 		 );
 				 $this->instance_form_fields['free_shipping'] = array(
 		 'title' => __('Free Shipping', 'shipping-rates-for-woocommerce'),
@@ -116,7 +118,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 		 'description' => __( 'Free shipping will override the configuration mention below.', 'shipping-rates-for-woocommerce' ),
 				 );
 				 
-				 if('yes' == get_option('free_shipping_field')){
+				 if('yes' == get_option('free_shipping_field')) {
 				 $this->instance_form_fields['pre_discount_price'] = array(
 			'title' => __('Pre Discount Price', 'shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
@@ -129,7 +131,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			 'class' =>'custom_free_shipping_class',
 			 'default' => 'minimum_order',
 			 'options' => array(
-				   ''           => __( '--Select One--','shipping-rates-for-woocommerce' ),
+				   ''           => __( '--Select One--', 'shipping-rates-for-woocommerce' ),
 					 'minimum_order' => __('Minimum Order', 'shipping-rates-for-woocommerce'),
 					 'shipping_coupon' => __('Shipping Coupon', 'shipping-rates-for-woocommerce'),
 			 )
@@ -138,21 +140,20 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				'title' => __( 'Free Shipping title', 'shipping-rates-for-woocommerce' ),
 					'type' => 'text',
 					'description' => __( 'Free Shipping label on site', 'shipping-rates-for-woocommerce' ),
-					'default' => __( 'Mwb Free Shippping Applied', 'shipping-rates-for-woocommerce' )
+					'default' => __( 'Mwb Free Shippping Applied', 'shipping-rates-for-woocommerce' ),
 			 );
 			 $this->instance_form_fields['free_shipping_amount'] = array(
 				 'title' => __( 'Free Shipping Amount', 'shipping-rates-for-woocommerce' ),
 					 'type' => 'number',
 					 'description' => __( 'Minmun amount for Free Shipping ', 'shipping-rates-for-woocommerce' ),
+					 'class' =>'mwb_stop_text',
 			 );
 			}
 			 $this->instance_form_fields['t1'] = array(
-			'title' => __( '<h3>Apply Advanced Shipping rules</h3>', 'shipping-rates-for-woocommerce' ),
+			'title' => __( '<h4>Apply Advanced Shipping rules</h4>', 'shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Apply Advanced Shipping rules',
-			'class' =>'',
-		 );
-		 if('yes' === get_option('advance_shipping_field')){
+		 );		if ('yes' === get_option('advance_shipping_field') ) {
 		 $this->instance_form_fields[ 'general_shipping']= array(
 			'title' => __( 'Include General Shipping Charges', 'shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
@@ -163,33 +164,30 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'title' => __( 'Categories Wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'multiselect',
 				'description' => __( 'Categories to apply shipping charge ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
 				'options' => $categories,
 		 );
 		 $this->instance_form_fields['price_categories_wise'] = array(
 			'title' => __( 'Shipping charge by categories wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Shipping charge for selected categories', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Shipping amount charge for selected categories.', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		 );
-
 		$this->instance_form_fields['range'] = array(
-			'title' => __( '<h4>Apply  Weight Range Rule</h4>', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Apply  Weight Range Rule', 'shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to enable weight range rule',
 			'class' =>'',
 			'description'  => __( 'Check to apply weight range rule.', 'shipping-rates-for-woocommerce' ),
 		);
-
 		$this->instance_form_fields['range_price'] = array(
-			'title' => __( '<h4>Apply Price Range Rule</h4>', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Apply Price Range Rule', 'shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to enable price range rule',
 			'class' =>'',
-			'description'  => __( 'Check to apply Price rules.', 'shipping-rates-for-woocommerce' ),
+			'description'  => __( 'Check to apply Price range rules.', 'shipping-rates-for-woocommerce' ),
 		);
 		$this->instance_form_fields['range_volume'] =array(
-			'title' => __( '<h4>Appy Volume Range Rule</h4>', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Appy Volume Range Rule', 'shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to enable volume range rule',
 			'class' =>'',
@@ -198,64 +196,72 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 		$this->instance_form_fields['max_weight_wise'] =  array(
 			'title' => __( 'Maximun Weight (Kg)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Maximum weight of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Maximum weight of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		);
 		$this->instance_form_fields['min_weight_wise'] = array(
 			'title' => __( 'Minimum Weight (Kg)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum weight of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Minimum weight of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		);
 		$this->instance_form_fields ['price_weight_wise'] = array(
 			'title' => __( 'Charge Weight Wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'shipping charge on selected weight of the cart', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'shipping charge on selected weight of the cart. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		);
 		$this->instance_form_fields['max_price'] = array(
 			'title' => __( 'Maximum Price', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum price of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		);
 		 $this->instance_form_fields['min_price'] =  array(
 			'title' => __( 'Minimum Price', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum price of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		 );
 		 $this->instance_form_fields['price_wise'] =  array(
 			'title' => __( 'Charge Price Wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Charge the shipping cost on selected price of cart', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Charge the shipping cost on selected price of cart. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		 );
 		 $this->instance_form_fields['max_volume_wise'] = array(
 			'title' => __( 'Maximun Volume (cm<sup>3</sup>)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Maximum vol. of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Maximum vol. of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		 );
 		 $this->instance_form_fields['min_volume_wise'] = array(
 			'title' => __( 'Minimum Volume (cm<sup>3</sup>)', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum vol. of the cart on which shipping charge applied ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
+				'description' => __( 'Minimum vol. of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
 		 );
 		 $this->instance_form_fields['volume_range_wise'] = array(
 			'title' => __( 'Charge Volume Wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'charge the shipping cost  on selected volume of the cart', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' )
-		 );
-		 }
-}
+				'description' => __( 'charge the shipping cost  on selected volume of the cart. ', 'shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'class' =>'mwb_stop_text',
+		 );	}
+	}
 
 	public function calculate_shipping( $package = array()) {
 		global $woocommerce;
 				// As we are using instances for the cost and the title we need to take those values drom the instance_settings.
-			 		$total_cart_weight    =  WC()->cart->get_cart_contents_weight();
+					$total_cart_weight      =  WC()->cart->get_cart_contents_weight();
 					$total_cart_price	  = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
 					$general_charges_enable   = $this->get_option('general_shipping');
 					$intance_settings     =  $this->instance_settings;
@@ -281,75 +287,63 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 					$cart_total_before_disc = $package['cart_subtotal'];
 					$shipping_cond_check    = get_option( 'shipping_coupon');
 					$cart_categories        = get_option('shipping_cart');
-  					$range = $this->get_option( 'range' );
+						$range = $this->get_option( 'range' );
 					$price_range = $this->get_option('range_price');
 					$vol_range = $this->get_option('range_volume');
 					
-	$items = $woocommerce->cart->get_cart();
-    $cart_prods_m3 = array();
-        foreach($items as $item => $values) { 
-            $_product =  wc_get_product( $values['data']->get_id());
-			$qty     = $values['quantity'];
-            $prod_m3 = $_product->get_length() * 
-                       $_product->get_width() * 
-                       $_product->get_height()*
+	$items         = $woocommerce->cart->get_cart();
+	$cart_prods_m3 = array();
+		foreach ($items as $item => $values) { 
+			$_product =  wc_get_product( $values['data']->get_id());
+			$qty      = $values[ 'quantity' ];
+			$prod_m3  = $_product->get_length() * 
+					   $_product->get_width() * 
+					   $_product->get_height()*
 					   $qty;
-        
-            array_push($cart_prods_m3, $prod_m3);
-			$total_cart_vol  = array_sum($cart_prods_m3);
-			
-        } 
-            
 		
-if('yes' === $enable_all_rules)
-{
-	if($total_cart_weight <= $max_weight && 'yes' === $range && $total_cart_weight >= $min_weight && !empty($min_weight) && !empty($max_weight)){
+			array_push($cart_prods_m3, $prod_m3);
+			$total_cart_vol  = array_sum($cart_prods_m3);
+		} 
+		if ('yes' === $enable_all_rules) {
+			if ($total_cart_weight <= $max_weight && 'yes' === $range && $total_cart_weight >= $min_weight && !empty($min_weight) && !empty($max_weight)){
 
-				$w3=$weight_shipping_charge;
-		} else{
-			$w3=0;
-		}
-	if($total_cart_weight > $max_weight  && !empty($max_weight) && 'yes' !== $range){
+				$w3 =$weight_shipping_charge;
+			} else {
+			$w3 =0;
+			}
+			if ($total_cart_weight > $max_weight  && !empty($max_weight) && 'yes' !== $range) {
 		$w1 = $weight_shipping_charge;
-}
-else{
-	$w1=0;
-}
-if($total_cart_weight < $min_weight  && !empty($min_weight) && 'yes' !== $range){
+			} else {
+	$w1 =0;
+			}
+			if ($total_cart_weight < $min_weight  && !empty($min_weight) && 'yes' !== $range) {
 		$w2 = $weight_shipping_charge;
-}  
-else{
-	$w2=0;
-}
-
+			} else {
+	$w2 =0;
+			}
 ///////////////////////////// Price Range //////////////////////////////////
-if($total_cart_price <= $max_price && 'yes' === $price_range && $total_cart_price >= $min_price && !empty($max_price) && !empty($min_price)){
+			if ($total_cart_price <= $max_price && 'yes' === $price_range && $total_cart_price >= $min_price && !empty($max_price) && !empty($min_price)){
 
 	$p3 = $price_wise_charge;
 	
-	}
+			} else {
+		$p3 =0;
+			}
 
-	else{
-		$p3=0;
-	}
+			if ($total_cart_price > $max_price  && !empty($max_price) && 'yes' !== $price_range) {
 
-if($total_cart_price > $max_price  && !empty($max_price) && 'yes' !== $price_range){
+	   $p1 = $price_wise_charge;
+			} else {
+	$p1 =0;	
+			}
 
-       $p1 = $price_wise_charge;
-}
-else{
-	$p1=0;	
-}
-
-if($total_cart_price < $min_price && !empty($min_price) && 'yes' !== $price_range){
+			if ($total_cart_price < $min_price && !empty($min_price) && 'yes' !== $price_range) {
 
  $p2 = $price_wise_charge;
-}
-else{
-	$p2=0;
-}
+			} else {
+	$p2 =0;
+			}
 /////////////////////////////////////////VOLUME/////////////
-
 if($total_cart_vol <= $max_vol && 'yes' === $vol_range && $total_cart_vol >= $min_vol && !empty($max_vol) && !empty($min_vol)){
 	$volume_3 = $vol_wise_charge;
 	} else{
@@ -358,7 +352,7 @@ if($total_cart_vol <= $max_vol && 'yes' === $vol_range && $total_cart_vol >= $mi
 
 if($total_cart_vol > $max_vol  && !empty($max_vol) && 'yes' !== $vol_range){
 
-       $volume_1 = $vol_wise_charge;
+	   $volume_1 = $vol_wise_charge;
 
 }else{
 	$volume_1=0;
@@ -421,7 +415,6 @@ if('yes' === $enable_free_shipping){
 	);
 	}		
 }
-
 // elseif('yes' === $general_charges_enable) {
 // 					$this->add_rate( array(
 // 								'id'      => $this->id,

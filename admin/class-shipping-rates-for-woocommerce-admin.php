@@ -49,7 +49,7 @@ class Shipping_rates_for_woocommerce_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -61,7 +61,7 @@ class Shipping_rates_for_woocommerce_Admin {
 	 */
 	public function srfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' === $screen->id ) {
 
 			wp_enqueue_style( 'mwb-srfw-select2-css', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/shipping-rates-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -89,7 +89,7 @@ class Shipping_rates_for_woocommerce_Admin {
 
 		
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' === $screen->id ) {
 			wp_enqueue_script( 'mwb-srfw-select2', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/shipping-rates-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
 			wp_enqueue_script( 'mwb-srfw-metarial-js', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -105,14 +105,13 @@ class Shipping_rates_for_woocommerce_Admin {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'reloadurl' => admin_url( 'admin.php?page=shipping_rates_for_woocommerce_menu' ),
 					'srfw_gen_tab_enable' => get_option( 'srfw_radio_switch_demo' ),
-					'license_nonce' => wp_create_nonce( 'my-nonce' ),
 				)
 			);
 
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 		}
 		
-		if ( isset( $screen->id ) && 'woocommerce_page_wc-settings' == $screen->id ) {
+		if ( isset( $screen->id ) && 'woocommerce_page_wc-settings' === $screen->id ) {
 			wp_register_script( $this->plugin_name . 'srfw_admin-js', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.js', array( 'jquery' ), $this->version, false );
 
 			wp_localize_script(
@@ -121,7 +120,7 @@ class Shipping_rates_for_woocommerce_Admin {
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'reloadurl' => admin_url( 'admin.php?page=woocommerce_page_wc-settings' ),
-					// 'srfw_gen_tab_enable' => get_option( 'srfw_radio_switch_demo' ),
+					'shipping_nonce' => wp_create_nonce( 'mwb-shipping-nonce' ),
 				)
 			);
 
@@ -193,7 +192,7 @@ class Shipping_rates_for_woocommerce_Admin {
 	}
 
 	/**
-	 * shipping-rates-for-woocommerce admin menu page.
+	 * Shipping-rates-for-woocommerce admin menu page.
 	 *
 	 * @since    1.0.0
 	 */
@@ -201,93 +200,114 @@ class Shipping_rates_for_woocommerce_Admin {
 
 		include_once SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/shipping-rates-for-woocommerce-admin-dashboard.php';
 	}
-     
+ 
 	/**
-	 * shipping-rates-for-woocommerce Checked Default.
+	 * Shipping-rates-for-woocommerce Checked Default.
 	 *
 	 * @since    1.0.0
 	 */
 	public function srfw_shipping_coupon() {
-		// check_ajax_referer( 'my-nonce', 'srfw_ajax_nonce' );
-		update_option('default_shipping_check','true');
+		check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+		update_option('default_shipping_check', 'true');
 		wp_die();
 		
 	}
 
 	/**
-	 * shipping-rates-for-woocommerce UnChecked Default
+	 * Shipping-rates-for-woocommerce UnChecked Default 
 	 *
 	 * @since    1.0.0
-	 */
+	 */ 
 	public function srfw_default_shipping_unchecked() {
-		update_option('default_shipping_check',$_COOKIE["default_check"]);
+		$mwb_data = isset(  $_COOKIE['default_check'] ) ? sanitize_key(  $_COOKIE['default_check'] ) : '';
+		update_option('default_shipping_check', $mwb_data );
 	}
 
 	/**
-	 * shipping-rates-for-woocommerce Checked visibility
+	 * Shipping-rates-for-woocommerce Checked visibility
 	 *
 	 * @since    1.0.0
 	 */
-	public function srfw_visibility_shipping_checked()  {
-	// check_ajax_referer( 'my-nonce', 'srfw_ajax_nonce' );
-	update_option('visibility_check','true');
+	public function srfw_visibility_shipping_checked() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+	update_option('visibility_check', 'true');
 	wp_die();
-}
+	}
 
 	/**
-	 * shipping-rates-for-woocommerce unChecked visibility
+	 * Shipping-rates-for-woocommerce unChecked visibility
 	 *
 	 * @since    1.0.0
 	 */
-public function srfw_visibility_shipping_unchecked() 
-{
-	update_option('visibility_check',$_COOKIE["visibility_check"]);
-}
+	public function srfw_visibility_shipping_unchecked() {
+	update_option('visibility_check', $_COOKIE['visibility_check']);
+	}
 
-public function product_shipping_categories() {
-	$me =array();
-	$cat = !empty( $_POST['cat'] ) ? sanitize_text_field( wp_unslash ( $_POST['cat'] ) ) : '';
-	$me[]=$cat;
+	/**
+	 * Shipping-rates-for-woocommerce categories visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function product_shipping_categories() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+		$me =array();
+	$cat    = !empty( $_POST['cat'] ) ? sanitize_text_field( wp_unslash ( $_POST['cat'] ) ) : '';
+	$me[]   =$cat;
 	update_option( 'product_categories', $me);
-	echo 'save ho gya';
 	wp_die();
-}
-
-
-public function fun_show_advance_field()
-{
-	$show_or_hide = !empty( $_POST['show'] ) ? sanitize_text_field( wp_unslash ( $_POST['show'] ) ) : '';
-	update_option( 'advance_shipping_field',$show_or_hide );
-	echo 'hello';
-	wp_die();
-}
-
-public function fun_hide_advance_field()
-{
-	$hide_or_show = !empty( $_POST['hide'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide'] ) ) : '';
-	update_option( 'advance_shipping_field',$hide_or_show );
-	echo 'yeah';
-	wp_die();
-}
-
-public function fun_show_free_field()
-{
-	$show_or_hide_free_shipping = !empty( $_POST['show_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['show_free_shipping'] ) ) : '';
-	update_option( 'free_shipping_field',$show_or_hide_free_shipping );
-	echo 'hello free';
-	wp_die();
-}
-
-public function fun_hide_free_field()
-{
-	$hide_or_show_free_shipping = !empty( $_POST['hide_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide_free_shipping'] ) ) : '';
-	update_option( 'free_shipping_field',$hide_or_show_free_shipping);
-	echo 'yeah free';
-	wp_die();
-}
+	}
 
 	/**
-	 * shipping-rates-for-woocommerce admin menu page.
+	 * Shipping-rates-for-woocommerce categories visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_show_advance_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+	$show_or_hide = !empty( $_POST['show'] ) ? sanitize_text_field( wp_unslash ( $_POST['show'] ) ) : '';
+	update_option( 'advance_shipping_field', $show_or_hide );
+	wp_die();
+	}
+
+	/**
+	 * Shipping-rates-for-woocommerce setting visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_hide_advance_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+	$hide_or_show = !empty( $_POST['hide'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide'] ) ) : '';
+	update_option( 'advance_shipping_field', $hide_or_show );
+	wp_die();
+	}
+
+
+	/**
+	 * Shipping-rates-for-woocommerce setting visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_show_free_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+	$show_or_hide_free_shipping = !empty( $_POST['show_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['show_free_shipping'] ) ) : '';
+	update_option( 'free_shipping_field', $show_or_hide_free_shipping );
+	wp_die();
+	}
+
+
+	/**
+	 * Shipping-rates-for-woocommerce setting visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_hide_free_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+	$hide_or_show_free_shipping = !empty( $_POST['hide_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide_free_shipping'] ) ) : '';
+	update_option( 'free_shipping_field', $hide_or_show_free_shipping);
+	wp_die();}
+
+	/**
+	 * Shipping-rates-for-woocommerce admin menu page.
 	 *
 	 * @since    1.0.0
 	 * @param array $srfw_settings_template Settings fields.
@@ -408,7 +428,7 @@ public function fun_hide_free_field()
 
 
 	/**
-	 * shipping-rates-for-woocommerce admin menu page.
+	 * Shipping-rates-for-woocommerce admin menu page.
 	 *
 	 * @since    1.0.0
 	 * @param array $srfw_settings_general Settings fields.
@@ -440,54 +460,59 @@ public function fun_hide_free_field()
 	}
 
 	/**
-	* shipping-rates-for-woocommerce save tab settings.
+	* Shipping-rates-for-woocommerce save tab settings.
 	*
 	* @since 1.0.0
 	*/
 	public function srfw_admin_save_tab_settings() {
 		global $srfw_mwb_srfw_obj, $error_notice;
-		if ( isset( $_POST['srfw_button_save'] ) ) {
-			$mwb_srfw_gen_flag = false;
+		if ( isset( $_POST['general_nonce'] ) ) {
+			$general_form_nonce = sanitize_text_field( wp_unslash( $_POST['general_nonce'] ) );
+			if ( wp_verify_nonce( $general_form_nonce, 'general-form-nonce' ) ) {
+				if ( isset( $_POST['srfw_button_save'] ) ) {
+			$mwb_srfw_gen_flag     = false;
 			$srfw_genaral_settings = apply_filters( 'srfw_general_settings_array', array() );
-			$srfw_button_index = array_search( 'submit', array_column( $srfw_genaral_settings, 'type' ) );
-			if ( isset( $srfw_button_index ) && ( null == $srfw_button_index || '' == $srfw_button_index ) ) {
-				$srfw_button_index = array_search( 'button', array_column( $srfw_genaral_settings, 'type' ) );
-			}
-			if ( isset( $srfw_button_index ) && '' !== $srfw_button_index ) {
-				unset( $srfw_genaral_settings[$srfw_button_index] );
-				if ( is_array( $srfw_genaral_settings ) && ! empty( $srfw_genaral_settings ) ) {
-					foreach ( $srfw_genaral_settings as $srfw_genaral_setting ) {
-						if ( isset( $srfw_genaral_setting['id'] ) && '' !== $srfw_genaral_setting['id'] ) {
-							if ( isset( $_POST[$srfw_genaral_setting['id']] ) ) {
-								update_option( $srfw_genaral_setting['id'], $_POST[$srfw_genaral_setting['id']] );
-							} else {
-								update_option( $srfw_genaral_setting['id'], '' );
-							}
-						}else{
-							$mwb_srfw_gen_flag = true;
-						}
+			$srfw_button_index     = array_search( 'submit', array_column( $srfw_genaral_settings, 'type' ) , true );
+					if ( isset( $srfw_button_index )) {
+				$srfw_button_index = array_search( 'button', array_column( $srfw_genaral_settings, 'type' ) , true );
 					}
-				}
-				if ( $mwb_srfw_gen_flag ) {
+					if ( isset( $srfw_button_index ) && '' !== $srfw_button_index ) {
+				unset( $srfw_genaral_settings[$srfw_button_index] );
+						if ( is_array( $srfw_genaral_settings ) && ! empty( $srfw_genaral_settings ) ) {
+							foreach ( $srfw_genaral_settings as $srfw_genaral_setting ) {
+								if ( isset( $srfw_genaral_setting['id'] ) && '' !== $srfw_genaral_setting['id'] ) {
+									if ( isset( $_POST[$srfw_genaral_setting['id']] ) ) {
+								update_option( $srfw_genaral_setting['id'], sanitize_text_field( wp_unslash($_POST[$srfw_genaral_setting['id']] ) ) );
+									} else {
+								update_option( $srfw_genaral_setting['id'], '' );
+									}
+								} else {
+							$mwb_srfw_gen_flag = true;
+								}
+							}
+						}
+						if ( $mwb_srfw_gen_flag ) {
 					$mwb_srfw_error_text = esc_html__( 'Id of some field is missing', 'shipping-rates-for-woocommerce' );
 					$srfw_mwb_srfw_obj->mwb_srfw_plug_admin_notice( $mwb_srfw_error_text, 'error' );
-				}else{
+						} else {
 					$mwb_srfw_error_text = esc_html__( 'Settings saved !', 'shipping-rates-for-woocommerce' );
-					$error_notice         = false;
+					$error_notice        = false;
+								}
+					}
 				}
 			}
 		}
 	}
 
 	/**
-	* shipping-rates-for-woocommerce custom  shipping save  settings.
+	* Shipping-rates-for-woocommerce custom  shipping save  settings.
 	*
 	* @since 1.0.0
 	*/
-	public function expected_date_delivery_fun()
-	{
+	public function expected_date_delivery_fun() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
 	$days = !empty( $_POST['expected_days'] ) ? sanitize_text_field( wp_unslash ( $_POST['expected_days'] ) ) : '';
-	update_option('expected_days',$days);
+	update_option('expected_days', $days);
 	wp_die();
 	}
 }

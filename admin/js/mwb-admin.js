@@ -39,7 +39,6 @@ $(document).ready(function () {
       $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().next().hide();
       $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().next().next().hide();
       $('#woocommerce_mwb_shipping_rate_free_shipping').parent().parent().parent().parent().next().next().next().next().hide();
-      
     }
   });
 
@@ -220,16 +219,13 @@ $('#woocommerce_mwb_shipping_rate_t1').on('change',function()
       }
   });
   }
-
 });
-
 
 $('#woocommerce_mwb_shipping_rate_categories_wise').on('click',function()
 {
   var select_button_text = $('#woocommerce_mwb_shipping_rate_categories_wise option:selected')
                 .toArray().map(item => item.text).join();
-
-console.log(select_button_text);
+            
 $.ajax({
   type:'POST',
   dataType: 'text',
@@ -254,5 +250,9 @@ $(".mwb_stop_text").on('keypress',function (e) {
      return false;
   }
 });
+
+////////////////////////////////////////////Multi-select////////////////////////////
+/////////////////////////////////////Multi-select End//////////////////////////////
+
 	 });
 	})( jQuery );   

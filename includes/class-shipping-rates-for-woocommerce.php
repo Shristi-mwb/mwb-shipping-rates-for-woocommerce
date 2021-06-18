@@ -282,7 +282,7 @@ class Shipping_rates_for_woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_public, 'srfw_public_enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_public, 'srfw_public_enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_before_cart', $srfw_plugin_public , 'auto_select_free_shipping_by_default' );
+		$this->loader->add_action( 'init', $srfw_plugin_public , 'auto_select_free_shipping_by_default' );
 		$this->loader->add_filter( 'woocommerce_package_rates', $srfw_plugin_public , 'hide_shipping_for_unlogged_user', 10, 2 );
 	}
 
@@ -499,7 +499,7 @@ class Shipping_rates_for_woocommerce {
 		$srfw_system_status['php_memory_limit'] = function_exists( 'ini_get' ) ? (int) ini_get( 'memory_limit' ) : __( 'N/A (ini_get function does not exist)', 'shipping-rates-for-woocommerce' );
 
 		// Get the PHP error log path.
-		$srfw_system_status['php_error_log_path'] = ! ini_get( 'error_log' ) ? __( 'N/A', 'shipping-rates-for-woocommerce' ) : ini_get( 'error_log' );
+		$srfw_system_status['php_error_log_patexpected_daysh'] = ! ini_get( 'error_log' ) ? __( 'N/A', 'shipping-rates-for-woocommerce' ) : ini_get( 'error_log' );
 
 		// Get PHP max upload size.
 		$srfw_system_status['php_max_upload'] = function_exists( 'ini_get' ) ? (int) ini_get( 'upload_max_filesize' ) : __( 'N/A (ini_get function does not exist)', 'shipping-rates-for-woocommerce' );

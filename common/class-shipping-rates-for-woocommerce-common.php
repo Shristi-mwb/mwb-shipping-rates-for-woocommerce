@@ -142,7 +142,7 @@ class Shipping_rates_for_woocommerce_Common {
 	$days_checker = get_option('expected_days');
 		if (!empty($days_checker)) {
 	$expec_date = date('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
-	esc_html__( '<div id=" mwb_delivery_message">Expected to be delivered by ' . $expec_date . '</div>');
+	_e( '<div id=" mwb_delivery_message">Expected to be delivered by ' . $expec_date . '</div>', 'shipping-rates-for-woocommerce');
 		}
 
 	}

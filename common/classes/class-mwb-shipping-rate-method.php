@@ -189,7 +189,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 		 $this->instance_form_fields['price_categories_wise'] = array(
 			'title' => __( 'Shipping charge by categories wise', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Shipping amount charge for selected categories.', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Shipping amount charge for selected categories per quantity wise.', 'shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );
@@ -423,7 +423,8 @@ if('yes' === $cart_categories && !empty($categories_wise_price)){
 }
 
 ///////////////////////////////////////////////////////VOLUME END
-$cost = $w1 + $w2 +$w3 + $p1 + $p2 + $p3 + $volume_1 +$volume_2 + $volume_3 + $price_for_categories;
+$cart_quantity = get_option('cat_count');
+$cost = $w1 + $w2 +$w3 + $p1 + $p2 + $p3 + $volume_1 +$volume_2 + $volume_3 + ($price_for_categories * $cart_quantity);
 if('yes' === $general_charges_enable)
 		{
 			$cost = $cost + $this->get_option( 'cost' );
@@ -490,7 +491,6 @@ if('yes' === $enable_free_shipping){
 		}
 		echo wp_kses_post( wpautop( $this->get_method_description() ) );
 		echo $this->get_admin_options_html(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-		
 		}
 
 	/**

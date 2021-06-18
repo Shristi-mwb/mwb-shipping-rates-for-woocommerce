@@ -171,7 +171,7 @@ class Shipping_rates_for_woocommerce_Common {
 	public function shipping_rates_categories() {
 	$shipping_prod_cat = get_option('product_categories');
 	$shipping_ar       = explode(',', $shipping_prod_cat[0]);
-
+    $cat_count = 0; 
 	$cat_in_cart = false;
 	   
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
@@ -179,12 +179,14 @@ class Shipping_rates_for_woocommerce_Common {
 			foreach ($shipping_ar as $x=>$val){
 		if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
 		$cat_in_cart = true;
+		$cat_count += $cart_item['quantity'];
 				}
 			}
 
 		}
 		if ( $cat_in_cart ) {
 	update_option('shipping_cart','yes');
+	update_option('cat_count',$cat_count);
 		} else {
 	update_option('shipping_cart','no');
 		}

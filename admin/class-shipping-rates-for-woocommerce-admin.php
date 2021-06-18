@@ -49,7 +49,7 @@ class Shipping_rates_for_woocommerce_Admin {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -61,7 +61,7 @@ class Shipping_rates_for_woocommerce_Admin {
 	 */
 	public function srfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' === $screen->id ) {
 
 			wp_enqueue_style( 'mwb-srfw-select2-css', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/shipping-rates-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -89,7 +89,7 @@ class Shipping_rates_for_woocommerce_Admin {
 
 		
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' == $screen->id ) {
+		if ( isset( $screen->id ) && 'makewebbetter_page_shipping_rates_for_woocommerce_menu' === $screen->id ) {
 			wp_enqueue_script( 'mwb-srfw-select2', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/shipping-rates-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
 			wp_enqueue_script( 'mwb-srfw-metarial-js', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -105,14 +105,13 @@ class Shipping_rates_for_woocommerce_Admin {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'reloadurl' => admin_url( 'admin.php?page=shipping_rates_for_woocommerce_menu' ),
 					'srfw_gen_tab_enable' => get_option( 'srfw_radio_switch_demo' ),
-					'license_nonce' => wp_create_nonce( 'my-nonce' ),
 				)
 			);
 
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 		}
 		
-		if ( isset( $screen->id ) && 'woocommerce_page_wc-settings' == $screen->id ) {
+		if ( isset( $screen->id ) && 'woocommerce_page_wc-settings' === $screen->id ) {
 			wp_register_script( $this->plugin_name . 'srfw_admin-js', SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.js', array( 'jquery' ), $this->version, false );
 
 			wp_localize_script(
@@ -121,7 +120,7 @@ class Shipping_rates_for_woocommerce_Admin {
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'reloadurl' => admin_url( 'admin.php?page=woocommerce_page_wc-settings' ),
-					// 'srfw_gen_tab_enable' => get_option( 'srfw_radio_switch_demo' ),
+					'shipping_nonce' => wp_create_nonce( 'mwb-shipping-nonce' ),
 				)
 			);
 
@@ -193,7 +192,7 @@ class Shipping_rates_for_woocommerce_Admin {
 	}
 
 	/**
-	 * shipping-rates-for-woocommerce admin menu page.
+	 * Shipping-rates-for-woocommerce admin menu page.
 	 *
 	 * @since    1.0.0
 	 */
@@ -201,62 +200,114 @@ class Shipping_rates_for_woocommerce_Admin {
 
 		include_once SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/shipping-rates-for-woocommerce-admin-dashboard.php';
 	}
-     
+ 
 	/**
-	 * shipping-rates-for-woocommerce Checked Default.
+	 * Shipping-rates-for-woocommerce Checked Default.
 	 *
 	 * @since    1.0.0
 	 */
 	public function srfw_shipping_coupon() {
-		// check_ajax_referer( 'my-nonce', 'srfw_ajax_nonce' );
-		update_option('default_shipping_check','true');
+		check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+		update_option('default_shipping_check', 'true');
 		wp_die();
 		
 	}
 
 	/**
-	 * shipping-rates-for-woocommerce UnChecked Default
+	 * Shipping-rates-for-woocommerce UnChecked Default 
 	 *
 	 * @since    1.0.0
-	 */
+	 */ 
 	public function srfw_default_shipping_unchecked() {
-		update_option('default_shipping_check',$_COOKIE["default_check"]);
+		$mwb_data = isset(  $_COOKIE['default_check'] ) ? sanitize_key(  $_COOKIE['default_check'] ) : '';
+		update_option('default_shipping_check', $mwb_data );
 	}
 
 	/**
-	 * shipping-rates-for-woocommerce Checked visibility
+	 * Shipping-rates-for-woocommerce Checked visibility
 	 *
 	 * @since    1.0.0
 	 */
-	public function srfw_visibility_shipping_checked()  {
-	// check_ajax_referer( 'my-nonce', 'srfw_ajax_nonce' );
-	update_option('visibility_check','true');
+	public function srfw_visibility_shipping_checked() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+	update_option('visibility_check', 'true');
 	wp_die();
-}
+	}
 
 	/**
-	 * shipping-rates-for-woocommerce unChecked visibility
+	 * Shipping-rates-for-woocommerce unChecked visibility
 	 *
 	 * @since    1.0.0
 	 */
-public function srfw_visibility_shipping_unchecked() 
-{
-	update_option('visibility_check',$_COOKIE["visibility_check"]);
-}
+	public function srfw_visibility_shipping_unchecked() {
+	update_option('visibility_check', $_COOKIE['visibility_check']);
+	}
 
-public function my()
-{
-
-	$me =array();
-	$cat = !empty( $_POST['cat'] ) ? sanitize_text_field( wp_unslash ( $_POST['cat'] ) ) : '';
-	$me[]=$cat;
+	/**
+	 * Shipping-rates-for-woocommerce categories visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function product_shipping_categories() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+		$me =array();
+	$cat    = !empty( $_POST['cat'] ) ? sanitize_text_field( wp_unslash ( $_POST['cat'] ) ) : '';
+	$me[]   =$cat;
 	update_option( 'product_categories', $me);
-	echo 'save ho gya';
 	wp_die();
-}
+	}
 
 	/**
-	 * shipping-rates-for-woocommerce admin menu page.
+	 * Shipping-rates-for-woocommerce categories visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_show_advance_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+	$show_or_hide = !empty( $_POST['show'] ) ? sanitize_text_field( wp_unslash ( $_POST['show'] ) ) : '';
+	update_option( 'advance_shipping_field', $show_or_hide );
+	wp_die();
+	}
+
+	/**
+	 * Shipping-rates-for-woocommerce setting visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_hide_advance_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );
+	$hide_or_show = !empty( $_POST['hide'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide'] ) ) : '';
+	update_option( 'advance_shipping_field', $hide_or_show );
+	wp_die();
+	}
+
+
+	/**
+	 * Shipping-rates-for-woocommerce setting visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_show_free_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+	$show_or_hide_free_shipping = !empty( $_POST['show_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['show_free_shipping'] ) ) : '';
+	update_option( 'free_shipping_field', $show_or_hide_free_shipping );
+	wp_die();
+	}
+
+
+	/**
+	 * Shipping-rates-for-woocommerce setting visibility
+	 *
+	 * @since    1.0.0
+	 */
+	public function fun_hide_free_field() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+	$hide_or_show_free_shipping = !empty( $_POST['hide_free_shipping'] ) ? sanitize_text_field( wp_unslash ( $_POST['hide_free_shipping'] ) ) : '';
+	update_option( 'free_shipping_field', $hide_or_show_free_shipping);
+	wp_die();}
+
+	/**
+	 * Shipping-rates-for-woocommerce admin menu page.
 	 *
 	 * @since    1.0.0
 	 * @param array $srfw_settings_template Settings fields.
@@ -375,109 +426,93 @@ public function my()
 		return $srfw_settings_template;
 	}
 
+
 	/**
-	* shipping-rates-for-woocommerce save tab settings.
+	 * Shipping-rates-for-woocommerce admin menu page.
+	 *
+	 * @since    1.0.0
+	 * @param array $srfw_settings_general Settings fields.
+	 */
+	public function srfw_admin_general_settings_page( $srfw_settings_general ) {
+
+		$srfw_settings_general = array(
+			array(
+				'title' => __( 'Enable Shipping Rates For Woocommerce', 'shipping-rates-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable plugin to start the functionality.', 'shipping-rates-for-woocommerce' ),
+				'id'    => 'srfw_radio_switch_shipping',
+				'value' => get_option( 'srfw_radio_switch_shipping' ),
+				'class' => 'srfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'shipping-rates-for-woocommerce' ),
+					'no' => __( 'NO', 'shipping-rates-for-woocommerce' ),
+				),
+			),
+
+			array(
+				'type'  => 'button',
+				'id'    => 'srfw_button_save',
+				'button_text' => __( 'Save Changes', 'shipping-rates-for-woocommerce' ),
+				'class' => 'srfw-button-class',
+			),
+		);
+		return $srfw_settings_general;
+	}
+
+	/**
+	* Shipping-rates-for-woocommerce save tab settings.
 	*
 	* @since 1.0.0
 	*/
 	public function srfw_admin_save_tab_settings() {
-		global $srfw_mwb_srfw_obj;
-		if ( isset( $_POST['srfw_button_demo'] ) ) {
-			$mwb_srfw_gen_flag = false;
+		global $srfw_mwb_srfw_obj, $error_notice;
+		if ( isset( $_POST['general_nonce'] ) ) {
+			$general_form_nonce = sanitize_text_field( wp_unslash( $_POST['general_nonce'] ) );
+			if ( wp_verify_nonce( $general_form_nonce, 'general-form-nonce' ) ) {
+				if ( isset( $_POST['srfw_button_save'] ) ) {
+			$mwb_srfw_gen_flag     = false;
 			$srfw_genaral_settings = apply_filters( 'srfw_general_settings_array', array() );
-			$srfw_button_index = array_search( 'submit', array_column( $srfw_genaral_settings, 'type' ) );
-			if ( isset( $srfw_button_index ) && ( null == $srfw_button_index || '' == $srfw_button_index ) ) {
-				$srfw_button_index = array_search( 'button', array_column( $srfw_genaral_settings, 'type' ) );
-			}
-			if ( isset( $srfw_button_index ) && '' !== $srfw_button_index ) {
-				unset( $srfw_genaral_settings[$srfw_button_index] );
-				if ( is_array( $srfw_genaral_settings ) && ! empty( $srfw_genaral_settings ) ) {
-					foreach ( $srfw_genaral_settings as $srfw_genaral_setting ) {
-						if ( isset( $srfw_genaral_setting['id'] ) && '' !== $srfw_genaral_setting['id'] ) {
-							if ( isset( $_POST[$srfw_genaral_setting['id']] ) ) {
-								update_option( $srfw_genaral_setting['id'], $_POST[$srfw_genaral_setting['id']] );
-							} else {
-								update_option( $srfw_genaral_setting['id'], '' );
-							}
-						}else{
-							$mwb_srfw_gen_flag = true;
-						}
+			$srfw_button_index     = array_search( 'submit', array_column( $srfw_genaral_settings, 'type' ) , true );
+					if ( isset( $srfw_button_index )) {
+				$srfw_button_index = array_search( 'button', array_column( $srfw_genaral_settings, 'type' ) , true );
 					}
-				}
-				if ( $mwb_srfw_gen_flag ) {
+					if ( isset( $srfw_button_index ) && '' !== $srfw_button_index ) {
+				unset( $srfw_genaral_settings[$srfw_button_index] );
+						if ( is_array( $srfw_genaral_settings ) && ! empty( $srfw_genaral_settings ) ) {
+							foreach ( $srfw_genaral_settings as $srfw_genaral_setting ) {
+								if ( isset( $srfw_genaral_setting['id'] ) && '' !== $srfw_genaral_setting['id'] ) {
+									if ( isset( $_POST[$srfw_genaral_setting['id']] ) ) {
+								update_option( $srfw_genaral_setting['id'], sanitize_text_field( wp_unslash($_POST[$srfw_genaral_setting['id']] ) ) );
+									} else {
+								update_option( $srfw_genaral_setting['id'], '' );
+									}
+								} else {
+							$mwb_srfw_gen_flag = true;
+								}
+							}
+						}
+						if ( $mwb_srfw_gen_flag ) {
 					$mwb_srfw_error_text = esc_html__( 'Id of some field is missing', 'shipping-rates-for-woocommerce' );
 					$srfw_mwb_srfw_obj->mwb_srfw_plug_admin_notice( $mwb_srfw_error_text, 'error' );
-				}else{
+						} else {
 					$mwb_srfw_error_text = esc_html__( 'Settings saved !', 'shipping-rates-for-woocommerce' );
-					$srfw_mwb_srfw_obj->mwb_srfw_plug_admin_notice( $mwb_srfw_error_text, 'success' );
+					$error_notice        = false;
+								}
+					}
 				}
 			}
 		}
-
-
-		
 	}
 
 	/**
-	* shipping-rates-for-woocommerce custom  shipping save  settings.
+	* Shipping-rates-for-woocommerce custom  shipping save  settings.
 	*
 	* @since 1.0.0
 	*/
-	public function expected_date_delivery_fun()
-	{
+	public function expected_date_delivery_fun() {
+	check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
 	$days = !empty( $_POST['expected_days'] ) ? sanitize_text_field( wp_unslash ( $_POST['expected_days'] ) ) : '';
-	update_option('expected_days',$days);
+	update_option('expected_days', $days);
 	wp_die();
 	}
-
-	public function mwb_srfw_condition_html(){
-		$condition = sanitize_text_field($_POST['condition']);
-		// echo $condition;
-
-		if($condition){
-			$html='';
-			$html .='<select id="srfw_condition_name" name ="srfw_condition_name"> <option value ="Category">Category </option><option value ="Weight" >Weight </option><option value ="Cart Total" >Cart Total </option><option value ="Price Range" >Price Range </option><option value ="Delivery Method" >Delivery Method </option><option value ="Free Shipping" >Free Shipping </option></select>';
-
-			echo $html;
-		}
-		
-		// $html = '';
-		// if($condition == 'Category'){
-		// 	$args = array( 'type' => 'product', 'taxonomy' => 'product_cat' ); 
-		// 	$categories = get_categories( $args ); 
-
-
-		// 	// print_r( $categories );
-		// 	$html .='<select id= "srfw_condition_name"> <option value ="Category">Category </option><option value ="Weight" >Weight </option><option value ="Cart Total" >Cart Total </option><option value ="Price Range" >Price Range </option><option value ="Delivery Method" >Delivery Method </option><option value ="Free Shipping" >Free Shipping </option>
-			
-			
-			
-		// 	</select><select id ="srfw_select_condition"><option value= "equal">Equal to (=)</option> <option value= "not_equal">Not Equal to(!=)</option> </select>';
-		// 	$html .='<select name=" " id=" ">';
-		// 	foreach ($categories as $cat) { 
-
-		// 		$html .='<option value = "'.$cat->slug .'">'.$cat->name.'</option>';
-		// 	}
-		// 	$html .='</select><input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-				
-		// 	echo $html;
-        
-		// }
-		// elseif($condition == 'Weight'){
-		// 	$html .='<input id ="min_weight" type="number" placeholder="Minimum Weight"><input id ="max_weight" type="number" placeholder="Maximum Weight"> <input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-		// 	echo $html;
-		// }
-		// elseif($condition == 'Cart Total'){
-		// 	$html .='<select id ="srfw_select_condition"><option value= "equal">Equal to (=)</option> <option value= "not_equal">Not Equal to(!=)</option> <option value= "greater_than">Greater than(>)</option> <option value= "less_than">Not Less than(<)</option></select><input id ="cart_price" type = "number" placeholder ="Cart Total"> <input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-		// 	echo $html;
-		// }
-		// elseif($condition == 'Price Range'){
-		// 	$html .='<input id ="min_price" type="number" placeholder="Minimum Price"><input id ="max_price" type="number" placeholder="Maximum price"> <input id ="mwb_shipping_rate_cost" type = "number" placeholder ="Shipping Cost">';
-		// 	echo $html;
-		// }
-		
-			
-	}
-
-
 }

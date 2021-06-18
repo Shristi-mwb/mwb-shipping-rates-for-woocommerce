@@ -19,6 +19,7 @@ $srfw_genaral_settings = apply_filters( 'srfw_general_settings_array', array() )
 ?>
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="mwb-srfw-gen-section-form">
+<input type="hidden" name="general_nonce" value="<?php echo esc_html( wp_create_nonce( 'general-form-nonce' ) ); ?>"/>
 	<div class="srfw-secion-wrap">
 		<?php
 		$srfw_general_html = $srfw_mwb_srfw_obj->mwb_srfw_plug_generate_html( $srfw_genaral_settings );

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 
-global $srfw_mwb_srfw_obj;
+global $srfw_mwb_srfw_obj ,$error_notice;
 $srfw_active_tab   = isset( $_GET['srfw_tab'] ) ? sanitize_key( $_GET['srfw_tab'] ) : 'shipping-rates-for-woocommerce-general';
 $srfw_default_tabs = $srfw_mwb_srfw_obj->mwb_srfw_plug_default_tabs();
 ?>
@@ -27,8 +27,12 @@ $srfw_default_tabs = $srfw_mwb_srfw_obj->mwb_srfw_plug_default_tabs();
 		<span>|</span>
 		<a href="https://makewebbetter.com/contact-us/" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'invoice-system-for-woocommerce' ); ?></a>
 	</div>
-</header>
-
+</header> 
+<?php
+if ( ! $error_notice ) { 
+	$srfw_mwb_srfw_obj->mwb_srfw_plug_admin_notice( 'Settings Saved', 'success' );
+}
+?>
 <main class="mwb-main mwb-bg-white mwb-r-8">
 	<nav class="mwb-navbar">
 		<ul class="mwb-navbar__items">

@@ -29,7 +29,7 @@ class Shipping_rates_for_woocommerce_Activator {
 	 * @since    1.0.0
 	 */
 	public static function shipping_rates_for_woocommerce_activate() {
-
+		update_option('srfw_radio_switch_shipping', 'on');
 	}
 
 }

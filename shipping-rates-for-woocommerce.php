@@ -129,6 +129,7 @@ function run_shipping_rates_for_woocommerce() {
 	$srfw_plugin_standard = new Shipping_rates_for_woocommerce();
 	$srfw_plugin_standard->srfw_run();
 	$GLOBALS['srfw_mwb_srfw_obj'] = $srfw_plugin_standard;
+	$GLOBALS['error_notice']        = true;
 
 }
 run_shipping_rates_for_woocommerce();

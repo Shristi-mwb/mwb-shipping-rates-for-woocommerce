@@ -27,7 +27,7 @@
             <div class="mwb-overview__keywords-item">
                 <div class="mwb-overview__keywords-card">
                     <div class="mwb-overview__keywords-image">
-                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Advanced-report.png' ); ?>" alt="Advanced-report image">
+                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/category-wise.png' ); ?>" alt="Advanced-report image">
                     </div>
                     <div class="mwb-overview__keywords-text">
                         <h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Category Wise Shipping ', 'shipping-rates-for-woocommerce' ); ?></h3>
@@ -45,7 +45,7 @@
             <div class="mwb-overview__keywords-item">
                 <div class="mwb-overview__keywords-card">
                     <div class="mwb-overview__keywords-image">
-                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Workflow.png' ); ?>" alt="Workflow image">
+                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Weight-and-Volume-Wise-Shipping.png' ); ?>" alt="Workflow image">
                     </div>
                     <div class="mwb-overview__keywords-text">
                         <h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Weight and Volume-Wise Shipping ', 'shipping-rates-for-woocommerce' ); ?></h3>
@@ -56,7 +56,7 @@
             <div class="mwb-overview__keywords-item">
                 <div class="mwb-overview__keywords-card">
                     <div class="mwb-overview__keywords-image">
-                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Variable-product.png' ); ?>" alt="Variable product image">
+                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Price-Range-Wise-Shipping.png' ); ?>" alt="Variable product image">
                     </div>
                     <div class="mwb-overview__keywords-text">
                         <h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Price Range Wise Shipping ', 'shipping-rates-for-woocommerce' ); ?></h3>
@@ -74,7 +74,7 @@
             <div class="mwb-overview__keywords-item">
                 <div class="mwb-overview__keywords-card">
                     <div class="mwb-overview__keywords-image">
-                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/List-of-abandoned-users.png' ); ?>" alt="List-of-abandoned-users image">
+                        <img src="<?php echo esc_html( SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Conditional-Free-Shipping.png' ); ?>" alt="List-of-abandoned-users image">
                     </div>
                     <div class="mwb-overview__keywords-text">
                         <h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Conditional Free Shipping', 'shipping-rates-for-woocommerce' ); ?></h3>

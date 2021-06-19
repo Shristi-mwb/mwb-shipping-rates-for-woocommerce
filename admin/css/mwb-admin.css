@@ -144,7 +144,7 @@
 }
 
 .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item .mwb-overview__keywords-card .mwb-overview__keywords-image img {
-  max-width: 80px;
+  max-width: 120px;
   -o-object-fit: cover;
      object-fit: cover;
   width: auto;

@@ -301,6 +301,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 					$total_cart_weight      =  WC()->cart->get_cart_contents_weight();
 					$total_cart_price	  = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
 					$general_charges_enable   = $this->get_option('general_shipping');
+					$cart_quantity = get_option('cat_count');
 					$intance_settings     =  $this->instance_settings;
 					$enable_all_rules = $this->get_option( 't1' );
 					$max_weight = $this->get_option( 'max_weight_wise' );
@@ -417,14 +418,13 @@ else{
 
 
 if('yes' === $cart_categories && !empty($categories_wise_price)){
-	$price_for_categories = $categories_wise_price;
+	$price_for_categories = $categories_wise_price * $cart_quantity ;
 }else{
 	$price_for_categories=0;
 }
 
 ///////////////////////////////////////////////////////VOLUME END
-$cart_quantity = get_option('cat_count');
-$cost = $w1 + $w2 +$w3 + $p1 + $p2 + $p3 + $volume_1 +$volume_2 + $volume_3 + ($price_for_categories * $cart_quantity);
+$cost = $w1 + $w2 +$w3 + $p1 + $p2 + $p3 + $volume_1 +$volume_2 + $volume_3 + ($price_for_categories);
 if('yes' === $general_charges_enable)
 		{
 			$cost = $cost + $this->get_option( 'cost' );
@@ -438,7 +438,6 @@ if('yes' === $general_charges_enable)
 	)
 );
 }
-
 if('yes' === $enable_free_shipping){
 	if ( 'yes' === $pre_discount_price ) {
 		$cart_total = $cart_total_before_disc;

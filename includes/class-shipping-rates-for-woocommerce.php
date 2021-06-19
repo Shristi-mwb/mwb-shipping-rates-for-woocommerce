@@ -252,7 +252,7 @@ class Shipping_rates_for_woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_common, 'srfw_common_enqueue_scripts' );
 		
-		// Creating MWb shipping method.
+		// Creating MWb shipping method. woocommerce_update_cart_action_cart_updated
 		if ('on' === get_option( 'srfw_radio_switch_shipping')) {
 		$this->loader->add_action( 'woocommerce_shipping_init', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
@@ -265,7 +265,7 @@ class Shipping_rates_for_woocommerce {
 		$this->loader->add_action( 'woocommerce_before_thankyou', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_filter( 'woocommerce_get_item_data', $srfw_plugin_common , 'displaying_cart_items_weight', 10, 2 );
 		}
-		// $this->loader->add_action( 'wp_ajax_shipping_coupon_action', $srfw_plugin_common, 'srfw_shipping_coupon' ,10);woocommerce_after_cart_item_name
+		// $this->loader->add_action( 'wp_ajax_shipping_coupon_action', $srfw_plugin_common, 'srfw_shipping_coupon' ,10);
 		// $this->loader->add_action( 'wp_ajax_nopriv_shipping_coupon_action', $srfw_plugin_common, 'srfw_shipping_coupon',10 );
 	}
 

@@ -30,18 +30,19 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 		$this->method_title       = __( 'MWB Shipping Rates', 'shipping-rates-for-woocommerce' );  // Title shown in admin.
 		$this->method_description = __( 'MWB Shipping Method With Different Conditioning Rules For Shipping.', 'shipping-rates-for-woocommerce' ); // Description shown in admin.
 		$this->instance_id        = absint( $instance_id );
-		$this->title              = __( 'MWB Shipping Rates', 'shipping-rates-for-woocommerce' );
-		$this->zones_settings     = $this->id . 'zones_settings';
-		$this->rates_settings     = $this->id . 'rates_settings';
-		$this->enabled            = 'yes'; // For alwayes enable
+	    $this->cost               = 0;
+		// $this->zones_settings     = $this->id . 'zones_settings';
+		// $this->rates_settings     = $this->id . 'rates_settings';
+		// $this->enabled            = 'yes'; // For alwayes enable
 		$this->supports           = array(
 			'shipping-zones',
 			'instance-settings',
 		);
-		$this->option_key = $this->id . '_mwb_shipping_rates';//The key for wordpress options
-		$this->jem_shipping_methods_option = 'mwb_rate_shipping_methods_' . $this->instance_id;
+		// $this->option_key = $this->id . '_mwb_shipping_rates';//The key for wordpress options
+		// $this->jem_shipping_methods_option = 'mwb_rate_shipping_methods_' . $this->instance_id;
 		$this->init();
-		$this->cost  = $this->get_option( 'cost' );
+		// $this->cost  = $this->get_option( 'cost' );
+		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 	}
 
 	/**
@@ -52,8 +53,16 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				// Load the settings API
 				$this->init_form_fields();
 				$this->init_settings();
-				add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				$this->title       = $this->get_option( 'title' );
+				$this->tax_status  = $this->get_option( 'tax_status' );
+		        $this->cost        = $this->get_option( 'cost' );
+				// add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 		}
+
+	/**
+	 * init setting for your setting fields
+	 *
+	 */	
 	public function init_form_fields() { 
 		$args = array(
 			'hide_empty'      => false,
@@ -85,6 +94,13 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'label' => __('visibile only to logged in user ', 'shipping-rates-for-woocommerce'),
 			'default`' => 'no'
 		 ),
+		 'only_general_shipping_charge' => array(
+			'title' => __('Enable only Genaral Charge', 'shipping-rates-for-woocommerce'),
+			'type' => 'checkbox',
+			'class'=>'only_general_shipping_charge_class',
+			'label' => __('', 'shipping-rates-for-woocommerce'),
+			'default`' => 'no'
+		 ),
 	 'title' => array(
 			'title' => __( 'Shipping Title', 'shipping-rates-for-woocommerce' ),
 				'type' => 'text',
@@ -99,7 +115,6 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 				),
-
 		 'tax_status' => array(
 				 'title' => __('Tax Status', 'shipping-rates-for-woocommerce'),
 				 'type' => 'select',
@@ -145,7 +160,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			 'default' => 'minimum_order',
 			 'desc_tip' =>true,
 			 'options' => array(
-				   ''           => __( '--Select One--', 'shipping-rates-for-woocommerce' ),
+				   ''         => __( '--Select One--', 'shipping-rates-for-woocommerce' ),
 					 'minimum_order' => __('Minimum Order', 'shipping-rates-for-woocommerce'),
 					 'shipping_coupon' => __('Shipping Coupon', 'shipping-rates-for-woocommerce'),
 			 )
@@ -298,10 +313,12 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 	public function calculate_shipping( $package = array()) {
 		global $woocommerce;
 				// As we are using instances for the cost and the title we need to take those values drom the instance_settings.
+				
 					$total_cart_weight      =  WC()->cart->get_cart_contents_weight();
-					$total_cart_price	  = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
+					$total_cart_price	  = $woocommerce->cart->subtotal;
 					$general_charges_enable   = $this->get_option('general_shipping');
 					$cart_quantity = get_option('cat_count');
+					$general_cost = $this->get_option( 'cost' );
 					$intance_settings     =  $this->instance_settings;
 					$enable_all_rules = $this->get_option( 't1' );
 					$max_weight = $this->get_option( 'max_weight_wise' );
@@ -354,80 +371,139 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			array_push($cart_prods_m3, $prod_m3);
 			$total_cart_vol  = array_sum($cart_prods_m3);
 		} 
+
+		if('yes' === $this->get_option( 'only_general_shipping_charge' )){
+			$this->add_rate( array(
+						'id'      => $this->id,
+						'label'   =>$this->get_option( 'title' ),
+						'cost'    => $this->get_option( 'cost' ),
+						'package' => $package,
+						'taxes'   => false,
+					)
+				);
+}
 		if ('yes' === $enable_all_rules) {
 			if ($total_cart_weight <= $max_weight && 'yes' === $range && $total_cart_weight >= $min_weight && !empty($min_weight) && !empty($max_weight)){
 
-				$w3 =$weight_shipping_charge;
+				if(!is_numeric($weight_shipping_charge)){
+				$mwb_weight_charge_3 =0;
+				} else{
+					$mwb_weight_charge_3 =$weight_shipping_charge;
+				}
 			} else {
-			$w3 =0;
+			$mwb_weight_charge_3 =0;
 			}
+
 			if ($total_cart_weight > $max_weight  && !empty($max_weight) && 'yes' !== $range) {
-		$w1 = $weight_shipping_charge;
+
+				if(!is_numeric($weight_shipping_charge)){
+				$mwb_weight_charge_1 =0;
+				} else{
+					$mwb_weight_charge_1 =$weight_shipping_charge;
+				}
 			} else {
-	$w1 =0;
+				$mwb_weight_charge_1 =0;
 			}
+			
 			if ($total_cart_weight < $min_weight  && !empty($min_weight) && 'yes' !== $range) {
-		$w2 = $weight_shipping_charge;
+				if(!is_numeric($weight_shipping_charge)){
+					$mwb_weight_charge_2 = 0;
+					} else {
+						$mwb_weight_charge_2 = $weight_shipping_charge;
+					}
 			} else {
-	$w2 =0;
+				$mwb_weight_charge_2 = 0;
 			}
 ///////////////////////////// Price Range //////////////////////////////////
 			if ($total_cart_price <= $max_price && 'yes' === $price_range && $total_cart_price >= $min_price && !empty($max_price) && !empty($min_price)){
 
-	$p3 = $price_wise_charge;
+	         if(!is_numeric($price_wise_charge)) {
+             $mwb_price_charge_3 = 0;
+			 }
+			 else{
+				$mwb_price_charge_3 = $price_wise_charge;
+			 }
 	
 			} else {
-		$p3 =0;
+				$mwb_price_charge_3 = 0 ;
 			}
 
 			if ($total_cart_price > $max_price  && !empty($max_price) && 'yes' !== $price_range) {
 
-	   $p1 = $price_wise_charge;
+				if(!is_numeric($price_wise_charge)) {
+					$mwb_price_charge_1 =0;
+					}
+					else{
+					   $mwb_price_charge_1 = $price_wise_charge;
+					}
 			} else {
-	$p1 =0;	
+				$mwb_price_charge_1 =0;	
 			}
 
 			if ($total_cart_price < $min_price && !empty($min_price) && 'yes' !== $price_range) {
 
- $p2 = $price_wise_charge;
+				if(!is_numeric($price_wise_charge)) {
+					$mwb_price_charge_2 =0;
+					}
+					else{
+					   $mwb_price_charge_2 = $price_wise_charge;
+					}
 			} else {
-	$p2 =0;
+				$mwb_price_charge_2 = 0;
 			}
+
 /////////////////////////////////////////VOLUME/////////////
 if($total_cart_vol <= $max_vol && 'yes' === $vol_range && $total_cart_vol >= $min_vol && !empty($max_vol) && !empty($min_vol)){
-	$volume_3 = $vol_wise_charge;
+	// $volume_3 = $vol_wise_charge;
+	if(!is_numeric($vol_wise_charge)){
+     $mwb_volume_charge_3 = 0;
 	} else{
-		$volume_3=0;
+		$mwb_volume_charge_3 = $vol_wise_charge;
+	}
+	} else{
+		$mwb_volume_charge_3=0;
 	}
 
 if($total_cart_vol > $max_vol  && !empty($max_vol) && 'yes' !== $vol_range){
 
-	   $volume_1 = $vol_wise_charge;
+	if(!is_numeric($vol_wise_charge)){
+		$mwb_volume_charge_1 = 0;
+	   } else{
+		   $mwb_volume_charge_1 = $vol_wise_charge;
+	   }
 
 }else{
-	$volume_1=0;
+	$mwb_volume_charge_1=0;
 }
 
 if($total_cart_vol < $min_vol && !empty($min_vol) && 'yes' !== $vol_range){
 
- $volume_2 = $vol_wise_charge;
+	if(!is_numeric($vol_wise_charge)){
+		$mwb_volume_charge_2 = 0;
+	   } else{
+		   $mwb_volume_charge_2 = $vol_wise_charge;
+	   }
 }
 else{
-	$volume_2=0;
+	$mwb_volume_charge_2 = 0;
 }
 
 
 if('yes' === $cart_categories && !empty($categories_wise_price)){
-	$price_for_categories = $categories_wise_price * $cart_quantity ;
+	$price_for_categories = $categories_wise_price * ($cart_quantity) ;
 }else{
 	$price_for_categories=0;
 }
 
 ///////////////////////////////////////////////////////VOLUME END
-$cost = $w1 + $w2 +$w3 + $p1 + $p2 + $p3 + $volume_1 +$volume_2 + $volume_3 + ($price_for_categories);
+$cost = ($mwb_weight_charge_1 + $mwb_weight_charge_2 + $mwb_weight_charge_3 +  $mwb_price_charge_2 +  $mwb_price_charge_1 + $mwb_price_charge_3 + $mwb_volume_charge_1 +$mwb_volume_charge_2 + $mwb_volume_charge_3 + ($price_for_categories));
 if('yes' === $general_charges_enable)
+
 		{
-			$cost = $cost + $this->get_option( 'cost' );
+			if(!is_numeric($general_cost)) {
+				$general_cost = 0;
+			}
+			$cost = $cost + $general_cost;
 		}
 	$this->add_rate( array(
 		'id'      => $this->id,
@@ -451,9 +527,6 @@ if('yes' === $enable_free_shipping){
 				'cost'    =>  0,
 				'package' => $package,
 				'taxes'   => false,
-			'cost'    => 0,
-			'package' => $package,
-			'taxes'   => false,
 		)
 	);
 	}		
@@ -467,17 +540,7 @@ if('yes' === $enable_free_shipping){
 	  )
   );
   }
-}
-// elseif('yes' === $general_charges_enable) {
-// 					$this->add_rate( array(
-// 								'id'      => $this->id,
-// 								'label'   =>$this->get_option( 'title' ),
-// 								'cost'    => $this->get_option( 'cost' ),
-// 								'package' => $package,
-// 								'taxes'   => false,
-// 							)
-// 						);
-// 		}
+} 
 	}
 
 	/**

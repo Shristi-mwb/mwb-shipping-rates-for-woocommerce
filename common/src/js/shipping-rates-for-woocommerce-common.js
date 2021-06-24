@@ -28,6 +28,10 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	 $(function() {
-		//  alert('jknljkfdnlk');
+		$( document.body ).on( 'updated_cart_totals', function(){
+			//re-do your jquery
+			jQuery(".button-primary woocommerce-save-button").trigger("click");
+			// alert('me');
+		});
 	});
 })( jQuery );

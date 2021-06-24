@@ -138,7 +138,7 @@ class Shipping_rates_for_woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function  expected_delivery_date_message() {
-	global $woocommerce , $product;
+	global $Date;
 	$days_checker = get_option('expected_days');
 		if (!empty($days_checker)) {
 	$expec_date = date('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
@@ -157,7 +157,7 @@ class Shipping_rates_for_woocommerce_Common {
 	$item_data[] = array(
 		'key'       => __('Weight', 'woocommerce'),
 		'value'     => $item_weight,
-		'display'   => $item_weight . ' ' . get_option('woocommerce_weight_unit')
+		'display'   => $item_weight . ' ' . get_option('woocommerce_weight_unit'),
 	);
 
 	return $item_data;

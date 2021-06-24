@@ -252,14 +252,14 @@ class Shipping_rates_for_woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_common, 'srfw_common_enqueue_scripts' );
 		
-		// Creating MWb shipping method. woocommerce_update_cart_action_cart_updated
+		// Creating MWb shipping method.
 		if ('on' === get_option( 'srfw_radio_switch_shipping')) {
 		$this->loader->add_action( 'woocommerce_shipping_init', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
 		$this->loader->add_action( 'woocommerce_applied_coupon', $srfw_plugin_common, 'srfw_coupon_add_fun' );
 		$this->loader->add_action( 'woocommerce_removed_coupon', $srfw_plugin_common, 'srfw_coupon_remove_fun' );
 		$this->loader->add_action( 'woocommerce_before_cart', $srfw_plugin_common, 'shipping_rates_categories' );
-		$this->loader->add_action( 'woocommerce_cart_updated', $srfw_plugin_common, 'shipping_rates_categories' );
+		$this->loader->add_action( 'woocommerce_update_cart_action_cart_updated', $srfw_plugin_common, 'shipping_rates_categories' );
 		$this->loader->add_action( 'woocommerce_before_shipping_calculator', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_review_order_before_payment', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_before_thankyou', $srfw_plugin_common, 'expected_delivery_date_message' );

@@ -84,7 +84,7 @@ class Shipping_rates_for_woocommerce {
 			$this->version = '1.0.0';
 		}
 
-		$this->plugin_name = 'shipping-rates-for-woocommerce';
+		$this->plugin_name = 'mwb-shipping-rates-for-woocommerce';
 
 		$this->shipping_rates_for_woocommerce_dependencies();
 		$this->shipping_rates_for_woocommerce_locale();
@@ -360,6 +360,10 @@ class Shipping_rates_for_woocommerce {
 
 		$srfw_default_tabs = array();
 
+		$srfw_default_tabs['shipping-rates-for-woocommerce-overview'] = array(
+			'title'       => esc_html__( 'Overview', 'shipping-rates-for-woocommerce' ),
+			'name'        => 'shipping-rates-for-woocommerce-overview',
+		);
 		$srfw_default_tabs['shipping-rates-for-woocommerce-general'] = array(
 			'title'       => esc_html__( 'General Setting', 'shipping-rates-for-woocommerce' ),
 			'name'        => 'shipping-rates-for-woocommerce-general',
@@ -370,14 +374,11 @@ class Shipping_rates_for_woocommerce {
 			'title'       => esc_html__( 'System Status', 'shipping-rates-for-woocommerce' ),
 			'name'        => 'shipping-rates-for-woocommerce-system-status',
 		);
-		$srfw_default_tabs['shipping-rates-for-woocommerce-template'] = array(
-			'title'       => esc_html__( 'Templates', 'shipping-rates-for-woocommerce' ),
-			'name'        => 'shipping-rates-for-woocommerce-template',
-		);
-		$srfw_default_tabs['shipping-rates-for-woocommerce-overview'] = array(
-			'title'       => esc_html__( 'Overview', 'shipping-rates-for-woocommerce' ),
-			'name'        => 'shipping-rates-for-woocommerce-overview',
-		);
+		// $srfw_default_tabs['shipping-rates-for-woocommerce-template'] = array(
+		// 	'title'       => esc_html__( 'Templates', 'shipping-rates-for-woocommerce' ),
+		// 	'name'        => 'shipping-rates-for-woocommerce-template',
+		// );
+		
 
 		return $srfw_default_tabs;
 	}
@@ -780,6 +781,9 @@ class Shipping_rates_for_woocommerce {
 											<?php checked( $srfw_component['value'], 'on' ); ?>
 											>
 										</div>
+									</div>
+									<div id='mwb_radio_switch_description'>
+									<label for="checkbox-1"><?php echo ( isset( $srfw_component['description'] ) ? esc_attr( $srfw_component['description'] ) : '' ); ?></label>
 									</div>
 								</div>
 							</div>

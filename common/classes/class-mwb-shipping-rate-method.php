@@ -95,7 +95,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'default`' => 'no'
 		 ),
 		 'only_general_shipping_charge' => array(
-			'title' => __('Enable only Genaral Charge', 'shipping-rates-for-woocommerce'),
+			'title' => __('Enable only General Charge', 'shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
 			'class'=>'only_general_shipping_charge_class',
 			'label' => __('', 'shipping-rates-for-woocommerce'),

@@ -439,7 +439,7 @@ class Shipping_rates_for_woocommerce_Admin {
 			array(
 				'title' => __( 'Enable Shipping Rates For Woocommerce', 'shipping-rates-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'Enable plugin to start the functionality.', 'shipping-rates-for-woocommerce' ),
+				'description'  => __( 'Enable plugin to start the functionality of the MWB Shipping Rates.', 'shipping-rates-for-woocommerce' ),
 				'id'    => 'srfw_radio_switch_shipping',
 				'value' => get_option( 'srfw_radio_switch_shipping' ),
 				'class' => 'srfw-radio-switch-class',

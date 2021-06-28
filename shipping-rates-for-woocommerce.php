@@ -16,7 +16,7 @@
  * Plugin URI:        https://makewebbetter.com/product/shipping-rates-for-woocommerce/
  * Description:       Shipping rates for WooCommerce provide different shipping options.
  * Version:           1.0.0
- * Author:            makewebbetter
+ * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       shipping-rates-for-woocommerce
  * Domain Path:       /languages

@@ -84,7 +84,7 @@ class Shipping_rates_for_woocommerce {
 			$this->version = '1.0.0';
 		}
 
-		$this->plugin_name = 'shipping-rates-for-woocommerce';
+		$this->plugin_name = 'mwb-shipping-rates-for-woocommerce';
 
 		$this->shipping_rates_for_woocommerce_dependencies();
 		$this->shipping_rates_for_woocommerce_locale();
@@ -252,14 +252,14 @@ class Shipping_rates_for_woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $srfw_plugin_common, 'srfw_common_enqueue_scripts' );
 		
-		// Creating MWb shipping method. woocommerce_update_cart_action_cart_updated
+		// Creating MWb shipping method.
 		if ('on' === get_option( 'srfw_radio_switch_shipping')) {
 		$this->loader->add_action( 'woocommerce_shipping_init', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $srfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
 		$this->loader->add_action( 'woocommerce_applied_coupon', $srfw_plugin_common, 'srfw_coupon_add_fun' );
 		$this->loader->add_action( 'woocommerce_removed_coupon', $srfw_plugin_common, 'srfw_coupon_remove_fun' );
 		$this->loader->add_action( 'woocommerce_before_cart', $srfw_plugin_common, 'shipping_rates_categories' );
-		$this->loader->add_action( 'woocommerce_cart_updated', $srfw_plugin_common, 'shipping_rates_categories' );
+		$this->loader->add_action( 'woocommerce_update_cart_action_cart_updated', $srfw_plugin_common, 'shipping_rates_categories' );
 		$this->loader->add_action( 'woocommerce_before_shipping_calculator', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_review_order_before_payment', $srfw_plugin_common, 'expected_delivery_date_message' );
 		$this->loader->add_action( 'woocommerce_before_thankyou', $srfw_plugin_common, 'expected_delivery_date_message' );
@@ -360,6 +360,10 @@ class Shipping_rates_for_woocommerce {
 
 		$srfw_default_tabs = array();
 
+		$srfw_default_tabs['shipping-rates-for-woocommerce-overview'] = array(
+			'title'       => esc_html__( 'Overview', 'shipping-rates-for-woocommerce' ),
+			'name'        => 'shipping-rates-for-woocommerce-overview',
+		);
 		$srfw_default_tabs['shipping-rates-for-woocommerce-general'] = array(
 			'title'       => esc_html__( 'General Setting', 'shipping-rates-for-woocommerce' ),
 			'name'        => 'shipping-rates-for-woocommerce-general',
@@ -370,14 +374,11 @@ class Shipping_rates_for_woocommerce {
 			'title'       => esc_html__( 'System Status', 'shipping-rates-for-woocommerce' ),
 			'name'        => 'shipping-rates-for-woocommerce-system-status',
 		);
-		$srfw_default_tabs['shipping-rates-for-woocommerce-template'] = array(
-			'title'       => esc_html__( 'Templates', 'shipping-rates-for-woocommerce' ),
-			'name'        => 'shipping-rates-for-woocommerce-template',
-		);
-		$srfw_default_tabs['shipping-rates-for-woocommerce-overview'] = array(
-			'title'       => esc_html__( 'Overview', 'shipping-rates-for-woocommerce' ),
-			'name'        => 'shipping-rates-for-woocommerce-overview',
-		);
+		// $srfw_default_tabs['shipping-rates-for-woocommerce-template'] = array(
+		// 	'title'       => esc_html__( 'Templates', 'shipping-rates-for-woocommerce' ),
+		// 	'name'        => 'shipping-rates-for-woocommerce-template',
+		// );
+		
 
 		return $srfw_default_tabs;
 	}
@@ -780,6 +781,9 @@ class Shipping_rates_for_woocommerce {
 											<?php checked( $srfw_component['value'], 'on' ); ?>
 											>
 										</div>
+									</div>
+									<div id='mwb_radio_switch_description'>
+									<label for="checkbox-1"><?php echo ( isset( $srfw_component['description'] ) ? esc_attr( $srfw_component['description'] ) : '' ); ?></label>
 									</div>
 								</div>
 							</div>

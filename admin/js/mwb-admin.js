@@ -243,7 +243,7 @@ $.ajax({
 })
 
 $(".mwb_stop_text").on('keypress',function (e) {
-  var regex = new RegExp("^[0-9]+$");
+  var regex = new RegExp("^[0-9.]+$");
   var key = String.fromCharCode(!e.charCode ? e.which : e.charCode);
   if (!regex.test(key)) {
      e.preventDefault();

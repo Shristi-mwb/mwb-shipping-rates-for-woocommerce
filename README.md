@@ -1,1 +1,0 @@
-# shipping-rates-for-woocommerce

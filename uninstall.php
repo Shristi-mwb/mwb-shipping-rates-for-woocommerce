@@ -21,7 +21,7 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Shipping_rates_for_woocommerce
+ * @package    Mwb_Shipping_Rates_For_Woocommerce
  */
 
 // If uninstall not called from WordPress, then exit.

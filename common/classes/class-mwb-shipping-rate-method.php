@@ -27,21 +27,15 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 	public function __construct( $instance_id = 0 ) {
 
 		$this->id                 = 'mwb_shipping_rate'; // Id for your shipping method. Should be uunique.
-		$this->method_title       = __( 'MWB Shipping Rates', 'shipping-rates-for-woocommerce' );  // Title shown in admin.
-		$this->method_description = __( 'MWB Shipping Method With Different Conditioning Rules For Shipping.', 'shipping-rates-for-woocommerce' ); // Description shown in admin.
+		$this->method_title       = __( 'MWB Shipping Rates', 'mwb-shipping-rates-for-woocommerce' );  // Title shown in admin.
+		$this->method_description = __( 'MWB Shipping Method With Different Conditioning Rules For Shipping.', 'mwb-shipping-rates-for-woocommerce' ); // Description shown in admin.
 		$this->instance_id        = absint( $instance_id );
 	    $this->cost               = 0;
-		// $this->zones_settings     = $this->id . 'zones_settings';
-		// $this->rates_settings     = $this->id . 'rates_settings';
-		// $this->enabled            = 'yes'; // For alwayes enable
 		$this->supports           = array(
 			'shipping-zones',
 			'instance-settings',
 		);
-		// $this->option_key = $this->id . '_mwb_shipping_rates';//The key for wordpress options
-		// $this->jem_shipping_methods_option = 'mwb_rate_shipping_methods_' . $this->instance_id;
 		$this->init();
-		// $this->cost  = $this->get_option( 'cost' );
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 	}
 
@@ -56,7 +50,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 				$this->title       = $this->get_option( 'title' );
 				$this->tax_status  = $this->get_option( 'tax_status' );
 		        $this->cost        = $this->get_option( 'cost' );
-				// add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+				$this->enable_all_rules = $this->get_option( 't1' );
 		}
 
 	/**
@@ -72,7 +66,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 		//Convert the object into a simple array containing a list of categories.
 		$categories[] =  '';
 		foreach ($cats as $category) {
-			$categories[] = __( $category->cat_name, 'shipping-rates-for-woocommerce' );
+			$categories[] = __( $category->cat_name, 'mwb-shipping-rates-for-woocommerce' );
 			
 		}
 		array_splice( $categories, 0 , 0, 'No Categories Selected' ); 
@@ -81,223 +75,224 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 	$this->instance_form_fields =
 	 array(
 		 'default_check' => array(
-			'title' => __('Default', 'shipping-rates-for-woocommerce'),
+			'title' => __('Default', 'mwb-shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
 			'class'=>'default_check_class',
-			'label' => __('Checkbox to set this shipping method as default selected option ', 'shipping-rates-for-woocommerce'),
+			'label' => __('Checkbox to set this shipping method as default selected option ', 'mwb-shipping-rates-for-woocommerce'),
 			'default`' => 'yes'
 		 ),
 		 'visibility' => array(
-			'title' => __('visibility', 'shipping-rates-for-woocommerce'),
+			'title' => __('visibility', 'mwb-shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
 			'class'=>'visibility_class',
-			'label' => __('visibile only to logged in user ', 'shipping-rates-for-woocommerce'),
+			'label' => __('visibile only to logged in user ', 'mwb-shipping-rates-for-woocommerce'),
 			'default`' => 'no'
 		 ),
 		 'only_general_shipping_charge' => array(
-			'title' => __('Enable only General Charge', 'shipping-rates-for-woocommerce'),
+			'title' => __('Enable only General Charge', 'mwb-shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
 			'class'=>'only_general_shipping_charge_class',
-			'label' => __('', 'shipping-rates-for-woocommerce'),
-			'default`' => 'no'
+			'label' => __('', 'mwb-shipping-rates-for-woocommerce'),
+			'default`' => 'yes'
 		 ),
 	 'title' => array(
-			'title' => __( 'Shipping Title', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Shipping Title', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Title to be display on site', 'shipping-rates-for-woocommerce' ),
-				'default' => __( 'MWB Shipping ', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Title to be display on site', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( 'MWB Shipping ', 'mwb-shipping-rates-for-woocommerce' ),
 				'desc_tip' =>true,
 				),
 	 'cost' => array(
-			'title' => __( 'Shipping Cost', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Shipping Cost', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'general shipping cost', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'general shipping cost', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 				),
 		 'tax_status' => array(
-				 'title' => __('Tax Status', 'shipping-rates-for-woocommerce'),
+				 'title' => __('Tax Status', 'mwb-shipping-rates-for-woocommerce'),
 				 'type' => 'select',
 				 'default' => 'taxable',
-				 'description' => __( 'Taxation on shipping', 'shipping-rates-for-woocommerce' ),
+				 'description' => __( 'Taxation on shipping', 'mwb-shipping-rates-for-woocommerce' ),
 				 'desc_tip' =>true,
 				 'options' => array(
-						 'taxable' => __('Taxable', 'shipping-rates-for-woocommerce'),
-						 'notax' => __('Not Taxable', 'shipping-rates-for-woocommerce'),
+						 'taxable' => __('Taxable', 'mwb-shipping-rates-for-woocommerce'),
+						 'notax' => __('Not Taxable', 'mwb-shipping-rates-for-woocommerce'),
 				 )
 				 ));
 				 $this->instance_form_fields['expected_delivery_date'] = array(
-					'title' => __( 'Expected Delivery Date', 'shipping-rates-for-woocommerce' ),
+					'title' => __( 'Expected Delivery Date', 'mwb-shipping-rates-for-woocommerce' ),
 						'type' => 'text',
 						'placeholder'=>'days',
-						'description' => __( 'Expected delivery date for shipping ', 'shipping-rates-for-woocommerce' ),
+						'description' => __( 'Expected delivery date for shipping ', 'mwb-shipping-rates-for-woocommerce' ),
 						'class' =>'mwb_stop_text',
 						'desc_tip' =>true,
 		 );
 				 $this->instance_form_fields['free_shipping'] = array(
-		 'title' => __('Free Shipping', 'shipping-rates-for-woocommerce'),
+		 'title' => __('Free Shipping', 'mwb-shipping-rates-for-woocommerce'),
 		 'type' => 'checkbox',
-		 'label' => __('Enable to apply conditional free shipping', 'shipping-rates-for-woocommerce'),
+		 'class' => 'mwb_free_shipping_check_'.$this->instance_id ,
+		 'label' => __('Enable to apply conditional free shipping', 'mwb-shipping-rates-for-woocommerce'),
 		 'default`' => 'no',
-		 'description' => __( 'Free shipping will override the configuration mention below.', 'shipping-rates-for-woocommerce' ),
+		 'description' => __( 'Free shipping will override the configuration mention below.', 'mwb-shipping-rates-for-woocommerce' ),
 		 'desc_tip' =>true,
 				 );
 				 
-				 if('yes' == get_option('free_shipping_field')) {
+				 if('yes' == $this->get_option('free_shipping')) {
 				 $this->instance_form_fields['pre_discount_price'] = array(
-			'title' => __('Pre Discount Price', 'shipping-rates-for-woocommerce'),
+			'title' => __('Pre Discount Price', 'mwb-shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
-			'label' => __('Checkbox to apply free shipping on pre-discounted price.', 'shipping-rates-for-woocommerce'),
-			'description' => __( 'Apply conditinal free shipping on the pre-discounted price', 'shipping-rates-for-woocommerce' ),
+			'label' => __('Checkbox to apply free shipping on pre-discounted price.', 'mwb-shipping-rates-for-woocommerce'),
+			'description' => __( 'Apply conditinal free shipping on the pre-discounted price', 'mwb-shipping-rates-for-woocommerce' ),
 			'desc_tip' =>true,
 			'default`' => 'no',
 				 );
 				 $this->instance_form_fields['free_shipping_cond'] = array(
-			 'title' => __('Free Shipping base on', 'shipping-rates-for-woocommerce'),
+			 'title' => __('Free Shipping base on', 'mwb-shipping-rates-for-woocommerce'),
 			 'type' => 'select',
 			 'class' =>'custom_free_shipping_class',
-			 'description' => __( 'Condition on which free shipping is allow', 'shipping-rates-for-woocommerce' ),
+			 'description' => __( 'Condition on which free shipping is allow', 'mwb-shipping-rates-for-woocommerce' ),
 			 'default' => 'minimum_order',
 			 'desc_tip' =>true,
 			 'options' => array(
-				   ''         => __( '--Select One--', 'shipping-rates-for-woocommerce' ),
-					 'minimum_order' => __('Minimum Order', 'shipping-rates-for-woocommerce'),
-					 'shipping_coupon' => __('Shipping Coupon', 'shipping-rates-for-woocommerce'),
+				   ''         => __( '--Select One--', 'mwb-shipping-rates-for-woocommerce' ),
+					 'minimum_order' => __('Minimum Order', 'mwb-shipping-rates-for-woocommerce'),
+					 'shipping_coupon' => __('Shipping Coupon', 'mwb-shipping-rates-for-woocommerce'),
 			 )
 			 );
 			 $this->instance_form_fields['shipping_label'] = array(
-				'title' => __( 'Free Shipping title', 'shipping-rates-for-woocommerce' ),
+				'title' => __( 'Free Shipping title', 'mwb-shipping-rates-for-woocommerce' ),
 					'type' => 'text',
-					'description' => __( 'Free Shipping label on site', 'shipping-rates-for-woocommerce' ),
-					'default' => __( 'Mwb Free Shippping Applied', 'shipping-rates-for-woocommerce' ),
+					'description' => __( 'Free Shipping label on site', 'mwb-shipping-rates-for-woocommerce' ),
+					'default' => __( 'Mwb Free Shippping Applied', 'mwb-shipping-rates-for-woocommerce' ),
 					'desc_tip' =>true,
 			 );
 			 $this->instance_form_fields['free_shipping_amount'] = array(
-				 'title' => __( 'Free Shipping Amount', 'shipping-rates-for-woocommerce' ),
+				 'title' => __( 'Free Shipping Amount', 'mwb-shipping-rates-for-woocommerce' ),
 					 'type' => 'text',
-					 'description' => __( 'Minimun amount for Free Shipping ', 'shipping-rates-for-woocommerce' ),
+					 'description' => __( 'Minimun amount for Free Shipping ', 'mwb-shipping-rates-for-woocommerce' ),
 					 'class' =>'mwb_stop_text',
 					 'desc_tip' =>true,
 			 );
 			}
 			 $this->instance_form_fields['t1'] = array(
-			'title' => __( '<h4>Apply Advanced Shipping rules</h4>', 'shipping-rates-for-woocommerce' ),
+			'title' => __( '<h4>Apply Advanced Shipping rules</h4>', 'mwb-shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Apply Advanced Shipping rules',
-			'description' => __( 'Advnace shipping rules for the shipping charge', 'shipping-rates-for-woocommerce' ),
+			'description' => __( 'Advnace shipping rules for the shipping charge', 'mwb-shipping-rates-for-woocommerce' ),
 			'desc_tip' =>true,
 
-		 );		if ('yes' === get_option('advance_shipping_field') ) {
+		 );		if ('yes' === $this->get_option('t1') ) {
 		 $this->instance_form_fields[ 'general_shipping']= array(
-			'title' => __( 'Include General Shipping Charges', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Include General Shipping Charges', 'mwb-shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to include general shipping charges applied above into advance charges.',
 			
 		 );
 		$this->instance_form_fields['categories_wise'] = array(
-			'title' => __( 'Categories Wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Categories Wise', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'multiselect',
-				'description' => __( 'Categories to apply shipping charge ', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Categories to apply shipping charge ', 'mwb-shipping-rates-for-woocommerce' ),
 				'options' => $categories,
 				'desc_tip' =>true,
 		 );
 		 $this->instance_form_fields['price_categories_wise'] = array(
-			'title' => __( 'Shipping charge by categories wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Shipping charge by categories wise', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Shipping amount charge for selected categories per quantity wise.', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Shipping amount charge for selected categories per quantity wise.', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );
 		$this->instance_form_fields['range'] = array(
-			'title' => __( 'Apply  Weight Range Rule', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Apply  Weight Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to enable weight range rule',
 			'class' =>'',
-			'description'  => __( 'Check to apply weight range rule.', 'shipping-rates-for-woocommerce' ),
+			'description'  => __( 'Check to apply weight range rule.', 'mwb-shipping-rates-for-woocommerce' ),
 		);
 		$this->instance_form_fields['range_price'] = array(
-			'title' => __( 'Apply Price Range Rule', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Apply Price Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to enable price range rule',
 			'class' =>'',
-			'description'  => __( 'Check to apply Price range rules.', 'shipping-rates-for-woocommerce' ),
+			'description'  => __( 'Check to apply Price range rules.', 'mwb-shipping-rates-for-woocommerce' ),
 		);
 		$this->instance_form_fields['range_volume'] =array(
-			'title' => __( 'Appy Volume Range Rule', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Appy Volume Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 			'type'  => 'checkbox',
 			'label' =>'Check to enable volume range rule',
 			'class' =>'',
-			'description'  => __( 'Check to apply Volume rules.', 'shipping-rates-for-woocommerce' ),
+			'description'  => __( 'Check to apply Volume rules.', 'mwb-shipping-rates-for-woocommerce' ),
 		);
 		$this->instance_form_fields['max_weight_wise'] =  array(
-			'title' => __( 'Maximun Weight (Kg)', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Maximun Weight (Kg)', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Maximum weight of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Maximum weight of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		);
 		$this->instance_form_fields['min_weight_wise'] = array(
-			'title' => __( 'Minimum Weight (Kg)', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Minimum Weight (Kg)', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum weight of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Minimum weight of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		);
 		$this->instance_form_fields ['price_weight_wise'] = array(
-			'title' => __( 'Charge Weight Wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Charge Weight Wise', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'shipping charge on selected weight of the cart. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'shipping charge on selected weight of the cart. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		);
 		$this->instance_form_fields['max_price'] = array(
-			'title' => __( 'Maximum Price', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Maximum Price', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		);
 		 $this->instance_form_fields['min_price'] =  array(
-			'title' => __( 'Minimum Price', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Minimum Price', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );
 		 $this->instance_form_fields['price_wise'] =  array(
-			'title' => __( 'Charge Price Wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Charge Price Wise', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Charge the shipping cost on selected price of cart. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Charge the shipping cost on selected price of cart. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );
 		 $this->instance_form_fields['max_volume_wise'] = array(
-			'title' => __( 'Maximun Volume (cm<sup>3</sup>)', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Maximun Volume (cm<sup>3</sup>)', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Maximum vol. of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Maximum vol. of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );
 		 $this->instance_form_fields['min_volume_wise'] = array(
-			'title' => __( 'Minimum Volume (cm<sup>3</sup>)', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Minimum Volume (cm<sup>3</sup>)', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Minimum vol. of the cart on which shipping charge applied. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'Minimum vol. of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );
 		 $this->instance_form_fields['volume_range_wise'] = array(
-			'title' => __( 'Charge Volume Wise', 'shipping-rates-for-woocommerce' ),
+			'title' => __( 'Charge Volume Wise', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'charge the shipping cost  on selected volume of the cart. ', 'shipping-rates-for-woocommerce' ),
-				'default' => __( '', 'shipping-rates-for-woocommerce' ),
+				'description' => __( 'charge the shipping cost  on selected volume of the cart. ', 'mwb-shipping-rates-for-woocommerce' ),
+				'default' => __( '', 'mwb-shipping-rates-for-woocommerce' ),
 				'class' =>'mwb_stop_text',
 				'desc_tip' =>true,
 		 );	}
@@ -320,7 +315,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 					$cart_quantity = get_option('cat_count');
 					$general_cost = $this->get_option( 'cost' );
 					$intance_settings     =  $this->instance_settings;
-					$enable_all_rules = $this->get_option( 't1' );
+
 					$max_weight = $this->get_option( 'max_weight_wise' );
 					$min_weight = $this->get_option( 'min_weight_wise' );
 					$max_price = $this->get_option( 'max_price' );
@@ -374,7 +369,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 
 		if('yes' === $this->get_option( 'only_general_shipping_charge' )){
 			$this->add_rate( array(
-						'id'      => $this->id,
+						'id'      => $this->get_rate_id(),
 						'label'   =>$this->get_option( 'title' ),
 						'cost'    => $this->get_option( 'cost' ),
 						'package' => $package,
@@ -382,7 +377,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 					)
 				);
 }
-		if ('yes' === $enable_all_rules) {
+		if ('yes' === $this->enable_all_rules) {
 			if ($total_cart_weight <= $max_weight && 'yes' === $range && $total_cart_weight >= $min_weight && !empty($min_weight) && !empty($max_weight)){
 
 				if(!is_numeric($weight_shipping_charge)){
@@ -414,7 +409,7 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			} else {
 				$mwb_weight_charge_2 = 0;
 			}
-///////////////////////////// Price Range //////////////////////////////////
+///////////////////////////// Price Range ////////////////////////////////////
 			if ($total_cart_price <= $max_price && 'yes' === $price_range && $total_cart_price >= $min_price && !empty($max_price) && !empty($min_price)){
 
 	         if(!is_numeric($price_wise_charge)) {
@@ -454,7 +449,6 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 
 /////////////////////////////////////////VOLUME/////////////
 if($total_cart_vol <= $max_vol && 'yes' === $vol_range && $total_cart_vol >= $min_vol && !empty($max_vol) && !empty($min_vol)){
-	// $volume_3 = $vol_wise_charge;
 	if(!is_numeric($vol_wise_charge)){
      $mwb_volume_charge_3 = 0;
 	} else{
@@ -495,7 +489,7 @@ if('yes' === $cart_categories && !empty($categories_wise_price)){
 	$price_for_categories=0;
 }
 
-///////////////////////////////////////////////////////VOLUME END
+///////////////////////////////////////////////////////VOLUME END/////////////////
 $cost = ($mwb_weight_charge_1 + $mwb_weight_charge_2 + $mwb_weight_charge_3 +  $mwb_price_charge_2 +  $mwb_price_charge_1 + $mwb_price_charge_3 + $mwb_volume_charge_1 +$mwb_volume_charge_2 + $mwb_volume_charge_3 + ($price_for_categories));
 if('yes' === $general_charges_enable)
 
@@ -506,7 +500,7 @@ if('yes' === $general_charges_enable)
 			$cost = $cost + $general_cost;
 		}
 	$this->add_rate( array(
-		'id'      => $this->id,
+		'id'      => $this->get_rate_id(),
 		'label'   =>$this->get_option( 'title' ),
 		'cost'    => $cost,
 		'package' => $package,
@@ -522,7 +516,7 @@ if('yes' === $enable_free_shipping){
 	}
 	if ( $min_amount <= $cart_total && 'minimum_order' === $min_order_cond  && 'yes' === $enable_free_shipping ) {
 			$this->add_rate( array(
-				'id'      => $this->id,
+				'id'      => $this->get_rate_id(),
 				'label'   => $free_shippping_lable,
 				'cost'    =>  0,
 				'package' => $package,
@@ -532,7 +526,7 @@ if('yes' === $enable_free_shipping){
 	}		
 	if ('shipping_coupon' === $min_order_cond  && 'yes' === $enable_free_shipping && 'yes' === $shipping_cond_check ) {
 		$this->add_rate( array(
-		  'id'      => $this->id,
+		  'id'      => $this->get_rate_id(),
 		  'label'   =>$free_shippping_lable,
 		  'cost'    => 0,
 		  'package' => $package,
@@ -553,10 +547,14 @@ if('yes' === $enable_free_shipping){
 		}
 		echo wp_kses_post( wpautop( $this->get_method_description() ) );
 		echo $this->get_admin_options_html(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		update_option('visibility_check' , $this->get_option( 'visibility' ));
+		update_option('default_shipping_check', $this->get_option( 'default_check' ));
+		update_option('expected_days', $this->get_option( 'expected_delivery_date' ));
+	
 		}
 
 	/**
-	 * Generating the html for setting field 
+	 * Generating the html for setting field
 	 *
 	 */
 		public function get_admin_options_html() {
@@ -564,4 +562,5 @@ if('yes' === $enable_free_shipping){
 			    $mwb_shipping_table ='<table class="form-table">' . $settings_html . '</table>';
 				return $mwb_shipping_table;
 		}
+
 }

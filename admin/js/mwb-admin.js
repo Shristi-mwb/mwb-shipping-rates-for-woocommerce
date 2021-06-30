@@ -1,32 +1,31 @@
+//code for datatable
+
+// jQuery(document).ready(function() {
+//     console.log('you entered');
+//     jQuery('#msrfw-datatable').DataTable({
+//         stateSave: true,
+//         dom: '<"mwb-dt-buttons"fB>tr<"bottom"lip>',
+//         "ordering": true, // enable ordering
+   
+        
+//         buttons: [
+//             'copyHtml5',
+//             'excelHtml5',
+//             'csvHtml5',
+//         ],
+//         language: {
+//             "lengthMenu": 'Rows per page _MENU_',
+
+//             paginate: { next: '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.99984 0L0.589844 1.41L5.16984 6L0.589844 10.59L1.99984 12L7.99984 6L1.99984 0Z" fill="#8E908F"/></svg>', previous: '<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.00016 12L7.41016 10.59L2.83016 6L7.41016 1.41L6.00016 -1.23266e-07L0.000156927 6L6.00016 12Z" fill="#8E908F"/></svg>' }
+//         },
+//     });
+// });
+
+//JS for MWB Shipping Rates For Woocoommerce
 (function( $ ) {
 	'use strict';
-// 	/**
-// 	 * All of the code for your admin-facing JavaScript source
-// 	 * should reside in this file.
-// 	 *
-// 	 * Note: It has been assumed you will write jQuery code here, so the
-// 	 * $ function reference has been prepared for usage within the scope
-// 	 * of this function.
-// 	 *
-// 	 * This enables you to define handlers, for when the DOM is ready:
-// 	 *
-// 	 * $(function() {
-// 	 *
-// 	 * });
-// 	 *
-// 	 * When the window is loaded:
-// 	 *
-// 	 * $( window ).load(function() {
-// 	 *
-// 	 * });
-// 	 *
-// 	 * ...and/or other possibilities.
-// 	 *
-// 	 * Ideally, it is not considered best practise to attach more than a
-// 	 * single DOM-ready or window-load handler for a particular page.
-// 	 * Although scripts in the WordPress core, Plugins and Themes may be
-// 	 * practising this, we should strive to set a better example in our own work.
-// 	 */
+
+
 $(document).ready(function () {
   $('#woocommerce_mwb_shipping_rate_free_shipping').on('click',function()
   {
@@ -46,128 +45,12 @@ $(document).ready(function () {
   $('#woocommerce_mwb_shipping_rate_free_shipping').on('change',function()
   {
     if($('#woocommerce_mwb_shipping_rate_free_shipping').is(':checked')){
-      $.ajax({
-        type:'POST',
-        dataType: 'text',
-        url: srfw_shipping_param.ajaxurl,
-      
-        data: {
-            'action':'show_free_shipping_field',
-            'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-            'show_free_shipping':'yes',
-        },
-        success:function( response ) {
-        $( ".woocommerce-save-button" ).trigger( "click" );
-        }
-    });
+      $( ".woocommerce-save-button" ).trigger( "click" );
      }
-    if($('#woocommerce_mwb_shipping_rate_free_shipping').not(':checked').length)
-  {
-    $.ajax({
-      type:'POST',
-      dataType: 'text',
-      url: srfw_shipping_param.ajaxurl,
-  
-      data: {
-          'action':'hide_free_shipping_field',
-          'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-          'hide_free_shipping':'no',
-      },
-    
-      success:function( response ) {
-      }
-  });
-  }
-  });
-
-  if($('.default_check_class').is(':checked')) {
-    $.ajax({
-      type:'POST',
-      dataType: 'text',
-      url: srfw_shipping_param.ajaxurl,
-  
-      data: {
-          'action':'shipping_coupon_action',
-          'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-      },
-    
-      success:function( response ) {
-      }
      
+    if($('#woocommerce_mwb_shipping_rate_free_shipping').not(':checked').length)
+  {}
   });
-  }
-  if($('.default_check_class').not(':checked').length)
-  {
-     $(document).ready(function () {
-      createCookie("default_check", 'false', "1");
-    });
-    
-    function createCookie(name, value, days) {
-      var expires;
-      if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-      }
-      else {
-        expires = "";
-      }
-      document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
-    }
-  }
-
-  if($('.visibility_class').is(':checked')) {
-   $.ajax({
-    type:'POST',
-    dataType: 'text',
-    url: srfw_shipping_param.ajaxurl,
-
-    data: {
-        'action':'shipping_visibility',
-        'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-    },
-  
-    success:function( response ) {
-    }
-});
-}
-  if($('.visibility_class').not(':checked').length)
-  {
-    createMyCookie("visibility_check", 'false', "10");
-  }
-
-  function createMyCookie(name, value, days) {
-    var expires;
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toGMTString();
-    }
-    else {
-      expires = "";
-    }
-    document.cookie = escape(name) + "=" + escape(value) + expires + "; path=/";
-  }
-
-
-$('#woocommerce_mwb_shipping_rate_expected_delivery_date').on('input', function() {
-  var delivery_days =$('#woocommerce_mwb_shipping_rate_expected_delivery_date').val();
-  $.ajax({
-    type:'POST',
-    dataType: 'text',
-    url: srfw_shipping_param.ajaxurl,
-
-    data: {
-        'action':'expected_date',
-        'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-        'expected_days':delivery_days,
-    },
-  
-    success:function( response ) {
-    }
-});
-});
-
 
 $('#woocommerce_mwb_shipping_rate_t1').on('click',function()
 {
@@ -184,41 +67,10 @@ $('#woocommerce_mwb_shipping_rate_t1').on('click',function()
 $('#woocommerce_mwb_shipping_rate_t1').on('change',function()
 {
   if($('#woocommerce_mwb_shipping_rate_t1').is(':checked')){
-    $.ajax({
-      type:'POST',
-      dataType: 'text',
-      url: srfw_shipping_param.ajaxurl,
-  
-      data: {
-          'action':'show_advance_shipping_field',
-          'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-          'show':'yes',
-      },
-    
-      success:function( response ) {
-        // alert(response);
-        $( ".woocommerce-save-button" ).trigger( "click" );
-      }
-  });
+    $( ".woocommerce-save-button" ).trigger( "click" );
   }
   if($('#woocommerce_mwb_shipping_rate_t1').not(':checked').length)
-  {
-    $.ajax({
-      type:'POST',
-      dataType: 'text',
-      url: srfw_shipping_param.ajaxurl,
-  
-      data: {
-          'action':'hide_advance_shipping_field',
-          'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
-          'hide':'no',
-      },
-    
-      success:function( response ) {
-
-      }
-  });
-  }
+  {}
 });
 
 $('#woocommerce_mwb_shipping_rate_categories_wise').on('click',function()
@@ -250,9 +102,43 @@ $(".mwb_stop_text").on('keypress',function (e) {
      return false;
   }
 });
+//////////////Range Select condition////////////////
+$( ".woocommerce-save-button" ).on( "click", function (){
+if($('#woocommerce_mwb_shipping_rate_max_weight_wise').val() && $('#woocommerce_mwb_shipping_rate_min_weight_wise').val()){
+  
+  if($('#woocommerce_mwb_shipping_rate_range').not(':checked')){
+    $('#woocommerce_mwb_shipping_rate_range').prop('required',true);
+  }
+  else{
+    $('#woocommerce_mwb_shipping_rate_range').prop('required',false);
+  }
+}
 
-////////////////////////////////////////////Multi-select////////////////////////////
-/////////////////////////////////////Multi-select End//////////////////////////////
+if($('#woocommerce_mwb_shipping_rate_max_price').val() && $('#woocommerce_mwb_shipping_rate_min_price').val()){
+  
+  if($('#woocommerce_mwb_shipping_rate_range_price').not(':checked')){
+    $('#woocommerce_mwb_shipping_rate_range_price').prop('required',true);
+    // $('#woocommerce_mwb_shipping_rate_range').customError('Entering an email-id is necessary!');
+  }
+  else{
+    $('#woocommerce_mwb_shipping_rate_range_price').prop('required',false);
+  }
+}
 
+if($('#woocommerce_mwb_shipping_rate_max_volume_wise').val() && $('#woocommerce_mwb_shipping_rate_min_volume_wise').val()){
+  
+  if($('#woocommerce_mwb_shipping_rate_range_volume').not(':checked')){
+    $('#woocommerce_mwb_shipping_rate_range_volume').prop('required',true);
+    // $('#woocommerce_mwb_shipping_rate_range').customError('Entering an email-id is necessary!');
+  }
+  else{
+    $('#woocommerce_mwb_shipping_rate_range_volume').prop('required',false);
+  }
+}
+
+});
+// else{
+//   alert($('#woocommerce_mwb_shipping_rate_max_weight_wise').val()); 
+// }
 	 });
 	})( jQuery );   

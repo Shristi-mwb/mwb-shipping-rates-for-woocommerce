@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Shipping_rates_for_woocommerce
- * @subpackage Shipping_rates_for_woocommerce
+ * @package    Mwb_Shipping_Rates_For_Woocommerce
+ * @subpackage Mwb_Shipping_Rates_For_Woocommerce
  */
 
-esc_html_e( 'oops looks like nothing is here', 'shipping-rates-for-woocommerce' );
+esc_html_e( 'oops looks like nothing is here', 'mwb-shipping-rates-for-woocommerce' );

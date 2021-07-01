@@ -334,6 +334,18 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin
         ),
         ),
         array(
+            'title' => __('Visibility', 'mwb-shipping-rates-for-woocommerce'),
+            'type'  => 'radio-switch',
+            'description'  => __('Show shipping method only to the logged in user on front end.', 'mwb-shipping-rates-for-woocommerce'),
+            'id'    => 'msrfw_radio_switch_visibility',
+            'value' => get_option('msrfw_radio_switch_visibility'),
+            'class' => 'msrfw-radio-switch-class',
+            'options' => array(
+            'yes' => __('YES', 'mwb-shipping-rates-for-woocommerce'),
+            'no' => __('NO', 'mwb-shipping-rates-for-woocommerce'),
+            ),
+            ),
+        array(
         'type'  => 'button',
         'id'    => 'msrfw_button_demo',
         'button_text' => __('Save Change', 'mwb-shipping-rates-for-woocommerce'),
@@ -342,127 +354,6 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin
         );
         return $msrfw_settings_general;
     }
-
-    /**
-     * MWB Shipping Rates For WooCommerce admin menu page.
-     *
-     * @since 1.0.0
-     * @param array $msrfw_settings_template Settings fields.
-     */
-    // public function msrfw_admin_template_settings_page( $msrfw_settings_template )
-    // {
-    //     $msrfw_settings_template = array(
-    //     array(
-    //     'title' => __('Text Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'text',
-    //     'description'  => __('This is text field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_text_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-text-class',
-    //     'placeholder' => __('Text Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-    //     array(
-    //     'title' => __('Number Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'number',
-    //     'description'  => __('This is number field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_number_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-number-class',
-    //     'placeholder' => '',
-    //     ),
-    //     array(
-    //     'title' => __('Password Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'password',
-    //     'description'  => __('This is password field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_password_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-password-class',
-    //     'placeholder' => '',
-    //     ),
-    //     array(
-    //     'title' => __('Textarea Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'textarea',
-    //     'description'  => __('This is textarea field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_textarea_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-textarea-class',
-    //     'rows' => '5',
-    //     'cols' => '10',
-    //     'placeholder' => __('Textarea Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-    //     array(
-    //     'title' => __('Select Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'select',
-    //     'description'  => __('This is select field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_select_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-select-class',
-    //     'placeholder' => __('Select Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'options' => array(
-    //                 '' => __('Select option', 'mwb-shipping-rates-for-woocommerce'),
-    //                 'INR' => __('Rs.', 'mwb-shipping-rates-for-woocommerce'),
-    //                 'USD' => __('$', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-    //     ),
-    //     array(
-    //     'title' => __('Multiselect Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'multiselect',
-    //     'description'  => __('This is multiselect field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_multiselect_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-multiselect-class mwb-defaut-multiselect',
-    //     'placeholder' => '',
-    //     'options' => array(
-    //                 'default' => __('Select currency code from options', 'mwb-shipping-rates-for-woocommerce'),
-    //                 'INR' => __('Rs.', 'mwb-shipping-rates-for-woocommerce'),
-    //                 'USD' => __('$', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-    //     ),
-    //     array(
-    //     'title' => __('Checkbox Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'checkbox',
-    //     'description'  => __('This is checkbox field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_checkbox_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-checkbox-class',
-    //     'placeholder' => __('Checkbox Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-
-    //     array(
-    //     'title' => __('Radio Field Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'radio',
-    //     'description'  => __('This is radio field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_radio_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-radio-class',
-    //     'placeholder' => __('Radio Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'options' => array(
-    //                 'yes' => __('YES', 'mwb-shipping-rates-for-woocommerce'),
-    //                 'no' => __('NO', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-    //     ),
-    //     array(
-    //     'title' => __('Enable', 'mwb-shipping-rates-for-woocommerce'),
-    //     'type'  => 'radio-switch',
-    //     'description'  => __('This is switch field demo follow same structure for further use.', 'mwb-shipping-rates-for-woocommerce'),
-    //     'id'    => 'msrfw_radio_switch_demo',
-    //     'value' => '',
-    //     'class' => 'msrfw-radio-switch-class',
-    //     'options' => array(
-    //                 'yes' => __('YES', 'mwb-shipping-rates-for-woocommerce'),
-    //                 'no' => __('NO', 'mwb-shipping-rates-for-woocommerce'),
-    //     ),
-    //     ),
-
-    //     array(
-    //     'type'  => 'button',
-    //     'id'    => 'msrfw_button_demo',
-    //     'button_text' => __('Button Demo', 'mwb-shipping-rates-for-woocommerce'),
-    //     'class' => 'msrfw-button-class',
-    //     ),
-    //     );
-    //     return $msrfw_settings_template;
-    // }
 
     /**
      * MWB Shipping Rates For WooCommerce save tab settings.
@@ -526,56 +417,4 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin
         return $mwb_input_array;
     }
 
-    /**
-     * checking makewebbetter license on daily basis
-     *
-     * @since 1.0.0
-     */
-
-    // public function mwb_msrfw_check_license()
-    // {
-
-    //     $user_license_key = get_option('mwb_msrfw_license_key', '');
-
-    //     $api_params = array(
-    //     'slm_action'        => 'slm_check',
-    //     'secret_key'        => MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY,
-    //     'license_key'       => $user_license_key,
-    //     '_registered_domain' => $_SERVER['SERVER_NAME'],
-    //     'item_reference'    => urlencode(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_ITEM_REFERENCE),
-    //     'product_reference' => 'MWBPK-2965',
-    //     );
-
-    //     $query = esc_url_raw(add_query_arg($api_params, MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_LICENSE_SERVER_URL));
-
-    //     // $ch = curl_init();
-    //     // curl_setopt($ch, CURLOPT_URL, $query);
-    //     // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     // curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-    //     // curl_setopt($ch, CURLOPT_SSL_VERIFYSTATUS, false);
-
-    //     // $mwb_response = curl_exec($ch);
-
-    //     // curl_close($ch);
-
-    //     // $license_data = json_decode($mwb_response);
-
-    //     $mwb_response = wp_remote_get(
-	// 		$query,
-	// 		array(
-	// 			'timeout' => 20,
-	// 			'sslverify' => false,
-	// 		)
-	// 	);
-	// 	$license_data = json_decode( wp_remote_retrieve_body( $mwb_response ) );
-
-    //     if (isset($license_data->result) && 'success' === $license_data->result && isset($license_data->status) && 'active' === $license_data->status ) {
-
-    //         update_option('mwb_msrfw_license_check', true);
-
-    //     } else {
-
-    //         delete_option('mwb_msrfw_license_check');
-    //     }
-    // }
 }

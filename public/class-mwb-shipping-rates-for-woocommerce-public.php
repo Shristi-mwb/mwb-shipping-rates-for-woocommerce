@@ -106,17 +106,18 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 	 * @since    1.0.0
 	 */
 	public function hide_shipping_for_unlogged_user( $rates , $package ) {
-      $checker = get_current_user_id();
-		if ( 'yes' === get_option('visibility_check')) { 
-			if(0 === $checker){
+			if ( 'on' === get_option('msrfw_radio_switch_visibility')) { 
+
 			foreach( $rates as $rate_id => $rate_val ) { 
 				if ( 'mwb_shipping_rate' === $rate_val->get_method_id() ) { 
+					if(!is_user_logged_in() ){
 					unset( $rates[ $rate_id ] );
-				}
-			} 
-		   }
-		} 
-		return $rates;
+					}
+				} 
+			}
 		}
+		return $rates;
+		
+	}
 
 }

@@ -245,7 +245,7 @@ class Mwb_Shipping_Rates_For_Woocommerce
 
         $this->loader->add_action('wp_enqueue_scripts', $msrfw_plugin_common, 'msrfw_common_enqueue_scripts');
         
-        //license validation.
+        //license validation. 'woocommerce_package_rates'
         // $this->loader->add_action('wp_ajax_mwb_msrfw_validate_license_key', $msrfw_plugin_common, 'mwb_msrfw_validate_license_key');
 
         if ('on' === get_option( 'msrfw_radio_switch_demo')) {
@@ -280,15 +280,6 @@ class Mwb_Shipping_Rates_For_Woocommerce
         $this->loader->add_action( 'woocommerce_before_cart', $msrfw_plugin_public , 'auto_select_free_shipping_by_default' , 10 );
         $this->loader->add_action( 'woocommerce_customer_save_address', $msrfw_plugin_public , 'auto_select_free_shipping_by_default', 10 );
 	    $this->loader->add_filter( 'woocommerce_package_rates', $msrfw_plugin_public , 'hide_shipping_for_unlogged_user', 10, 2 );
-
-        //license validation.
-        $callname_lic = self::$lic_callback_function;
-        $callname_lic_initial = self::$lic_ini_callback_function;
-        $day_count = self::$callname_lic_initial();
-        
-        if (self::$callname_lic() || 0 < $day_count ) {
-        }
-
     }
 
     /**

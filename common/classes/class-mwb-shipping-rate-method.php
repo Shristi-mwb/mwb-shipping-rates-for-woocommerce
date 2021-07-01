@@ -81,19 +81,12 @@ class Mwb_Shipping_rate_method extends WC_Shipping_Method {
 			'label' => __('Checkbox to set this shipping method as default selected option ', 'mwb-shipping-rates-for-woocommerce'),
 			'default`' => 'yes'
 		 ),
-		 'visibility' => array(
-			'title' => __('visibility', 'mwb-shipping-rates-for-woocommerce'),
-			'type' => 'checkbox',
-			'class'=>'visibility_class',
-			'label' => __('visibile only to logged in user ', 'mwb-shipping-rates-for-woocommerce'),
-			'default`' => 'no'
-		 ),
 		 'only_general_shipping_charge' => array(
-			'title' => __('Enable only General Charge', 'mwb-shipping-rates-for-woocommerce'),
+			'title' => __('Enable General Charge', 'mwb-shipping-rates-for-woocommerce'),
 			'type' => 'checkbox',
 			'class'=>'only_general_shipping_charge_class',
-			'label' => __('', 'mwb-shipping-rates-for-woocommerce'),
-			'default`' => 'yes'
+			'label' => __('Checkbox to apply general shipping charges.', 'mwb-shipping-rates-for-woocommerce'),
+			'default`' => 'yes',
 		 ),
 	 'title' => array(
 			'title' => __( 'Shipping Title', 'mwb-shipping-rates-for-woocommerce' ),
@@ -547,10 +540,9 @@ if('yes' === $enable_free_shipping){
 		}
 		echo wp_kses_post( wpautop( $this->get_method_description() ) );
 		echo $this->get_admin_options_html(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-		update_option('visibility_check' , $this->get_option( 'visibility' ));
 		update_option('default_shipping_check', $this->get_option( 'default_check' ));
 		update_option('expected_days', $this->get_option( 'expected_delivery_date' ));
-	
+	   
 		}
 
 	/**

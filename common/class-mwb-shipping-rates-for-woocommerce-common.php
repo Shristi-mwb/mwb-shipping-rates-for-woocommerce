@@ -217,7 +217,6 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	$expec_date = date('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
 	_e( '<div id=" mwb_delivery_message">Expected to be delivered by ' . $expec_date . '</div>', 'mwb-shipping-rates-for-woocommerce');
 		}
-
 	}
 
 	/**

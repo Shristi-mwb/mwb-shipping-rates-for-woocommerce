@@ -80,24 +80,25 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	function auto_select_free_shipping_by_default() {
-		if('yes' === get_option('default_shipping_check')) {
-		if ( isset(WC()->session) && ! WC()->session->has_session() )
+	public function auto_select_free_shipping_by_default() {
+		if ('yes' === get_option('default_shipping_check')) {
+			if ( isset(WC()->session) && ! WC()->session->has_session() ) {
 			WC()->session->set_customer_session_cookie( true );
-	       
+			}
 		// Check if "free shipping" is already set
-		if ( strpos( WC()->session->get('chosen_shipping_methods')[0], 'mwb_shipping_rate' ) !== false )
+		if ( strpos( WC()->session->get('chosen_shipping_methods')[0], 'mwb_shipping_rate' ) !== false ) {
 			return;
+			}
 	
 		// Loop through shipping methods
-		foreach( WC()->session->get('shipping_for_package_0')['rates'] as $key => $rate ){
-			if( $rate->method_id === 'mwb_shipping_rate' ){
+			foreach ( WC()->session->get('shipping_for_package_0')['rates'] as $key => $rate ) {
+				if ( 'mwb_shipping_rate' === $rate->method_id) {
 				// Set "Free shipping" method
 				WC()->session->set( 'chosen_shipping_methods', array($rate->id) );
 				return;
+				}
 			}
 		}
-	  }
 	}
 
 	/**
@@ -105,12 +106,13 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function hide_shipping_for_unlogged_user( $rates , $package ) {
-			if ( 'on' === get_option('msrfw_radio_switch_visibility')) { 
+	public function hide_shipping_for_unlogged_user( $rates, $package ) {
+				$package;
+		if ( 'on' === get_option('msrfw_radio_switch_visibility')) { 
 
-			foreach( $rates as $rate_id => $rate_val ) { 
+			foreach ( $rates as $rate_id => $rate_val ) { 
 				if ( 'mwb_shipping_rate' === $rate_val->get_method_id() ) { 
-					if(!is_user_logged_in() ){
+					if (!is_user_logged_in() ) {
 					unset( $rates[ $rate_id ] );
 					}
 				} 

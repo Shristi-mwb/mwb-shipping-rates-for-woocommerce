@@ -70,80 +70,6 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	}
 
 	/**
-	 * validating makewebbetter license
-	 *
-	 * @since    1.0.0
-	 */
-
-	public function mwb_msrfw_validate_license_key() {
-	
-		$mwb_msrfw_purchase_code = sanitize_text_field( $_POST['purchase_code'] );
-		$api_params = array(
-			'slm_action'        => 'slm_activate',
-			'secret_key'        => MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY,
-			'license_key'       => $mwb_msrfw_purchase_code,
-			'_registered_domain' => $_SERVER['SERVER_NAME'],
-			'item_reference'    => urlencode( MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_ITEM_REFERENCE ),
-			'product_reference' => 'MWBPK-2965',
-
-		);
-
-		$query = esc_url_raw( add_query_arg( $api_params, MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_LICENSE_SERVER_URL ) );
-		// $ch = curl_init();
-		// curl_setopt( $ch, CURLOPT_URL, $query );
-		// curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		// curl_setopt( $ch, CURLOPT_TIMEOUT, 20 );
-		// curl_setopt( $ch, CURLOPT_SSL_VERIFYSTATUS, false );
-		// $mwb_msrfw_response = curl_exec( $ch );
-		// curl_close($ch);
-
-		$mwb_msrfw_response = wp_remote_get(
-			$query,
-			array(
-				'timeout' => 20,
-				'sslverify' => false,
-			)
-		);
-
-		if ( is_wp_error( $mwb_msrfw_response ) ) {
-			echo json_encode(
-				array(
-					'status' => false,
-					'msg' => __(
-						'An unexpected error occurred. Please try again.',
-						'mwb-shipping-rates-for-woocommerce'
-					),
-				)
-			);
-		} else {
-			$mwb_msrfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_msrfw_response ) );
-
-			if ( isset( $mwb_msrfw_license_data->result ) && $mwb_msrfw_license_data->result == 'success' ) {
-				update_option( 'mwb_msrfw_license_key', $mwb_msrfw_purchase_code );
-				update_option( 'mwb_msrfw_license_check', true );
-
-				echo json_encode(
-					array(
-						'status' => true,
-						'msg' => __(
-							'Successfully Verified. Please Wait.',
-							'mwb-shipping-rates-for-woocommerce'
-						),
-					)
-				);
-			} else {
-				echo json_encode(
-					array(
-						'status' => false,
-						'msg' => $mwb_msrfw_license_data->message,
-					)
-				);
-			}
-		}
-		wp_die();
-	}
-
-	/**
 	 * Creating shipping method for WooCommerce.
 	 *
 	 * @param array $methods an array of shipping methods.
@@ -152,13 +78,13 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	 */
 	public function mwb_shipping_rate_for_woocommerce_create_shipping_method( $methods ) {
 
-		if ( ! class_exists( 'Mwb_Shipping_rate_method' ) ) {
+		if ( ! class_exists( 'Mwb_Shipping_Rate_Method' ) ) {
 			/**
 			 * Custom shipping class for Shipping.
 			 */
 		
 			require_once plugin_dir_path( __FILE__ ) . '/classes/class-mwb-shipping-rate-method.php'; // Including class file.
-			new Mwb_Shipping_rate_method();
+			new Mwb_Shipping_Rate_Method();
 			
 			
 		}
@@ -186,6 +112,10 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	public function srfw_coupon_add_fun() { 
 	$applied_coupons = WC()->cart->get_applied_coupons();
 
+		if (empty($applied_coupons)) {
+		update_option('shipping_coupon', 'no');
+		}
+
 		foreach ( $applied_coupons as $coupon_code ) {
 
 	$coupon = new WC_Coupon($coupon_code);
@@ -202,7 +132,22 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function srfw_coupon_remove_fun() {
-		update_option('shipping_coupon', 'no');
+		$applied_coupons = WC()->cart->get_applied_coupons();
+
+		if (empty($applied_coupons)) {
+	update_option('shipping_coupon', 'no');
+		}
+
+		foreach ( $applied_coupons as $coupon_code ) {
+
+	$coupon = new WC_Coupon($coupon_code);
+
+			if ($coupon->get_free_shipping()) {
+	 update_option('shipping_coupon', 'yes');
+			} else {
+				update_option('shipping_coupon', 'no');
+			}
+		}
 	}
 
 	/**
@@ -214,8 +159,8 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	global $Date;
 	$days_checker = get_option('expected_days');
 		if (!empty($days_checker)) {
-	$expec_date = date('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
-	_e( '<div id=" mwb_delivery_message">Expected to be delivered by ' . $expec_date . '</div>', 'mwb-shipping-rates-for-woocommerce');
+	$expec_date = gmdate('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
+	esc_html_e( 'Expected to be delivered by ' . $expec_date , 'mwb-shipping-rates-for-woocommerce');
 		}
 	}
 
@@ -243,24 +188,24 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	public function shipping_rates_categories() {
 	$shipping_prod_cat = get_option('product_categories');
 	$shipping_ar       = explode(',', $shipping_prod_cat[0]);
-    $cat_count = 0; 
-	$cat_in_cart = false;
+			$cat_count = 0; 
+		  $cat_in_cart = false;
 	   
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
  
-			foreach ($shipping_ar as $x=>$val){
+			foreach ($shipping_ar as $x=>$val) {
 		if ( has_term( $val, 'product_cat', $cart_item['product_id'] ) ) {
 		$cat_in_cart = true;
-		$cat_count += $cart_item['quantity'];
+		$cat_count  += $cart_item['quantity'];
 				}
 			}
 
 		}
 		if ( $cat_in_cart ) {
-	update_option('shipping_cart','yes');
-	update_option('cat_count',$cat_count);
+	update_option('shipping_cart', 'yes');
+	update_option('cat_count', $cat_count);
 		} else {
-	update_option('shipping_cart','no');
+	update_option('shipping_cart', 'no');
 		}
 		if ( 'No Categories Selected' === $shipping_prod_cat[0] ) {	
 		update_option('shipping_cart', 'no');

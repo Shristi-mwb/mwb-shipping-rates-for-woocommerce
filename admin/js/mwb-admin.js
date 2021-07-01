@@ -118,7 +118,6 @@ if($('#woocommerce_mwb_shipping_rate_max_price').val() && $('#woocommerce_mwb_sh
   
   if($('#woocommerce_mwb_shipping_rate_range_price').not(':checked')){
     $('#woocommerce_mwb_shipping_rate_range_price').prop('required',true);
-    // $('#woocommerce_mwb_shipping_rate_range').customError('Entering an email-id is necessary!');
   }
   else{
     $('#woocommerce_mwb_shipping_rate_range_price').prop('required',false);
@@ -129,7 +128,6 @@ if($('#woocommerce_mwb_shipping_rate_max_volume_wise').val() && $('#woocommerce_
   
   if($('#woocommerce_mwb_shipping_rate_range_volume').not(':checked')){
     $('#woocommerce_mwb_shipping_rate_range_volume').prop('required',true);
-    // $('#woocommerce_mwb_shipping_rate_range').customError('Entering an email-id is necessary!');
   }
   else{
     $('#woocommerce_mwb_shipping_rate_range_volume').prop('required',false);
@@ -137,8 +135,5 @@ if($('#woocommerce_mwb_shipping_rate_max_volume_wise').val() && $('#woocommerce_
 }
 
 });
-// else{
-//   alert($('#woocommerce_mwb_shipping_rate_max_weight_wise').val()); 
-// }
 	 });
 	})( jQuery );   

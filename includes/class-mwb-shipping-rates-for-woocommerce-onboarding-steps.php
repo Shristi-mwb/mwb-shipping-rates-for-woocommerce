@@ -109,7 +109,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 	public function __construct() {
 		self::$mwb_msrfw_store_name = get_bloginfo( 'name' );
 		self::$mwb_msrfw_store_url = home_url();
-		self::$mwb_msrfw_plugin_name = 'mwb-shipping-rates-for-woocommerce';
+		self::$mwb_msrfw_plugin_name = 'Mwb Shipping Rates For Woocommerce';
 		self::$mwb_msrfw_plugin_name_label = 'MWB STANDARD PLUGIN';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_msrfw_onboarding_enqueue_styles' ) );
@@ -726,6 +726,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 			'cookies'     => array(),
 		);
 		$response = wp_remote_post( $url, $request );
+		// update_option( 'mwb_shipping_2', wp_json_encode($response) );
 		if ( is_wp_error( $response ) ) {
 			$status_code = 500;
 			$response    = esc_html__( 'Unexpected Error Occured', 'mwb-shipping-rates-for-woocommerce' );

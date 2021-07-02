@@ -177,7 +177,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'mwb_shipping_rat
 		if (strpos($plugin_file_name, basename(__FILE__)) ) {
 		$links_array[] = '<a href="#" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">'.__('Demo', 'mwb-shipping-rates-for-woocommerce').'</a>';
 		$links_array[] = '<a href="#" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">'.__('Documentation', 'mwb-shipping-rates-for-woocommerce').'</a>';
-		$links_array[] = '<a href="#" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">'.__('Support', 'mwb-shipping-rates-for-woocommerce').'</a>';
+		$links_array[] = '<a href="https://makewebbetter.com/contact-us/" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">'.__('Support', 'mwb-shipping-rates-for-woocommerce').'</a>';
 		}
 	return $links_array;
 	}

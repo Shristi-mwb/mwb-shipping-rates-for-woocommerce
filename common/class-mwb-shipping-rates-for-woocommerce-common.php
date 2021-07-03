@@ -151,6 +151,17 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	}
 
 	/**
+	 * Checking Free shipping Coupon.
+	 *
+	 * @since 1.0.0
+	 */
+	public function Mwb_free_shipping_coupon_checking() {
+		if (!is_user_logged_in()) {
+			update_option('shipping_coupon', 'no');
+		}
+	}
+
+	/**
 	 * Expected delivery  shipping method.
 	 *
 	 * @since 1.0.0

@@ -307,8 +307,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	 *
 	 * @return array
 	 */
-	public function mwb_sanitize_array( $mwb_input_array )
-	{
+	public function mwb_sanitize_array( $mwb_input_array ) {
 		foreach ( $mwb_input_array as $key => $value ) {
 			$key   = sanitize_text_field($key);
 			$value = sanitize_text_field($value);

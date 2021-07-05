@@ -223,7 +223,7 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 
 		$this->loader->add_action('wp_enqueue_scripts', $msrfw_plugin_common, 'msrfw_common_enqueue_scripts');
 		
-		if ('on' === get_option( 'msrfw_radio_switch_demo')) {
+		if ('on' === get_option('msrfw_radio_switch_enable')) {
 			$this->loader->add_action( 'woocommerce_shipping_init', $msrfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_create_shipping_method' );
 			$this->loader->add_filter( 'woocommerce_shipping_methods', $msrfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
 			$this->loader->add_action( 'woocommerce_applied_coupon', $msrfw_plugin_common, 'srfw_coupon_add_fun' );

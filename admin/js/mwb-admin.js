@@ -135,5 +135,6 @@ if($('#woocommerce_mwb_shipping_rate_max_volume_wise').val() && $('#woocommerce_
 }
 
 });
+$('.is-dismissible').fadeOut(1500);
 	 });
 	})( jQuery );   

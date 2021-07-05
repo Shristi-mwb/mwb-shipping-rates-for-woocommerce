@@ -109,8 +109,8 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 	public function __construct() {
 		self::$mwb_msrfw_store_name = get_bloginfo( 'name' );
 		self::$mwb_msrfw_store_url = home_url();
-		self::$mwb_msrfw_plugin_name = 'Mwb Shipping Rates For Woocommerce';
-		self::$mwb_msrfw_plugin_name_label = 'MWB STANDARD PLUGIN';
+		self::$mwb_msrfw_plugin_name = 'MWB Shipping Rates For WooCommerce';
+		self::$mwb_msrfw_plugin_name_label = 'MWB Shipping Rates For WooCommerce';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_msrfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_msrfw_onboarding_enqueue_scripts' ) );
@@ -535,7 +535,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'org_plugin_name',
-				'value' => '',
+				'value' => self::$mwb_msrfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),
@@ -726,7 +726,6 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 			'cookies'     => array(),
 		);
 		$response = wp_remote_post( $url, $request );
-		// update_option( 'mwb_shipping_2', wp_json_encode($response) );
 		if ( is_wp_error( $response ) ) {
 			$status_code = 500;
 			$response    = esc_html__( 'Unexpected Error Occured', 'mwb-shipping-rates-for-woocommerce' );
@@ -777,7 +776,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 	public function mwb_msrfw_valid_page_screen_check() {
 		$mwb_msrfw_screen = get_current_screen();
 		$mwb_msrfw_is_flag = false;
-		if ( isset( $mwb_msrfw_screen->id ) && 'makewebbetter_page_mwb_shipping_rates_for_woocommerce_menu' == $mwb_msrfw_screen->id ) {
+		if ( isset( $mwb_msrfw_screen->id ) && 'makewebbetter_page_mwb_shipping_rates_for_woocommerce_menu' === $mwb_msrfw_screen->id ) {
 			$mwb_msrfw_is_flag = true;
 		}
 

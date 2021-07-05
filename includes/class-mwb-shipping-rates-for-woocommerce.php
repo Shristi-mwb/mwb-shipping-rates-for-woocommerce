@@ -223,7 +223,7 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 
 		$this->loader->add_action('wp_enqueue_scripts', $msrfw_plugin_common, 'msrfw_common_enqueue_scripts');
 		
-		if ('on' === get_option( 'msrfw_radio_switch_demo')) {
+		if ('on' === get_option('msrfw_radio_switch_enable')) {
 			$this->loader->add_action( 'woocommerce_shipping_init', $msrfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_create_shipping_method' );
 			$this->loader->add_filter( 'woocommerce_shipping_methods', $msrfw_plugin_common, 'mwb_shipping_rate_for_woocommerce_add_shipping_method' );
 			$this->loader->add_action( 'woocommerce_applied_coupon', $msrfw_plugin_common, 'srfw_coupon_add_fun' );
@@ -234,6 +234,8 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_review_order_before_payment', $msrfw_plugin_common, 'expected_delivery_date_message' );
 			$this->loader->add_action( 'woocommerce_before_thankyou', $msrfw_plugin_common, 'expected_delivery_date_message' );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $msrfw_plugin_common , 'displaying_cart_items_weight', 10, 2 );
+			$this->loader->add_action( 'init', $msrfw_plugin_common , 'Mwb_free_shipping_coupon_checking', 10 );
+
 		}
 
 	}
@@ -251,7 +253,7 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 		$this->loader->add_action('wp_enqueue_scripts', $msrfw_plugin_public, 'msrfw_public_enqueue_styles');
 		$this->loader->add_action('wp_enqueue_scripts', $msrfw_plugin_public, 'msrfw_public_enqueue_scripts');
 		 
-		$this->loader->add_action( 'init', $msrfw_plugin_public , 'auto_select_free_shipping_by_default' , 10 );
+		$this->loader->add_action( 'woocommerce_before_cart', $msrfw_plugin_public , 'auto_select_free_shipping_by_default' , 10 );
 		$this->loader->add_action( 'woocommerce_before_cart', $msrfw_plugin_public , 'auto_select_free_shipping_by_default' , 10 );
 		$this->loader->add_action( 'woocommerce_customer_save_address', $msrfw_plugin_public , 'auto_select_free_shipping_by_default', 10 );
 		$this->loader->add_filter( 'woocommerce_package_rates', $msrfw_plugin_public , 'hide_shipping_for_unlogged_user', 10, 2 );

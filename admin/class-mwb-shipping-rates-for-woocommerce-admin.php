@@ -223,18 +223,19 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	 */
 	public function msrfw_admin_general_settings_page( $msrfw_settings_general ) {
 		$msrfw_settings_general = array(
+		array(),
 		array(
-		'title' => __('Enable plugin', 'mwb-shipping-rates-for-woocommerce'),
-		'type'  => 'radio-switch',
-		'description'  => __('Enable plugin to start the functionality of the MWB Shipping Rates.', 'mwb-shipping-rates-for-woocommerce'),
-		'id'    => 'msrfw_radio_switch_demo',
-		'value' => get_option('msrfw_radio_switch_demo'),
-		'class' => 'msrfw-radio-switch-class',
-		'options' => array(
-		'yes' => __('YES', 'mwb-shipping-rates-for-woocommerce'),
-		'no' => __('NO', 'mwb-shipping-rates-for-woocommerce'),
-		),
-		),
+			'title' => __('Enable plugin ', 'mwb-shipping-rates-for-woocommerce'),
+			'type'  => 'radio-switch',
+			'description'  => __('Enable plugin to start the functionality of the MWB Shipping Rates.', 'mwb-shipping-rates-for-woocommerce'),
+			'id'    => 'msrfw_radio_switch_enable',
+			'value' => get_option('msrfw_radio_switch_enable'),
+			'class' => 'msrfw-radio-switch-class',
+			'options' => array(
+			'yes' => __('YES', 'mwb-shipping-rates-for-woocommerce'),
+			'no' => __('NO', 'mwb-shipping-rates-for-woocommerce'),
+			),
+			),
 		array(
 			'title' => __('Visibility', 'mwb-shipping-rates-for-woocommerce'),
 			'type'  => 'radio-switch',
@@ -247,6 +248,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 			'no' => __('NO', 'mwb-shipping-rates-for-woocommerce'),
 			),
 			),
+
 		array(
 		'type'  => 'button',
 		'id'    => 'msrfw_button_demo',
@@ -307,8 +309,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	 *
 	 * @return array
 	 */
-	public function mwb_sanitize_array( $mwb_input_array )
-	{
+	public function mwb_sanitize_array( $mwb_input_array ) {
 		foreach ( $mwb_input_array as $key => $value ) {
 			$key   = sanitize_text_field($key);
 			$value = sanitize_text_field($value);

@@ -91,11 +91,13 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 			}
 	
 		// Loop through shipping methods
+		if (is_array( WC()->session->get('shipping_for_package_0')['rates']) || is_object( WC()->session->get('shipping_for_package_0')['rates'])) {
 			foreach ( WC()->session->get('shipping_for_package_0')['rates'] as $key => $rate ) {
 				if ( 'mwb_shipping_rate' === $rate->method_id) {
 				// Set "Free shipping" method
 				WC()->session->set( 'chosen_shipping_methods', array($rate->id) );
 				return;
+					}
 				}
 			}
 		}

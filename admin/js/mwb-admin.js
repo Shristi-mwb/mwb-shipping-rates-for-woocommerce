@@ -105,13 +105,15 @@ $(".mwb_stop_text").on('keypress',function (e) {
 //////////////Range Select condition////////////////
 $( ".woocommerce-save-button" ).on( "click", function (){
 if($('#woocommerce_mwb_shipping_rate_max_weight_wise').val() && $('#woocommerce_mwb_shipping_rate_min_weight_wise').val()){
-  
   if($('#woocommerce_mwb_shipping_rate_range').not(':checked')){
     $('#woocommerce_mwb_shipping_rate_range').prop('required',true);
   }
   else{
     $('#woocommerce_mwb_shipping_rate_range').prop('required',false);
   }
+}
+else{
+  $('#woocommerce_mwb_shipping_rate_range').prop('required',false);
 }
 
 if($('#woocommerce_mwb_shipping_rate_max_price').val() && $('#woocommerce_mwb_shipping_rate_min_price').val()){
@@ -123,6 +125,9 @@ if($('#woocommerce_mwb_shipping_rate_max_price').val() && $('#woocommerce_mwb_sh
     $('#woocommerce_mwb_shipping_rate_range_price').prop('required',false);
   }
 }
+else{
+  $('#woocommerce_mwb_shipping_rate_range_price').prop('required',false);
+}
 
 if($('#woocommerce_mwb_shipping_rate_max_volume_wise').val() && $('#woocommerce_mwb_shipping_rate_min_volume_wise').val()){
   
@@ -132,6 +137,9 @@ if($('#woocommerce_mwb_shipping_rate_max_volume_wise').val() && $('#woocommerce_
   else{
     $('#woocommerce_mwb_shipping_rate_range_volume').prop('required',false);
   }
+}
+else{
+  $('#woocommerce_mwb_shipping_rate_range_volume').prop('required',false);
 }
 
 });

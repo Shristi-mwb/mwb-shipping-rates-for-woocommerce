@@ -14,7 +14,7 @@
  * @wordpress-plugin
  * Plugin Name:       MWB Shipping Rates For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/mwb-shipping-rates-for-woocommerce/
- * Description:       Your Basic Plugin
+ * Description:       The MWB WooCommerce Shipping Rates plugin is a full-featured and extremely versatile plugin for setting numerous shipping ways with different shipping regulations and maximizing earnings from the shipping methods on offer.
  * Version:           1.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/

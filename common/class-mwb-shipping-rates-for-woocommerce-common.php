@@ -64,8 +64,9 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	 * @since    1.0.0
 	 */
 	public function msrfw_common_enqueue_scripts() {
+		$mwb_checking_cart_page = is_cart();
 		wp_register_script( $this->plugin_name . 'common', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'common/js/mwb-shipping-rates-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name . 'common', 'msrfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( $this->plugin_name . 'common', 'msrfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) , 'mwb_cart_page' => $mwb_checking_cart_page ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
 	}
 

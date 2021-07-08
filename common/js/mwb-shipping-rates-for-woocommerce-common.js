@@ -30,10 +30,16 @@
 	 */
 	 $(function() {
 		$( document.body ).on( 'updated_cart_totals', function(){
-			//re-do your jquery
 			jQuery(".button-primary woocommerce-save-button").trigger("click");
-			// alert('me');
 		});
+		if('1' == msrfw_common_param.mwb_cart_page) 
+		{
+			window.onload = function() {
+				if(!window.location.hash) {
+					window.location = window.location + '#loaded';
+					window.location.reload();
+				}
+			}
+		}
 	});
-
 })( jQuery );

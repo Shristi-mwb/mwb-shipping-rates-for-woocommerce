@@ -487,7 +487,7 @@ $cost = ( $mwb_weight_charge_1 + $mwb_weight_charge_2 + $mwb_weight_charge_3 +  
 			} else {
 		$cart_total = $cart_total_after_disc;
 			}
-			if ( $min_amount <= $cart_total && 'minimum_order' === $min_order_cond  && 'yes' === $enable_free_shipping ) {
+			if ( $min_amount <= $cart_total && 'minimum_order' === $min_order_cond  && 'yes' === $enable_free_shipping && !empty($min_amount)) {
 			$this->add_rate( array(
 				'id'      => $this->get_rate_id(),
 				'label'   => $free_shippping_lable,

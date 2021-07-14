@@ -234,7 +234,7 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_review_order_before_payment', $msrfw_plugin_common, 'expected_delivery_date_message' );
 			$this->loader->add_action( 'woocommerce_before_thankyou', $msrfw_plugin_common, 'expected_delivery_date_message' );
 			$this->loader->add_filter( 'woocommerce_get_item_data', $msrfw_plugin_common , 'displaying_cart_items_weight', 10, 2 );
-			$this->loader->add_action( 'init', $msrfw_plugin_common , 'Mwb_free_shipping_coupon_checking', 10 );
+			$this->loader->add_action( 'init', $msrfw_plugin_common , 'mwb_free_shipping_coupon_checking', 10 );
 
 		}
 
@@ -405,7 +405,7 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 		}
 
 		$msrfw_notice  = '<div class="' . esc_attr($msrfw_classes) . '">';
-		$msrfw_notice .= '<p>' . esc_html($msrfw_message) . '</p>';
+		$msrfw_notice .= '<p>' . esc_html($msrfw_message. 'mwb-shipping-rates-for-woocommerce') . '</p>';
 		$msrfw_notice .= '</div>';
 
 		echo wp_kses_post($msrfw_notice);
@@ -867,10 +867,10 @@ class Mwb_Shipping_Rates_For_Woocommerce {
 		}
 	}
 
-	// public static variable to be accessed in this plugin.
+	/** Public static variable to be accessed in this plugin. */
 	public static $lic_callback_function = 'check_lcns_validity';
 
-	// public static variable to be accessed in this plugin.
+	/** Public static variable to be accessed in this plugin.*/
 	public static $lic_ini_callback_function = 'check_lcns_initial_days';
 
 	/**

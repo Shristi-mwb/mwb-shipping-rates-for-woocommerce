@@ -30,6 +30,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Activator {
 	public static function mwb_shipping_rates_for_woocommerce_activate() {
 
 		update_option('msrfw_radio_switch_enable', 'on');
+
 	}
 
 }

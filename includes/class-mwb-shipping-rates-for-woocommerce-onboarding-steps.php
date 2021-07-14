@@ -12,8 +12,8 @@
 /**
  * The Onboarding-specific functionality of the plugin admin side.
  *
- * @package     mwb_shipping_rates_for_woocommerce
- * @subpackage  mwb_shipping_rates_for_woocommerce/includes
+ * @package    Mwb_Shipping_Rates_For_Woocommerce
+ * @subpackage Mwb_Shipping_Rates_For_Woocommerce/includes
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -482,7 +482,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 
 			rand() => array(
 				'id' => 'mwb-msrfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_msrfw_plugin_name_label . ' so we can improve the plugin', 'mwb-shipping-rates-for-woocommerce' ),
+				'title' => esc_html__( 'Let us know why you are deactivating' . self::$mwb_msrfw_plugin_name_label . 'so we can improve the plugin', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',

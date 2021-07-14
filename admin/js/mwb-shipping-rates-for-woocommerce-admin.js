@@ -51,7 +51,7 @@
       }
     );
 
-    $(".mwb-password-hidden").click(function() {
+    $(".mwb-password-hidden").on('click',function() {
       if ($(".mwb-form__password").attr("type") == "text") {
         $(".mwb-form__password").attr("type", "password");
       } else {
@@ -78,7 +78,6 @@ jQuery(document).ready(function($) {
   $("form#mwb_msrfw_license_form").on("submit", function(e) {
     e.preventDefault();
 
-    //   $("#mwb_license_ajax_loader").show();
     var license_key = $("#mwb_msrfw_license_key").val();
     mwb_msrfw_send_license_request(license_key);
   });
@@ -94,8 +93,6 @@ jQuery(document).ready(function($) {
       },
 
       success: function(data) {
-        //   $("#mwb_upsell_license_ajax_loader").hide();
-
         if (data.status == true) {
           $("#mwb_msrfw_license_activation_status").css("color", "#42b72a");
 

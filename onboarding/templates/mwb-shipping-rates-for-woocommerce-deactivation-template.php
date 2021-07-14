@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    Mwb_Shipping_Rates_For_Woocommerce
+ * @subpackage Mwb_Shipping_Rates_For_Woocommerce/admin/onboarding
  */
 
 global $pagenow, $msrfw_mwb_msrfw_obj;

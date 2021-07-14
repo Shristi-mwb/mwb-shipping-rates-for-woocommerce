@@ -1,20 +1,19 @@
 <?php
-
 /**
  * Register new Shipping Method for WooCommerce.
  *
  * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
- * @package    Shipping_rates_for_woocommerce
- * @subpackage Shipping_rates_for_woocommerce/includes
+ * @package    MWB_Shipping_rates_for_woocommerce
+ * @subpackage MWB_Shipping_rates_for_woocommerce/includes
  */
 
 /**
  * This class defines all code necessary to add a new shiiping method.
  *
- * @package    Shipping_rates_for_woocommerce
- * @subpackage Shipping_rates_for_woocommerce/includes
+ * @package    MWB_Shipping_rates_for_woocommerce
+ * @subpackage MWB_Shipping_rates_for_woocommerce/includes
  */
 class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 	/**
@@ -43,7 +42,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 	 *
 	 */
 	public  function init() {
-				// Load the settings API
+				// Load the settings API.
 				$this->init_form_fields();
 				$this->init_settings();
 				$this->title            = $this->get_option( 'title' );
@@ -53,7 +52,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 	}
 
 	/**
-	 * Init setting for your setting fields
+	 * Init setting for your setting fields.
 	 *
 	 */	
 	public function init_form_fields() { 
@@ -284,7 +283,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 	/**
 	 * Calculation for the shipping
 	 *
-	 * @param mixed $instance_id used to store instance.
+	 * @param array $package used to store instance.
 	 * @return void
 	 */
 	public function calculate_shipping( $package = array()) {
@@ -388,7 +387,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 			} else {
 				$mwb_weight_charge_2 = 0;
 			}
-///////////////////////////// Price Range ////////////////////////////////////
+// Price Section.
 			if ($total_cart_price <= $max_price && 'yes' === $price_range && $total_cart_price >= $min_price && !empty($max_price) && !empty($min_price)) {
 
 				if (!is_numeric($price_wise_charge)) {
@@ -423,7 +422,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 				$mwb_price_charge_2 = 0;
 			}
 
-/////////////////////////////////////////VOLUME/////////////
+// VOLUME Section.
 			if ($total_cart_vol <= $max_vol && 'yes' === $vol_range && $total_cart_vol >= $min_vol && !empty($max_vol) && !empty($min_vol)) {
 				if (!is_numeric($vol_wise_charge)) {
 	 $mwb_volume_charge_3 = 0;
@@ -457,14 +456,12 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 	$mwb_volume_charge_2 = 0;
 			}
 
-
 			if ('yes' === $cart_categories && !empty($categories_wise_price)) {
 	$price_for_categories = $categories_wise_price * ( $cart_quantity ) ;
 			} else {
 	$price_for_categories = 0;
 			}
-
-///////////////////////////////////////////////////////VOLUME END/////////////////
+// VOLUME Section End.
 $cost = ( $mwb_weight_charge_1 + $mwb_weight_charge_2 + $mwb_weight_charge_3 +  $mwb_price_charge_2 +  $mwb_price_charge_1 + $mwb_price_charge_3 + $mwb_volume_charge_1 +$mwb_volume_charge_2 + $mwb_volume_charge_3 + ( $price_for_categories ) );
 			if ('yes' === $general_charges_enable ) {
 				if (!is_numeric($general_cost)) {
@@ -518,7 +515,7 @@ $cost = ( $mwb_weight_charge_1 + $mwb_weight_charge_2 + $mwb_weight_charge_3 +  
 		if ( ! $this->instance_id ) {
 			echo '<h2>' . esc_html( $this->get_method_title() ) . '</h2>';
 		}
-		echo wp_kses_post( wpautop( $this->get_method_description() ) );
+		echo wp_kses_post( wpautop( esc_textarea($this->get_method_description() ) ) );
 		echo $this->get_admin_options_html(); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		update_option('default_shipping_check', $this->get_option( 'default_check' ));
 		update_option('expected_days', $this->get_option( 'expected_delivery_date' ));

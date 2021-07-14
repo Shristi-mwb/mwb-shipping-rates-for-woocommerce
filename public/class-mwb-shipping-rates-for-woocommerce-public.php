@@ -58,7 +58,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 	 */
 	public function msrfw_public_enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'public/css/mwb-shipping-rates-for-woocommerce-public.css', array(), $this->version, 'all' );
+		// Including Public Css.
 
 	}
 
@@ -85,16 +85,16 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 			if ( isset(WC()->session) && ! WC()->session->has_session() ) {
 			WC()->session->set_customer_session_cookie( true );
 			}
-		// Check if "free shipping" is already set
+		// Check if "free shipping" is already set.
 		if ( strpos( WC()->session->get('chosen_shipping_methods')[0], 'mwb_shipping_rate' ) !== false ) {
 			return;
 			}
 	
-		// Loop through shipping methods
+		// Loop through shipping methods.
 		if (is_array( WC()->session->get('shipping_for_package_0')['rates']) || is_object( WC()->session->get('shipping_for_package_0')['rates'])) {
 			foreach ( WC()->session->get('shipping_for_package_0')['rates'] as $key => $rate ) {
 				if ( 'mwb_shipping_rate' === $rate->method_id) {
-				// Set "Free shipping" method
+				// Set "Free shipping" method.
 				WC()->session->set( 'chosen_shipping_methods', array($rate->id) );
 				return;
 					}
@@ -107,6 +107,9 @@ class Mwb_Shipping_Rates_For_Woocommerce_Public {
 	 * Setting the visibility shipping option.
 	 *
 	 * @since    1.0.0
+	 * @package    Mwb_Shipping_Rates_For_Woocommerce
+	 * @param      array $rates      Shipping Rates.
+	 * @param      string $package      The package.
 	 */
 	public function hide_shipping_for_unlogged_user( $rates, $package ) {
 				$package;

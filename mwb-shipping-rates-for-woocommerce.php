@@ -191,7 +191,6 @@ add_filter('plugin_row_meta', 'mwb_shipping_rates_for_woocommerce_custom_setting
 	 * @name iasfw_plugin_error_notices()
 	 * @link http://www.makewebbetter.com/
 	 */
-
 	function msrfw_plugin_error_notices(){ ?>
 	<div class="error notice is-dismissible">
 		<p><?php esc_html_e( ' Woocommerce is not activated, Please activate Woocommerce first to install MWB Shipping Rates For Woocomerce . ' , 'mwb-shipping-rates-for-woocommerce' ); ?></p>

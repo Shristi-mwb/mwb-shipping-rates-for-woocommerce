@@ -77,7 +77,6 @@ class Mwb_Shipping_Rates_For_Woocommerce_Rest_Api {
 			'msrfw-route/v1',
 			'/msrfw-dummy-data/',
 			array(
-				// 'methods'  => 'POST',
 				'methods'  => WP_REST_Server::CREATABLE,
 				'callback' => array( $this, 'mwb_msrfw_default_callback' ),
 				'permission_callback' => array( $this, 'mwb_msrfw_default_permission_check' ),

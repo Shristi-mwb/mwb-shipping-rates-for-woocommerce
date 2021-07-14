@@ -8,5 +8,4 @@
  * @package    Mwb_Shipping_Rates_For_Woocommerce
  * @subpackage Mwb_Shipping_Rates_For_Woocommerce/admin
  */
-
 // Silence is golden.

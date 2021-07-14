@@ -55,7 +55,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	 * @since    1.0.0
 	 */
 	public function msrfw_common_enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name . 'common', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'common/css/mwb-shipping-rates-for-woocommerce-common.css', array(), $this->version, 'all' );
+		// Common CSS.
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	 *
 	 * @since 1.0.0
 	 */
-	public function Mwb_free_shipping_coupon_checking() {
+	public function mwb_free_shipping_coupon_checking() {
 		if (!is_user_logged_in()) {
 			update_option('shipping_coupon', 'no');
 		}
@@ -168,23 +168,25 @@ class Mwb_Shipping_Rates_For_Woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function  expected_delivery_date_message() {
-	global $Date;
+	global $date;
 	$days_checker = get_option('expected_days');
 		if (!empty($days_checker)) {
-	$expec_date = gmdate('l jS \of F ', strtotime($Date . ' + ' . $days_checker . 'days'));
+	$expec_date = gmdate('l jS \of F ', strtotime($date . ' + ' . $days_checker . 'days'));
 	esc_html_e( 'Expected to be delivered by ' . $expec_date , 'mwb-shipping-rates-for-woocommerce');
 		}
 	}
 
 	/**
 	 * Weighting display delivery  shipping method.
-	 *
+	 * 
+	 * @param array $item_data used to store data of item in cart.
+	 * @param array $cart_item used to store info of item in cart.
 	 * @since 1.0.0
 	 */
 	public function displaying_cart_items_weight( $item_data, $cart_item ) {
 	$item_weight = $cart_item['data']->get_weight();
 	$item_data[] = array(
-		'key'       => __('Weight', 'woocommerce'),
+		'key'       => __('Weight', 'mwb-shipping-rates-for-woocommerce'),
 		'value'     => $item_weight,
 		'display'   => $item_weight . ' ' . get_option('woocommerce_weight_unit'),
 	);

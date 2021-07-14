@@ -68,7 +68,6 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 
 			wp_enqueue_style('mwb-msrfw-meterial-icons-css', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all');
 
-			wp_enqueue_style($this->plugin_name . '-admin-global', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-shipping-rates-for-woocommerce-admin-global.css', array( 'mwb-msrfw-meterial-icons-css' ), time(), 'all');
 
 			wp_enqueue_style($this->plugin_name, MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-shipping-rates-for-woocommerce-admin.scss', array(), $this->version, 'all');
 			wp_enqueue_style('mwb-admin-min-css', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array(), $this->version, 'all');
@@ -202,7 +201,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Shipping-rates-for-woocommerce categories visibility
+	 * MWB Shipping Rates For WooCommerce categories visibility
 	 *
 	 * @since    1.0.0
 	 */
@@ -267,8 +266,8 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	public function msrfw_admin_save_tab_settings() {
 		global $msrfw_mwb_msrfw_obj;
 		if (isset($_POST['msrfw_button_demo']) 
-			&& ( !empty($_POST['mwb_tabs_nonce']) 
-			&& wp_verify_nonce(sanitize_text_field($_POST['mwb_tabs_nonce']), 'admin_save_data') ) 
+			&& ( !empty($_POST['mwb_tabs_nonce'])
+			&& wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['mwb_tabs_nonce'])), 'admin_save_data') ) 
 		) {
 			$mwb_msrfw_gen_flag     = false;
 			$msrfw_genaral_settings = apply_filters('msrfw_general_settings_array', array());
@@ -282,7 +281,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 					foreach ( $msrfw_genaral_settings as $msrfw_genaral_setting ) {
 						if (isset($msrfw_genaral_setting['id']) && '' !== $msrfw_genaral_setting['id'] ) {
 							if (isset($_POST[$msrfw_genaral_setting['id']]) ) {
-								update_option($msrfw_genaral_setting['id'], is_array($_POST[$msrfw_genaral_setting['id']]) ? $this->mwb_sanitize_array(sanitize_text_field($_POST[$msrfw_genaral_setting['id']])) : sanitize_text_field($_POST[$msrfw_genaral_setting['id']]));
+								update_option($msrfw_genaral_setting['id'], is_array($_POST[$msrfw_genaral_setting['id']]) ? $this->mwb_sanitize_array(sanitize_text_field(wp_unslash($_POST[$msrfw_genaral_setting['id']]))) : sanitize_text_field(wp_unslash($_POST[$msrfw_genaral_setting['id']])));
 							} else {
 								update_option($msrfw_genaral_setting['id'], '');
 							}
@@ -305,7 +304,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	/**
 	 * Sanitation for an array.
 	 * 
-	 * @param $array
+	 * @param array $mwb_input_array.
 	 *
 	 * @return array
 	 */

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Provide a admin area view for the plugin
  *
@@ -8,4 +8,5 @@
  * @package    Mwb_Shipping_Rates_For_Woocommerce
  * @subpackage Mwb_Shipping_Rates_For_Woocommerce/admin
  */
+
 // Silence is golden.

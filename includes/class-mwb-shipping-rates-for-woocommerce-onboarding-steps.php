@@ -109,7 +109,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 	public function __construct() {
 		self::$mwb_msrfw_store_name = get_bloginfo( 'name' );
 		self::$mwb_msrfw_store_url = home_url();
-		self::$mwb_msrfw_plugin_name = 'MWB Shipping Rates For WooCommerce';
+		self::$mwb_msrfw_plugin_name       = 'MWB Shipping Rates For WooCommerce';
 		self::$mwb_msrfw_plugin_name_label = 'MWB Shipping Rates For WooCommerce';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_msrfw_onboarding_enqueue_styles' ) );
@@ -169,7 +169,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 		if ( $this->mwb_msrfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-msrfw-onboarding-select2-style', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/mwb-shipping-rates-for-woocommerce-select2.css', array(), time(), 'all' );
-			
+
 			wp_enqueue_style( 'mwb-msrfw-meterial-css', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-msrfw-meterial-css2', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-msrfw-meterial-lite', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -215,9 +215,9 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'msrfw_auth_nonce'    => wp_create_nonce( 'mwb_msrfw_onboarding_nonce' ),
 					'msrfw_current_screen'    => $pagenow,
-					'msrfw_current_supported_slug'    => 
-					//desc - filter for trial.
-					apply_filters('mwb_msrfw_deactivation_supported_slug', array( $msrfw_current_slug ) ),
+					'msrfw_current_supported_slug'    =>
+					// desc - filter for trial.
+					apply_filters( 'mwb_msrfw_deactivation_supported_slug', array( $msrfw_current_slug ) ),
 				)
 			);
 		}
@@ -254,7 +254,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_msrfw_skip_onboarding_popup() {
 
-	 $get_skipped_timstamp = update_option( 'mwb_msrfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'mwb_msrfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}
@@ -482,7 +482,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 
 			rand() => array(
 				'id' => 'mwb-msrfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating' . self::$mwb_msrfw_plugin_name_label . 'so we can improve the plugin', 'mwb-shipping-rates-for-woocommerce' ),
+				'title' => esc_html__( 'Let us know why you are deactivating MWB Shipping Rates For WooCommerce so we can improve the plugin', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',
@@ -669,7 +669,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 	 * @since       1.0.0
 	 */
 	protected function mwb_msrfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
-		
+
 		if ( 'onboarding' == $action_type ) {
 			$form_id = self::$mwb_msrfw_onboarding_form_id;
 		} else {
@@ -692,7 +692,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Onboarding_Steps {
 				),
 			)
 		);
-	
+
 		$response = $this->mwb_msrfw_hic_post( $url, $form_data, $headers );
 
 		if ( 200 == $response['status_code'] ) {

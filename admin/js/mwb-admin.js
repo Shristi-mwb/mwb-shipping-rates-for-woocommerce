@@ -58,11 +58,11 @@ $('#woocommerce_mwb_shipping_rate_categories_wise').on('click',function()
 $.ajax({
   type:'POST',
   dataType: 'text',
-  url: srfw_shipping_param.ajaxurl,
+  url: msrfw_shipping_param.ajaxurl,
 
   data: {
       'action':'product_categories',
-      'srfw_ajax_nonce':srfw_shipping_param.shipping_nonce,
+      'msrfw_ajax_nonce':msrfw_shipping_param.shipping_nonce,
       'cat':select_button_text,
   },
 

@@ -110,18 +110,18 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 		}
 
 		 // Admin JS For MWB Shipping Rates.
-		 wp_register_script( $this->plugin_name . 'srfw_admin-js', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.js', array( 'jquery' ), $this->version, false );
+		 wp_register_script( $this->plugin_name . 'msrfw_admin-js', MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/mwb-admin.js', array( 'jquery' ), $this->version, false );
 
 		 wp_localize_script(
-			 $this->plugin_name . 'srfw_admin-js',
-			 'srfw_shipping_param',
+			 $this->plugin_name . 'msrfw_admin-js',
+			 'msrfw_shipping_param',
 			 array(
 				 'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				 'shipping_nonce' => wp_create_nonce( 'mwb-shipping-nonce' ),
 			 )
 		 );
 
-		 wp_enqueue_script( $this->plugin_name . 'srfw_admin-js' );
+		 wp_enqueue_script( $this->plugin_name . 'msrfw_admin-js' );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	public function msrfw_options_page() {
 		global $submenu;
 		if (empty($GLOBALS['admin_page_hooks']['mwb-plugins']) ) {
-			add_menu_page(__('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), __('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
+			add_menu_page(__('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), _('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
 			$msrfw_menus = 
 			//desc - filter for trial.
 			apply_filters('mwb_add_plugins_menus_array', array());
@@ -206,7 +206,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	 * @since    1.0.0
 	 */
 	public function product_shipping_categories() {
-		check_ajax_referer( 'mwb-shipping-nonce', 'srfw_ajax_nonce' );	
+		check_ajax_referer( 'mwb-shipping-nonce', 'msrfw_ajax_nonce' );	
 			$me =array();
 		$cat    = !empty( $_POST['cat'] ) ? sanitize_text_field( wp_unslash ( $_POST['cat'] ) ) : '';
 		$me[]   = $cat;
@@ -302,11 +302,10 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Sanitation for an array.
-	 * 
-	 * @param array $mwb_input_array.
+	 * MWB Shipping Rates For WooCommerce for sanitizing the array.
 	 *
-	 * @return array
+	 * @since 1.0.0
+	 * @param array $mwb_input_array Settings fields.
 	 */
 	public function mwb_sanitize_array( $mwb_input_array ) {
 		foreach ( $mwb_input_array as $key => $value ) {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Fired during plugin deactivation
  *
@@ -7,4 +7,5 @@
  *
  * @package    Mwb_Shipping_Rates_For_Woocommerce
  */
+
 // Silence is golden.

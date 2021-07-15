@@ -132,7 +132,7 @@ class Mwb_Shipping_Rates_For_Woocommerce_Admin {
 	public function msrfw_options_page() {
 		global $submenu;
 		if (empty($GLOBALS['admin_page_hooks']['mwb-plugins']) ) {
-			add_menu_page(__('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), _('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
+			add_menu_page(__('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), __('MakeWebBetter', 'mwb-shipping-rates-for-woocommerce'), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15);
 			$msrfw_menus = 
 			//desc - filter for trial.
 			apply_filters('mwb_add_plugins_menus_array', array());

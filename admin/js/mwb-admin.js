@@ -1,4 +1,4 @@
-//JS for MWB Shipping Rates For Woocoommerce
+//JS for MWB Shipping Rates For Woocoommerce.
 (function( $ ) {
 	'use strict';
 
@@ -79,7 +79,7 @@ $(".mwb_stop_text").on('keypress',function (e) {
      return false;
   }
 });
-//////////////Range Select condition////////////////
+//Range Select condition.
 $( ".woocommerce-save-button" ).on( "click", function (){
 if($('#woocommerce_mwb_shipping_rate_max_weight_wise').val() && $('#woocommerce_mwb_shipping_rate_min_weight_wise').val()){
   if($('#woocommerce_mwb_shipping_rate_range').not(':checked')){

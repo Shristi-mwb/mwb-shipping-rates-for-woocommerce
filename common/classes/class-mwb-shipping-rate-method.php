@@ -87,7 +87,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 			'title' => array(
 				'title' => __( 'Shipping Title', 'mwb-shipping-rates-for-woocommerce' ),
 				'type' => 'text',
-				'description' => __( 'Title to be display on site', 'mwb-shipping-rates-for-woocommerce' ),
+				'description' => __( 'Title to be display on the site', 'mwb-shipping-rates-for-woocommerce' ),
 				'default' => __( 'MWB Shipping ', 'mwb-shipping-rates-for-woocommerce' ),
 				'desc_tip' => true,
 			),
@@ -113,7 +113,6 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 				 $this->instance_form_fields['expected_delivery_date'] = array(
 					 'title' => __( 'Expected Delivery Date', 'mwb-shipping-rates-for-woocommerce' ),
 					 'type' => 'text',
-					 'placeholder' => 'days',
 					 'description' => __( 'Expected delivery date for shipping ', 'mwb-shipping-rates-for-woocommerce' ),
 					 'class' => 'mwb_stop_text',
 					 'desc_tip' => true,
@@ -133,7 +132,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 						 'title' => __( 'Pre Discount Price', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'checkbox',
 						 'label' => __( 'Checkbox to apply free shipping on pre-discounted price.', 'mwb-shipping-rates-for-woocommerce' ),
-						 'description' => __( 'Apply conditinal free shipping on the pre-discounted price', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Apply conditional free shipping on the pre-discounted price', 'mwb-shipping-rates-for-woocommerce' ),
 						 'desc_tip' => true,
 						 'default`' => 'no',
 					 );
@@ -141,7 +140,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 						 'title' => __( 'Free Shipping base on', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'select',
 						 'class' => 'custom_free_shipping_class',
-						 'description' => __( 'Condition on which free shipping is allow', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Condition on which free shipping is allowed', 'mwb-shipping-rates-for-woocommerce' ),
 						 'default' => 'minimum_order',
 						 'desc_tip' => true,
 						 'options' => array(
@@ -154,13 +153,13 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 						 'title' => __( 'Free Shipping title', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
 						 'description' => __( 'Free Shipping label on site', 'mwb-shipping-rates-for-woocommerce' ),
-						 'default' => __( 'Mwb Free Shippping Applied', 'mwb-shipping-rates-for-woocommerce' ),
+						 'default' => __( 'Mwb Free Shipping Applied', 'mwb-shipping-rates-for-woocommerce' ),
 						 'desc_tip' => true,
 					 );
 					 $this->instance_form_fields['free_shipping_amount']   = array(
 						 'title' => __( 'Free Shipping Amount', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Minimun amount for Free Shipping ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Minimum amount for Free Shipping ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 ); }
@@ -168,14 +167,14 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 					 'title' => __( 'Apply Advanced Shipping rules', 'mwb-shipping-rates-for-woocommerce' ),
 					 'type'  => 'checkbox',
 					 'label' => __( 'Apply Advanced Shipping rules', 'mwb-shipping-rates-for-woocommerce' ),
-					 'description' => __( 'Advnace shipping rules for the shipping charge', 'mwb-shipping-rates-for-woocommerce' ),
+					 'description' => __( 'Advance shipping rules for the shipping charge', 'mwb-shipping-rates-for-woocommerce' ),
 					 'desc_tip' => true,
 
 				 );     if ( 'yes' === $this->get_option( 't1' ) ) {
 					 $this->instance_form_fields['general_shipping'] = array(
 						 'title' => __( 'Include General Shipping Charges', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => __( 'Check to include general shipping charges applied above into advance charges.', 'mwb-shipping-rates-for-woocommerce'),
+						 'label' => __( 'Check to include general shipping charges applied above into advance charges.', 'mwb-shipping-rates-for-woocommerce' ),
 
 					 );
 					 $this->instance_form_fields['categories_wise']        = array(
@@ -188,35 +187,32 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 					 $this->instance_form_fields['price_categories_wise'] = array(
 						 'title' => __( 'Shipping charge by categories wise', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Shipping amount charge for selected categories per quantity wise.', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Shipping amount charge for selected categories per quantity-wise.', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
 					 $this->instance_form_fields['range']                  = array(
 						 'title' => __( 'Apply  Weight Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => __( 'Check to enable weight range rule', 'mwb-shipping-rates-for-woocommerce'),
+						 'label' => __( 'Check to enable weight range rule.', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => '',
-						 'description'  => __( 'Check to apply weight range rule.', 'mwb-shipping-rates-for-woocommerce' ),
 					 );
 					 $this->instance_form_fields['range_price']            = array(
 						 'title' => __( 'Apply Price Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => __( 'Check to enable price range rule', 'mwb-shipping-rates-for-woocommerce' ),
+						 'label' => __( 'Check to enable price range rule.', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => '',
-						 'description'  => __( 'Check to apply Price range rules.', 'mwb-shipping-rates-for-woocommerce' ),
 					 );
 					 $this->instance_form_fields['range_volume']           = array(
 						 'title' => __( 'Appy Volume Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => __( 'Check to enable volume range rule ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'label' => __( 'Check to enable volume range rule. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => '',
-						 'description'  => __( 'Check to apply Volume rules.', 'mwb-shipping-rates-for-woocommerce' ),
 					 );
 					 $this->instance_form_fields['max_weight_wise']        = array(
-						 'title' => __( 'Maximun Weight (Kg)', 'mwb-shipping-rates-for-woocommerce' ),
+						 'title' => __( 'Maximum Weight (Kg)', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Maximum weight of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Maximum weight of the cart, on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
@@ -230,7 +226,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 					 $this->instance_form_fields ['price_weight_wise']     = array(
 						 'title' => __( 'Charge Weight Wise', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'shipping charge on selected weight of the cart. ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'shipping charge on the selected weight of the cart. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
@@ -244,28 +240,28 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 					 $this->instance_form_fields['min_price']             = array(
 						 'title' => __( 'Minimum Price', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Minimum price of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Minimum price of the cart, on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
 					 $this->instance_form_fields['price_wise']            = array(
 						 'title' => __( 'Charge Price Wise', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Charge the shipping cost on selected price of cart. ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Charge the shipping cost on the selected price of the cart. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
 					 $this->instance_form_fields['max_volume_wise']       = array(
 						 'title' => __( 'Maximun Volume (cm<sup>3</sup>)', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Maximum vol. of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Maximum volume of the cart, on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
 					 $this->instance_form_fields['min_volume_wise']       = array(
 						 'title' => __( 'Minimum Volume (cm<sup>3</sup>)', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type' => 'text',
-						 'description' => __( 'Minimum vol. of the cart on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
+						 'description' => __( 'Minimum volume of the cart, on which shipping charge applied. ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => 'mwb_stop_text',
 						 'desc_tip' => true,
 					 );
@@ -516,7 +512,55 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 			echo '<h2>' . esc_html( $this->get_method_title() ) . '</h2>';
 		}
 		echo wp_kses_post( wpautop( esc_textarea( $this->get_method_description() ) ) );
-		echo _e( $this->get_admin_options_html() ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		$allowed_html = array(
+			'table'    => array(
+				'class' => array(),
+				'id'    => array(),
+			),
+			'tr'       => array(
+				'valign' => array(),
+			),
+			'th'       => array(
+				'class' => array(),
+				'scope' => array(),
+			),
+			'td'       => array(
+				'class' => array(),
+			),
+			'fieldset' => array(),
+			'legend'   => array(
+				'class' => array(),
+			),
+			'span'     => array(
+				'class'    => array(),
+				'data-tip' => array(),
+			),
+			'label'    => array(
+				'for' => array(),
+				'id'  => array(),
+			),
+			'input'    => array(
+				'type'     => array(),
+				'id'       => array(),
+				'name'     => array(),
+				'multiple' => array(),
+				'accept'   => array(),
+				'class'    => array(),
+				'checked'  => array(),
+				'value'    => array(),
+			),
+			'select'   => array(
+				'id'       => array(),
+				'name'     => array(),
+				'class'    => array(),
+				'multiple' => array(),
+			),
+			'option'   => array(
+				'value'    => array(),
+				'selected' => array(),
+			),
+		);
+		echo wp_kses( $this->get_admin_options_html(), $allowed_html );
 		update_option( 'default_shipping_check', $this->get_option( 'default_check' ) );
 		update_option( 'expected_days', $this->get_option( 'expected_delivery_date' ) );
 

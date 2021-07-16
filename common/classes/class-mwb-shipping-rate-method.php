@@ -167,7 +167,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 				 $this->instance_form_fields['t1'] = array(
 					 'title' => __( 'Apply Advanced Shipping rules', 'mwb-shipping-rates-for-woocommerce' ),
 					 'type'  => 'checkbox',
-					 'label' => 'Apply Advanced Shipping rules',
+					 'label' => __( 'Apply Advanced Shipping rules', 'mwb-shipping-rates-for-woocommerce' ),
 					 'description' => __( 'Advnace shipping rules for the shipping charge', 'mwb-shipping-rates-for-woocommerce' ),
 					 'desc_tip' => true,
 
@@ -175,7 +175,7 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 					 $this->instance_form_fields['general_shipping'] = array(
 						 'title' => __( 'Include General Shipping Charges', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => 'Check to include general shipping charges applied above into advance charges.',
+						 'label' => __( 'Check to include general shipping charges applied above into advance charges.', 'mwb-shipping-rates-for-woocommerce'),
 
 					 );
 					 $this->instance_form_fields['categories_wise']        = array(
@@ -195,21 +195,21 @@ class Mwb_Shipping_Rate_Method extends WC_Shipping_Method {
 					 $this->instance_form_fields['range']                  = array(
 						 'title' => __( 'Apply  Weight Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => 'Check to enable weight range rule',
+						 'label' => __( 'Check to enable weight range rule', 'mwb-shipping-rates-for-woocommerce'),
 						 'class' => '',
 						 'description'  => __( 'Check to apply weight range rule.', 'mwb-shipping-rates-for-woocommerce' ),
 					 );
 					 $this->instance_form_fields['range_price']            = array(
 						 'title' => __( 'Apply Price Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => 'Check to enable price range rule',
+						 'label' => __( 'Check to enable price range rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => '',
 						 'description'  => __( 'Check to apply Price range rules.', 'mwb-shipping-rates-for-woocommerce' ),
 					 );
 					 $this->instance_form_fields['range_volume']           = array(
 						 'title' => __( 'Appy Volume Range Rule', 'mwb-shipping-rates-for-woocommerce' ),
 						 'type'  => 'checkbox',
-						 'label' => 'Check to enable volume range rule',
+						 'label' => __( 'Check to enable volume range rule ', 'mwb-shipping-rates-for-woocommerce' ),
 						 'class' => '',
 						 'description'  => __( 'Check to apply Volume rules.', 'mwb-shipping-rates-for-woocommerce' ),
 					 );

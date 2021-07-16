@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<li><?php esc_html_e( 'This plugin makes it simple for your customers to access shipping rates.', 'mwb-shipping-rates-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Create a number of MWB shipping methods.', 'mwb-shipping-rates-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Customers can choose from a variety of shipping options.', 'mwb-shipping-rates-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Shipments should be deployed in a more strategic manner.', 'mwb-shipping-rates-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Shipments should be deployed more strategically manner.', 'mwb-shipping-rates-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Shipping rates can be molded to optimize shipping', 'mwb-shipping-rates-for-woocommerce' ); ?></li>
 			</ul>
 		</div>
@@ -69,7 +69,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php esc_html_e( ' Weight and Volume-Wise Shipping', 'mwb-shipping-rates-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
-						<?php esc_html_e( 'You can easily determine delivery fees depending on the weight and volume of the cart. The use of different shipping costs based on weight and volume slabs is a typical occurrence. You can define a delivery charge according to the weight and volume unit outside of the stated range.', 'mwb-shipping-rates-for-woocommerce' ); ?>
+						<?php esc_html_e( 'You can easily determine delivery fees depending on the weight and volume of the cart. The use of different shipping costs based on weight and volume slab is a typical occurrence. You can define a delivery charge according to the weight and volume unit outside of the stated range.', 'mwb-shipping-rates-for-woocommerce' ); ?>
 						</p>
 					</div>
 				</div>
@@ -102,7 +102,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p class="mwb-overview__keywords-description">
 							<?php
 							esc_html_e(
-								'Configure the conditional rules to allow free shipping on the certain condition of the cart applied.',
+								'Configure the conditional rules to allow free shipping on the certain Condition of the cart applied.',
 								'mwb-shipping-rates-for-woocommerce'
 							);
 							?>

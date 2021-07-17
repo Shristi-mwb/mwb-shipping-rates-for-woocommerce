@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<p>
 				<?php
 				esc_html_e(
-					'The MWB WooCommerce Shipping Rates plugin is a full-featured and extremely versatile plugin for setting numerous shipping ways with different shipping regulations and maximizing earnings from the shipping methods on offer.
+					'The MWB Shipping Rates For WooCommerce plugin is a full-featured and extremely versatile plugin for setting numerous shipping ways with different shipping regulations and maximizing earnings from the shipping methods on offer.
                      MWB Shipping Rates for WooCommerce is used to calculate shipping rates based on the total weight of the order, the total price of all products in the cart, different product categories, and other factors. ',
 					'mwb-shipping-rates-for-woocommerce'
 				);

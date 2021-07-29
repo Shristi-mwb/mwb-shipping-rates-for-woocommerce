@@ -27,9 +27,9 @@ $msrfw_default_tabs = $msrfw_mwb_msrfw_obj->mwb_msrfw_plug_default_tabs();
 	?>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title"><?php esc_html_e( 'MWB SHIPPING RATES FOR WOOCOMMERCE', 'mwb-shipping-rates-for-woocommerce' ); ?></h1>
-		<a href="https://docs.makewebbetter.com/mwb-shipping-rates-for-woocommerce" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'mwb-shipping-rates-for-woocommerce' ); ?></a>
+		<a href="https://docs.makewebbetter.com/mwb-shipping-rates-for-woocommerce/?utm_source=shipping-backend&utm_medium=doc-cta&utm_campaign=shipping-org" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'mwb-shipping-rates-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<a href="https://makewebbetter.com/contact-us/" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'mwb-shipping-rates-for-woocommerce' ); ?></a>
+		<a href="https://makewebbetter.com/submit-query/" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'mwb-shipping-rates-for-woocommerce' ); ?></a>
 	</div>
 </header>
 <main class="mwb-main mwb-bg-white mwb-r-8">

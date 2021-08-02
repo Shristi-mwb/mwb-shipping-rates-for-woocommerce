@@ -1,112 +1,122 @@
 === MWB Shipping Rates For WooCommerce ===
-Contributors: makewebbetter
-Tags: comments, spam
+Contributors: MakeWebBetter
+Donate link: https://makewebbetter.com/
+Tags: shipping, shipping rates, woocommerce, delivery, tracking
 Requires at least: 4.6
-Tested up to: 4.9.5
+Tested up to: 5.8
+WC requires at least: 3.0.0
+WC tested up to: 5.5.2
 Stable tag: 1.0.0
-License: GNU General Public License v3.0
+Requires PHP: 5.6
+License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+MWB Shipping Rates For WooCommerce help you determine exact shipping rates so you can keep track of your expenses and ship orders without wasting time.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+SHIPPING RATES PLUGIN PROVIDES WELL-DEFINED SOLUTIONS TO ASSIST YOU IN DETERMINING THE MOST COST-EFFECTIVE SHIPPING RATES FOR YOUR STORE.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+MWB Shipping Rates For WooCommerce obtains real-time shipping rates from various carriers and calculates them depending on the customer's location, product category, shipping class, weight, price, number of items, and so on, and shows them on your WooCommerce Cart and Checkout page.
 
-A few notes about the sections above:
+WooCommerce Shipping Rates plugin provides well-defined solutions to assist you in setting inexpensive shipping rates on your website. The admin can use the Shipping Rates plugin to:
 
-*   "Contributors" is a comma separated list of people who have contributed for this plugin
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+* Create a number of MWB shipping methods.
+* Help their customers to choose from a variety of shipping options.
+* Makes it simple for your customers to access shipping rates.
+* Set up WooCommerce dynamic shipping rates based on the order total.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+== With the MWB Shipping Rates For WooCommerce Plugin on your Store you can ==
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+**1.** Add product categories, user roles, countries, and other information as required.
+
+**2.** You can specify WooCommerce Shipping Rates based on various parameters such as Product Weight, Cart Subtotal, Product Category, etc.
+
+**3.** Our plugin integrates well with WooCommerce and ensures you personalize the shipment notification for your orders.
+
+**4.** You'll have a deeper understanding of all your shipping conditions, enabling you to come up with innovative methods to share cost-effective shipping rates.
+
+**5.** You can easily define as many rules as you want to estimate WooCommerce shipping charges.
+
+== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+[**Download Now**](https://downloads.wordpress.org/plugin/mwb-shipping-rates-for-woocommerce.zip)
+
+Visit [**MWB Shipping Rates For WooCommerce Documentation**](https://docs.makewebbetter.com/mwb-shipping-rates-for-woocommerce/?utm_source=MWB-shipping-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
+
+== What’s included in our FREE MWB Shipping Rates For WooCommerce Plugin? == 
+
+**1. Manage Shipments in one Place**
+WooCommerce Shipping Charges/Rates dashboard, you can swiftly manage orders and create shipments. Orders can be imported directly from your WooCommerce store.
+
+**2. Category Wise Shipping**
+Set shipping costs according to product categories. The delivery charges for Product Categories A, B, and C are the same. With the shipping costs for the Shipping category of the products in your cart, you can effortlessly estimate your total shipping cost.
+
+**3. Increase in Conversion**
+Offer additional shipping rates and full cost transparency to persuade prospective customers.
+
+**4. Price Range Wise Shipping**
+The cost of shipping varies depending on the price of the cart, which is usually somewhere within the midst of the given price category.
+
+**5. Weight and Volume-Wise Shipping**
+You can easily determine delivery fees depending on the weight and volume of the cart. The use of different shipping costs based on weight and volume slabs is a typical occurrence. 
+You can define a delivery charge according to the weight and volume unit outside of the stated range.
+
+**6. Shipping Rules**
+You can set Shipping Charges based on a variety of factors, like Product Weight, Cart Subtotal, Product Category, and so on.
+
+**7. Conditional Free Shipping**
+Configure the conditional rules to allow free shipping if the cart satisfies a specified set of criteria.
+
+[**Free demo of MWB Shipping Rates For WooCommerce**](https://demo.makewebbetter.com/mwb-shipping-rates-for-woocommerce/cart/#loaded/?utm_source=MWB-shipping-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-demo)
+
+== What’s Included in Premium Version of MWB Shipping Rates For WooCommerce Offers?[Coming Soon] ==
+
+**1.** Can determine shipping rates depend on the product.
+**2.** Can determine shipping rates based on delivery address.
+**3.** Offer FREE shipping for Plus members.
+
+== SUPPORT ==
+
+If you need support or have any question then kindly use our online chat window [here](https://makewebbetter.com/?utm_source=MWB-shipping-org&utm_medium=MWB-org-page&utm_campaign=MWB-shipping-org) or  connect with us then [**Generate a Ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-shipping-org&utm_medium=MWB-ORG&utm_campaign=shipping-submit-query-ORG)
+If our documentation doesn’t contain the solution to your problem, you can visit the [**MakeWebBetter Forums**](https://forums.makewebbetter.com/?utm_source=MWB-shipping-org&utm_medium=MWB-org-page&utm_campaign=MWB-shipping-org) with your question.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+= Automatic installation =
 
-e.g.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of MWB Shipping Rates For WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-1. Upload the `mwb-shipping-rates-for-woocommerce` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+In the search field type "MWB Shipping Rates For WooCommerce" and click Search Plugins. Once you've found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
+
+= Manual installation =
+
+The manual installation method involves downloading our MWB Shipping Rates For WooCommerce and uploading it to your webserver via your favorite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
+
+= Updating =
+
+Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
-
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+= My question is not listed? =
+Please visit the [MakeWebBetter knowledge base](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/mwb-shipping-rate-for-woocommerce/?utm_source=MWB-shipping-org&utm_medium=MWB-ORG&utm_campaign=shipping-kb-ORG) for more detailed [documentation](https://docs.makewebbetter.com/mwb-shipping-rates-for-woocommerce/?utm_source=MWB-shipping-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc).
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 1.0.0 =
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+* First version
+
+== Screenshots ==
+
+1. Shipping General Setting
+2. Add Shipping Method
+3. Edit WooCommerce Shipping Setting
+4. WooCommerce Backend Shipping Rate Setting
+5. Display Shipping Rate On Cart Page
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+= 1.0.0 =
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+* First version

@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       MWB Shipping Rates For WooCommerce
- * Plugin URI:        https://makewebbetter.com/product/mwb-shipping-rates-for-woocommerce/
+ * Plugin URI:        https://wordpress.org/plugins/search/mwb-shipping-rates-for-woocommerce/
  * Description:       The MWB WooCommerce Shipping Rates plugin is a full-featured and extremely versatile plugin for setting numerous shipping ways with different shipping regulations and maximizing earnings from the shipping methods on offer.
  * Version:           1.0.0
  * Author:            MakeWebBetter
@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * WC Requires at least: 4.0.0
- * WC tested up to: 5.3.0
+ * WC tested up to: 5.5.2
  * WP Requires at least: 5.1.0
- * WP Tested up to: 5.7.2
+ * WP Tested up to: 5.8
  * Requires PHP: 7.2 or Higher
  *
  * License:           GNU General Public License v3.0
@@ -177,7 +177,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'mwb_shipping_rat
 		if (strpos($plugin_file_name, basename(__FILE__)) ) {
 		$links_array[] = '<a href="https://demo.makewebbetter.com/mwb-shipping-rates-for-woocommerce/?utm_source=shipping-backend&utm_medium=demo-cta&utm_campaign=shipping-org" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">'.__('Demo', 'mwb-shipping-rates-for-woocommerce').'</a>';
 		$links_array[] = '<a href="https://docs.makewebbetter.com/mwb-shipping-rates-for-woocommerce/?utm_source=shipping-backend&utm_medium=doc-cta&utm_campaign=shipping-org" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">'.__('Documentation', 'mwb-shipping-rates-for-woocommerce').'</a>';
-		$links_array[] = '<a href="https://makewebbetter.com/submit-query/" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">'.__('Support', 'mwb-shipping-rates-for-woocommerce').'</a>';
+		$links_array[] = '<a href="https://makewebbetter.com/submit-query/?utm_source=shipping-backend&utm_medium=mwbsupport-cta&utm_campaign=shipping-org" target="_blank"><img src="' . esc_html(MWB_SHIPPING_RATES_FOR_WOOCOMMERCE_DIR_URL) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">'.__('Support', 'mwb-shipping-rates-for-woocommerce').'</a>';
 		}
 	return $links_array;
 	}
